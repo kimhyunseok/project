@@ -55,23 +55,35 @@
 			} else if ($("#user_pw").val() == "") {
 				alert("비밀번호를 입력해주세요");
 			} else {
-				var id=$("#user_id").val();
-				var pw=$("#user_pw").val();
-				$.ajax({
-			        // type을 설정합니다.
-			        type : 'POST',
-			        url : "http://localhost:8080/LoginChk",
-			        // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-			        data : {"user_id" : id,"user_pw" : pw},
-			        // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
-			        success : function (data) {
-			            // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
-			            alert(data.chk);      
-			        }
-			    });
-			}
-		});
+				var id = $("#user_id").val();
+				var pw = $("#user_pw").val();
+						$.ajax({
+							type : 'POST',
+							url : "http://localhost:8080/LoginChk.ajax",
+							data : {
+								"user_id" : id,
+								"user_pw" : pw
+							},
+						    success:function(msg){
+						    	if(msg.chk==3)
+						    		alert("아이디를 입력해주세요");
+						    	else if(msg.chk==4)
+						    		alert("비밀번호를 입력해주세요");
+						    	else if(msg.chk==true){
+						    		 alert("성공");
+						    	}if(msg.chk==false){
+						    		 alert("실패");
+						    	} 
+						    		
+						    },
+						    error:function(request,status,error){
+						            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						    }
+						    
+						}); 
+		}
 	});
+});
 </script>
 
 

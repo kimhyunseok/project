@@ -1,6 +1,11 @@
 package com.test.project.Controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.test.project.Dto.User;
 import com.test.project.Service.UserService;
+
+import net.sf.json.JSONArray;
 
 /**
  * @패키지 com.test.project.Controller
@@ -34,7 +42,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String index(String name) {
 		logger.info("================index Start=================");
-		// System.out.println(service.UserCnt());
+		System.out.println(service.UserCnt());
 		logger.info("================index End=================");
 		return "index";
 	}
@@ -57,38 +65,49 @@ public class HomeController {
 	 * @작성자 : KHS
 	 * @설명 : login check
 	 */
-
 	@ResponseBody
-	@RequestMapping("/LoginChk")
-	public ModelAndView loginChk(String name, HttpServletRequest request) {
+	@RequestMapping("/LoginChk.ajax")
+	public HashMap<String, Object> loginChk(User user, HttpServletRequest request) {
 		logger.info("================Login Start=================");
-		final int LOGIN_ID_FAIL=1;
-		final int LOGIN_PW_FAIL=2;
-		final int LOGIN_SUCCESS=2;
-		ModelAndView mv = new ModelAndView(); 
-		String id = request.getParameter("user_id");
-		String pw = request.getParameter("user_pw");
-		System.out.println(id+"+++++++++++++"+pw);
-		if(id.equals("")&&id.isEmpty()==true) {
-			logger.info(">>>>>>>>>>>>>>>>>>>>>>>아이디 입력해주세요");
-			mv.addObject("chk", LOGIN_ID_FAIL);
-		}
-		else if(pw.equals("")&&pw.isEmpty()==true){
-			logger.info(">>>>>>>>>>>>>>>>>>>>>>>패스워드 입력해주세요");
-			mv.addObject("chk", LOGIN_PW_FAIL);
-		}
-		else {
-			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>로그인성공");
-			/*int loginChk=service.LoginChk(id, pw);
-			if(loginChk==1){
-				System.out.println("로그인 성공");
-			}else {
-				System.out.println("로그인 실패");
-			}*/
-			mv.addObject("chk", LOGIN_SUCCESS);
+		final int LOGIN_ID_FAIL = 3;
+		final int LOGIN_PW_FAIL = 4;
+		final Boolean LOGIN_SUCCESS = true;
+		final Boolean LOGIN_FAIL = false;
+
+		String user_id = user.getUser_id();
+		String user_pw = user.getUser_pw();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if (user_id.equals("") && user_id.isEmpty() == true) {
+			logger.info("==================ID Empty==================");
+			map.put("chk", LOGIN_ID_FAIL);
+		} else if (user_pw.equals("") && user_pw.isEmpty() == true) {
+			logger.info("==================Password Empty==================");
+			map.put("chk", LOGIN_PW_FAIL);
+		} else {
+			int loginChk = service.LoginChk(user);
+			if (loginChk == 1) {
+				logger.info("==================Login Success==================");
+				map.put("chk", LOGIN_SUCCESS);
+			} else {
+				logger.info("==================Login Fail");
+				map.put("chk", LOGIN_FAIL);
+			}
 		}
 		logger.info("================Login End=================");
-		mv.setViewName("main/Login");
-		return mv;
+		return map;
 	}
+
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping("/LoginChk") public HashMap<String, Object> loginChk(
+	 * HttpServletRequest request) {
+	 * logger.info("================Login Start================="); HashMap<String,
+	 * Object> map = new HashMap<String, Object>();
+	 * 
+	 * logger.info("================Login End=================");
+	 * 
+	 * return map; }
+	 */
 }
