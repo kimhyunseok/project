@@ -1,4 +1,4 @@
-package com.test.project.Entity;
+package com.test.project.Dto;
 
 import lombok.Getter;
 import lombok.Setter;
