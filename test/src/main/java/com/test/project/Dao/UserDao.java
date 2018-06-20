@@ -1,8 +1,8 @@
-package com.test.project.Mapper;
+package com.test.project.Dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserMapper {
+public interface UserDao {
 	public int UserCnt();
 }
