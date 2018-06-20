@@ -49,7 +49,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link text-white" href="http://localhost:8080/Login">
+				<a class="nav-link text-white" href="http://localhost:8080/login">
 					<i class="fas fa-sign-in-alt"></i> Login
 				</a>
 			</li>

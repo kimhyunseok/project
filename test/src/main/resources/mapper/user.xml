@@ -6,4 +6,12 @@
 			COUNT(*)
 		FROM TB_USER
 	</select>
+	<select id="LoginChk" parameterType="String" resultType="int" >
+		SELECT
+			COUNT(*)
+		FROM
+			TB_USER
+		WHERE
+		user_id = ${user_id} AND user_pw =${user_pw}
+	</select>
 </mapper>

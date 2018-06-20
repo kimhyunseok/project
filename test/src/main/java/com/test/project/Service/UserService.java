@@ -12,6 +12,8 @@ public class UserService {
 
 	public int UserCnt() {
 		return mapper.UserCnt();
-	};
-
+	}
+	public int LoginChk(String id,String pw) {
+		return mapper.LoginChk(id,pw);
+	}
 }
