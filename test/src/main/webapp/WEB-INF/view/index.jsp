@@ -3,7 +3,6 @@
 <html>
 <jsp:include page="/WEB-INF/view//include/head.jsp" />
 <body>
-
 	<div id="wrapper" class="animate">
 		<jsp:include page="/WEB-INF/view/include/menu.jsp" />
 		<div class="container-fluid">

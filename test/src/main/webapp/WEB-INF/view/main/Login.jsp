@@ -66,13 +66,13 @@
 							},
 						    success:function(msg){
 						    	if(msg.chk==3)
-						    		alert("아이디를 입력해주세요");
+						    		alert("아이디를 입력해주세요.");
 						    	else if(msg.chk==4)
-						    		alert("비밀번호를 입력해주세요");
+						    		alert("비밀번호를 입력해주세요.");
 						    	else if(msg.chk==true){
-						    		 alert("성공");
+						    		location.href = 'http://localhost:8080/';
 						    	}if(msg.chk==false){
-						    		 alert("실패");
+						    		 alert("아이디 혹은 비밀번호를 확인해주세요.");
 						    	} 
 						    		
 						    },

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +43,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String index(String name) {
 		logger.info("================index Start=================");
-		System.out.println(service.UserCnt());
+		service.UserCnt();
 		logger.info("================index End=================");
 		return "index";
 	}
@@ -73,9 +74,10 @@ public class HomeController {
 		final int LOGIN_PW_FAIL = 4;
 		final Boolean LOGIN_SUCCESS = true;
 		final Boolean LOGIN_FAIL = false;
-
+		
 		String user_id = user.getUser_id();
 		String user_pw = user.getUser_pw();
+		HttpSession session = request.getSession();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		if (user_id.equals("") && user_id.isEmpty() == true) {
@@ -86,16 +88,24 @@ public class HomeController {
 			map.put("chk", LOGIN_PW_FAIL);
 		} else {
 			int loginChk = service.LoginChk(user);
-			if (loginChk == 1) {
-				logger.info("==================Login Success==================");
-				map.put("chk", LOGIN_SUCCESS);
-			} else {
-				logger.info("==================Login Fail");
-				map.put("chk", LOGIN_FAIL);
-			}
+				if (loginChk == 1) {
+					logger.info("==================Login Success==================");
+					session.setAttribute("ss_id", user_id);
+					logger.info("=================="+session.getAttribute("ss_id").toString()+"==================");
+					map.put("chk", LOGIN_SUCCESS);
+				} else {
+					logger.info("==================Login Fail");
+					map.put("chk", LOGIN_FAIL);
+				}
 		}
 		logger.info("================Login End=================");
 		return map;
+	}
+	@RequestMapping("/loginout")
+	public String loginOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("ss_id");
+		return "index";
 	}
 
 	/*
