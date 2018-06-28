@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-	$('.test').on('click', function(e) {
+	$('.leftmenutrigger').on('click', function(e) {
 		$('.side-nav').toggleClass("open");
 		$('#wrapper').toggleClass("open");
 		e.preventDefault();

@@ -34,7 +34,7 @@
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link text-white" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fas fa-building"></i> 강의 <i class="fas fa-building shortmenu animate"></i>
+					<i class="fas fa-chalkboard-teacher"></i>강의 <i class="fas fa-chalkboard-teacher shortmenu animate"></i>
 				</a>
 			</li>
 			<li class="nav-item">
@@ -42,16 +42,17 @@
 					<i class="fas fa-building"></i> 소개 <i class="fas fa-building shortmenu animate"></i>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link text-white test" href="#" title="Comment">
-					<i class="fas fa-building "></i> 소개 <i class="fas fa-building shortmenu animate"></i>
-				</a>
-			</li>
+			
 		</ul>
 		<!-- 로그인 Start -->
 		<ul class="navbar-nav ml-md-auto d-md-flex">
 			<c:choose>
 				<c:when test="${sessionScope.ss_id eq null}">
+					<li class="nav-item">
+						<a class="nav-link text-white" href="http://localhost:8080/member">
+							<i class="fas fa-users"></i> join
+						</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link text-white" href="http://localhost:8080/login">
 							<i class="fas fa-sign-in-alt"></i> Login
@@ -78,8 +79,6 @@
 	</div>
 </nav>
 <script>
-
-	
 	function loading() {
 		$("#fakeLoader").fakeLoader({
 			timeToHide : 1000, //Time in milliseconds for fakeLoader disappear
