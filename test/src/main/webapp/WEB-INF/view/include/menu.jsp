@@ -42,22 +42,27 @@
 					<i class="fas fa-building"></i> 소개 <i class="fas fa-building shortmenu animate"></i>
 				</a>
 			</li>
-			
+
 		</ul>
 		<!-- 로그인 Start -->
 		<ul class="navbar-nav ml-md-auto d-md-flex">
 			<c:choose>
 				<c:when test="${sessionScope.ss_id eq null}">
+					<!-- Join Area -->
 					<li class="nav-item">
-						<a class="nav-link text-white" href="http://localhost:8080/member">
-							<i class="fas fa-users"></i> join
+						<a class="nav-link text-white" href="http://localhost:8080/member" data-toggle="tooltip" data-placement="bottom" title="가입하기">
+							<i class="fas fa-users"></i>&nbsp;
 						</a>
 					</li>
+					<!-- join Area -->
+					<!-- Login Area -->
 					<li class="nav-item">
-						<a class="nav-link text-white" href="http://localhost:8080/login">
-							<i class="fas fa-sign-in-alt"></i> Login
+						<a class="nav-link text-white" href="http://localhost:8080/login" data-toggle="tooltip" data-placement="bottom" title="로그인">
+							<i class="fas fa-sign-in-alt"></i>&nbsp;
 						</a>
 					</li>
+					<!-- Login Area -->
+
 				</c:when>
 				<c:when test="${sessionScope.ss_id ne null}">
 					<li class="nav-item">
@@ -79,15 +84,17 @@
 	</div>
 </nav>
 <script>
-	function loading() {
-		$("#fakeLoader").fakeLoader({
-			timeToHide : 1000, //Time in milliseconds for fakeLoader disappear
-			zIndex : 999, // Default zIndex
-			spinner : "spinner2",//Options: 'spinner1', 'spinner2', 'spinner3', 'spinner4', 'spinner5', 'spinner6', 'spinner7' 
-			bgColor : "#dcdcdc" //Hex, RGB or RGBA colors
-		});
-	}
-		
-	
-	$(window).on('load',loading());
+  $(document).ready(function() {
+    function loading() {
+      $("#fakeLoader").fakeLoader({
+      timeToHide : 1000, //Time in milliseconds for fakeLoader disappear
+      zIndex : 999, // Default zIndex
+      spinner : "spinner2",//Options: 'spinner1', 'spinner2', 'spinner3', 'spinner4', 'spinner5', 'spinner6', 'spinner7' 
+      bgColor : "#dcdcdc" //Hex, RGB or RGBA colors
+      });
+    }
+
+    $('[data-toggle="tooltip"]').tooltip();
+    $(window).on('load', loading());
+  });
 </script>

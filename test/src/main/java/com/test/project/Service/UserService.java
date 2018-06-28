@@ -11,8 +11,8 @@ public class UserService {
 	@Autowired
 	UserDao mapper;
 
-	public int UserCnt() {
-		return mapper.UserCnt();
+	public int UserCnt(String user_id) {
+		return mapper.UserCnt(user_id);
 	}
 	public int LoginChk(User user) {
 		return mapper.LoginChk(user);

@@ -57,60 +57,41 @@
 </body>
 </html>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$("#btnLogin1")
-								.click(
-										function() {
-											if ($("#user_id").val() == "") {
-												alert("아이디를 입력해주세요");
-											} else if ($("#user_pw").val() == "") {
-												alert("비밀번호를 입력해주세요");
-											} else {
-												var id = $("#user_id").val();
-												var pw = $("#user_pw").val();
-												$
-														.ajax({
-															type : 'POST',
-															url : "http://localhost:8080/LoginChk.ajax",
-															data : {
-																"user_id" : id,
-																"user_pw" : pw
-															},
-															success : function(
-																	msg) {
-																if (msg.chk == 3)
-																	alert("아이디를 입력해주세요.");
-																else if (msg.chk == 4)
-																	alert("비밀번호를 입력해주세요.");
-																else if (msg.chk == true) {
-																	location.href = 'http://localhost:8080/';
-																}
-																if (msg.chk == false) {
-																	alert("아이디 혹은 비밀번호를 확인해주세요.");
-																}
-
-															},
-															error : function(
-																	request,
-																	status,
-																	error) {
-																alert("code:"
-																		+ request.status
-																		+ "\n"
-																		+ "message:"
-																		+ request.responseText
-																		+ "\n"
-																		+ "error:"
-																		+ error);
-															}
-
-														});
-											}
-										});
-
-					});
+  $(document).ready(function() {
+    $("#btnLogin1").click(function() {
+      if ($("#user_id").val() == "") {
+        alert("아이디를 입력해주세요");
+      } else if ($("#user_pw").val() == "") {
+        alert("비밀번호를 입력해주세요");
+      } else {
+        var id = $("#user_id").val();
+        var pw = $("#user_pw").val();
+        $.ajax({
+        type : 'POST',
+        url : "http://localhost:8080/LoginChk.ajax",
+        data : {
+        "user_id" : id,
+        "user_pw" : pw
+        },
+        success : function(msg) {
+          if (msg.chk == 3)
+            alert("아이디를 입력해주세요.");
+          else if (msg.chk == 4)
+            alert("비밀번호를 입력해주세요.");
+          else if (msg.chk == true) {
+            location.href = 'http://localhost:8080/';
+          }
+          if (msg.chk == false) {
+            alert("아이디 혹은 비밀번호를 확인해주세요.");
+          }
+        },
+        error : function(request, status, error) {
+          alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+        });
+      }
+    });
+  });
 </script>
 
 

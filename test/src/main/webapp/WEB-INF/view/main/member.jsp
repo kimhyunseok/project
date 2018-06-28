@@ -18,28 +18,59 @@
 									<h3 class="mb-0">Login</h3>
 								</div>
 								<div class="card-body">
-									<form class="form" action="http://localhost:8080/LoginChk" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
-										<div class="form-group">
-											<label for="uname1">아이디</label> <input type="text" name="user_id" class="form-control form-control-lg rounded-0" id="user_id" required="">
-											<div class="invalid-feedback">Oops, you missed this one.</div>
-										</div>
-										<div class="form-group">
-											<label>패스워드</label> <input type="password" name="user_pw" class="form-control form-control-lg rounded-0" id="user_pw" required="" autocomplete="new-password">
-											<div class="invalid-feedback">Enter your password too!</div>
-										</div>
-										<div class="row">
-											<label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description small text-dark">Remember me on this computer</span>
-											</label>
-										</div>
-										<div class="row">
-											<div class="col-sm-6">
-												<button type="button" class="btn btn-info btn-lg btn-block" id="btnLogin1">Login</button>
+									<form>
+										<div class="form-row">
+											<div class="col-sm-8 form-group">
+												<label>아이디 </label><span class="regForm text-danger">*</span> <input type="text" id="user_id" class="form-control" placeholder="" required>
 											</div>
-											<div class="col-sm-6" id="naver_id_login" style="text-align: center">
-												<a href="${url}">
-													<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" />
-												</a>
+											<!-- form-id end.// -->
+											<div class="col form-group">
+												<label>&nbsp; </label>
+												<button class="btn btn-info btn-block" id="idchk">중복확인</button>
 											</div>
+											<!-- form-group end.// -->
+										</div>
+										<div class="form-group">
+											<label>패스워드</label><span class="regForm text-danger">*</span> <input name="user_pwd" class="form-control pwd1" type="password" required >
+										</div>
+										<div class="form-group">
+											<label>패스워드 확인</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
+										</div>
+										<div class="form-group">
+											<font name="check"><br/></font>
+										</div>
+										<div class="form-row">
+											<div class="col form-group">
+												<label>닉네임</label> <input name="user_nm" type="text" class="form-control " placeholder="" required> 
+											</div>
+											<!-- form-id end.// -->
+										</div>
+										<!-- form-row end.// -->
+
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												<label>이메일</label><span class="regForm text-danger">*</span>
+												<div class="form-inline">
+													<input type="email" class="form-control col-md-5" required name="user_email"> <span class="col-md-1">@</span> 
+													<select name="user_email" id="inputState" class="form-control col-md-6" >
+														<option value="naver">naver.com</option>
+														<option value="gmail">gmail.com</option>
+														<option value="nate">nate.com</option>
+														<option value="hanmail">hanmail.net</option>
+														<option value="custom">직접입력</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="form-row  justify-content-md-center ">
+											<div class="row">
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary join">가입하기</button>
+													&nbsp;
+													<button type="reset" class="btn btn-secondary" >취소</button>
+												</div>
+											</div>
+											<!-- form-group// -->
 										</div>
 									</form>
 								</div>
@@ -57,60 +88,63 @@
 </body>
 </html>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$("#btnLogin1")
-								.click(
-										function() {
-											if ($("#user_id").val() == "") {
-												alert("아이디를 입력해주세요");
-											} else if ($("#user_pw").val() == "") {
-												alert("비밀번호를 입력해주세요");
-											} else {
-												var id = $("#user_id").val();
-												var pw = $("#user_pw").val();
-												$
-														.ajax({
-															type : 'POST',
-															url : "http://localhost:8080/LoginChk.ajax",
-															data : {
-																"user_id" : id,
-																"user_pw" : pw
-															},
-															success : function(
-																	msg) {
-																if (msg.chk == 3)
-																	alert("아이디를 입력해주세요.");
-																else if (msg.chk == 4)
-																	alert("비밀번호를 입력해주세요.");
-																else if (msg.chk == true) {
-																	location.href = 'http://localhost:8080/';
-																}
-																if (msg.chk == false) {
-																	alert("아이디 혹은 비밀번호를 확인해주세요.");
-																}
+  $(document).ready(function() {
+    var idchk=false;
+    var pwdchk=false;
+    $("#idchk").click(function() {
+      if ($("#user_id").val() == "") {
+        alert("아이디를 입력해주세요");
+      } else {
+        var id = $("#user_id").val();
+        $.ajax({
+        type : 'POST',
+        url : "http://localhost:8080/IdChk.ajax",
+        data : {
+          "user_id" : id
+        },
+        success : function(msg) {
+          idchk=msg.idchk;
+          if (idchk==1) {
+            idchk=false;
+            alert("이미 존재하는 아이디입니다");
+          } else if(idchk==0){
+            idchk=true;
+            $("#user_id").attr('disabled', 'disabled');
+            $("#idchk").attr('disabled', 'disabled');
+          }
+        }
+        });
+      }
+    });
+    /* 중복확인 end// */
+    
+    $('.pwd1').keyup(function(){
+      $('font[name=check]').html('<br>');
+     }); 
 
-															},
-															error : function(
-																	request,
-																	status,
-																	error) {
-																alert("code:"
-																		+ request.status
-																		+ "\n"
-																		+ "message:"
-																		+ request.responseText
-																		+ "\n"
-																		+ "error:"
-																		+ error);
-															}
-
-														});
-											}
-										});
-
-					});
+     $('.pwd2').keyup(function(){
+      if($('.pwd1').val()==$('.pwd2').val()){
+       $('font[name=check]').html('<br>');
+       $('font[name=check]').html("비밀번호가 일치합니다");
+       $('font[name=check]').css("color","blue");
+       pwdchk=false;
+      }else{
+       $('font[name=check]').html('<br>');
+       $('font[name=check]').html("비밀번호가 틀림니다.");
+       $('font[name=check]').css("color","red");
+       pwdchk=true;
+      }
+     }); 
+     /* 비번체크 end// */
+     $(".join").click(function() {
+	      if(idchk==false){
+	        alert("중복확인을 해주세요");
+	      }else if(pwdchk==true){
+	        alert("비밀번호가 틀림니다.");
+	      }else if()
+     });
+    
+  });
 </script>
 
 
