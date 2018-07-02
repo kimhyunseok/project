@@ -8,4 +8,5 @@ import com.test.project.Dto.User;
 public interface UserDao {
 	public int UserCnt(String user_id);
 	public int LoginChk(User user);
+	public int UserJoin(User user);
 }

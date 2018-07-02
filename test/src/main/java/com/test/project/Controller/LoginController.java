@@ -11,7 +11,6 @@ package com.test.project.Controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -36,34 +35,6 @@ import com.test.project.Service.UserService;
  * @파일이름 LoginController.java
  * @작성자 KHS
  * @작성날짜 2018. 6. 26. 오후 5:46:20
- * @설명:
- */
-/**
- * @패키지   com.test.project.Controller
- * @파일이름  LoginController.java
- * @작성자   KHS
- * @작성날짜  2018. 6. 28. 오후 9:16:31
- * @설명:
- */
-/**
- * @패키지   com.test.project.Controller
- * @파일이름  LoginController.java
- * @작성자   KHS
- * @작성날짜  2018. 6. 28. 오후 9:16:33
- * @설명:
- */
-/**
- * @패키지   com.test.project.Controller
- * @파일이름  LoginController.java
- * @작성자   KHS
- * @작성날짜  2018. 6. 28. 오후 9:16:33
- * @설명:
- */
-/**
- * @패키지   com.test.project.Controller
- * @파일이름  LoginController.java
- * @작성자   KHS
- * @작성날짜  2018. 6. 28. 오후 9:16:34
  * @설명:
  */
 @Controller

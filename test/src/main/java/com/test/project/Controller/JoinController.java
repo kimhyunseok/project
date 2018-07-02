@@ -62,5 +62,13 @@ public class JoinController {
     logger.info("================IdChk End=================");
     return map;
   }
-  
+  @RequestMapping(value = "/UserJoin", method = { RequestMethod.GET, RequestMethod.POST })
+  public ModelAndView join(User user,HttpServletRequest request) {
+    logger.info("================join Start=================");
+    ModelAndView model =new ModelAndView();
+    model.setViewName("redirect:http://localhost:8080/");
+    service.UserJoin(user);
+    logger.info("================join End=================");
+    return model;
+  }
 }

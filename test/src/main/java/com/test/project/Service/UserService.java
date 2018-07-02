@@ -8,14 +8,18 @@ import com.test.project.Dto.User;
 
 @Service
 public class UserService {
-	@Autowired
-	UserDao mapper;
-
-	public int UserCnt(String user_id) {
-		return mapper.UserCnt(user_id);
-	}
-	public int LoginChk(User user) {
-		return mapper.LoginChk(user);
-	}
-	
+  @Autowired
+  UserDao mapper;
+  
+  public int UserCnt(String user_id) {
+    return mapper.UserCnt(user_id);
+  }
+  
+  public int LoginChk(User user) {
+    return mapper.LoginChk(user);
+  }
+  
+  public int UserJoin(User user) {
+    return mapper.UserJoin(user);
+  }
 }

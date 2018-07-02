@@ -18,10 +18,10 @@
 									<h3 class="mb-0">Login</h3>
 								</div>
 								<div class="card-body">
-									<form>
+									<form id="join" method="post" action="http://localhost:8080/UserJoin">
 										<div class="form-row">
 											<div class="col-sm-8 form-group">
-												<label>아이디 </label><span class="regForm text-danger">*</span> <input type="text" id="user_id" class="form-control" placeholder="" required>
+												<label>아이디 </label><span class="regForm text-danger">*</span> <input name="user_id" type="text" id="user_id" class="form-control" placeholder="" required>
 											</div>
 											<!-- form-id end.// -->
 											<div class="col form-group">
@@ -31,7 +31,7 @@
 											<!-- form-group end.// -->
 										</div>
 										<div class="form-group">
-											<label>패스워드</label><span class="regForm text-danger">*</span> <input name="user_pwd" class="form-control pwd1" type="password" required >
+											<label>패스워드</label><span class="regForm text-danger">*</span> <input name="user_pw" id="user_pw"class="form-control pwd1" type="password" required >
 										</div>
 										<div class="form-group">
 											<label>패스워드 확인</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
@@ -40,23 +40,15 @@
 											<font name="check"><br/></font>
 										</div>
 										<div class="form-row">
-											<div class="col form-group">
-												<label>닉네임</label> <input name="user_nm" type="text" class="form-control " placeholder="" required> 
-											</div>
-											<!-- form-id end.// -->
-										</div>
-										<!-- form-row end.// -->
-
-										<div class="form-row">
 											<div class="form-group col-md-12">
 												<label>이메일</label><span class="regForm text-danger">*</span>
 												<div class="form-inline">
-													<input type="email" class="form-control col-md-5" required name="user_email"> <span class="col-md-1">@</span> 
-													<select name="user_email" id="inputState" class="form-control col-md-6" >
-														<option value="naver">naver.com</option>
-														<option value="gmail">gmail.com</option>
-														<option value="nate">nate.com</option>
-														<option value="hanmail">hanmail.net</option>
+													<input type="text" name="user_email_1" class="form-control col-md-5" required  id="user_email"> <span class="col-md-1">@</span> 
+													<select name="user_email_2" id="inputState" class="form-control col-md-6" >
+														<option value="naver.com">naver.com</option>
+														<option value="gmail.com">gmail.com</option>
+														<option value="nate.com">nate.com</option>
+														<option value="hanmail.net">hanmail.net</option>
 														<option value="custom">직접입력</option>
 													</select>
 												</div>
@@ -108,9 +100,10 @@
             idchk=false;
             alert("이미 존재하는 아이디입니다");
           } else if(idchk==0){
+            alert("사용가능한 아이디입니다");
             idchk=true;
-            $("#user_id").attr('disabled', 'disabled');
-            $("#idchk").attr('disabled', 'disabled');
+            $("#user_id").attr('readonly', 'readonly');
+            $("#idchk").attr('readonly', 'readonly');
           }
         }
         });
@@ -137,11 +130,18 @@
      }); 
      /* 비번체크 end// */
      $(".join").click(function() {
+       alert($("#user_id").val());
 	      if(idchk==false){
 	        alert("중복확인을 해주세요");
+	        return false;
 	      }else if(pwdchk==true){
 	        alert("비밀번호가 틀림니다.");
-	      }else if()
+	        return false;
+	      }else if($("#user_email").val()==null){
+	        alert("이메일을 입력해주세요");
+	        return false;
+	      }
+	      
      });
     
   });

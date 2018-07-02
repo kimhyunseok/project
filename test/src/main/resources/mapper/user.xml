@@ -5,9 +5,9 @@
 		SELECT
 			COUNT(*)
 		FROM TB_USER
-		WHERE USER_ID LIKE #{param}
+			WHERE USER_ID LIKE #{param}
 	</select>
-	<select id="LoginChk" parameterType="com.test.project.Dto.User" resultType="int" >
+	<select id="LoginChk" parameterType="com.test.project.Dto.User" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
@@ -15,4 +15,20 @@
 		WHERE
 		user_id = #{user_id} AND user_pw =#{user_pw}
 	</select>
+	<insert id="UserJoin" parameterType="com.test.project.Dto.User">
+		INSERT INTO tb_user
+		(
+		`user_id`,
+		`user_pw`,
+		`user_email_1`,
+		`user_email_2`)
+		VALUES
+		(
+		#{user_id},
+		#{user_pw},
+		#{user_email_1},
+		#{user_email_2}
+		);
+
+	</insert>
 </mapper>
