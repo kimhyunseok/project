@@ -147,6 +147,7 @@ public class LoginController {
 		
 		if (msg.equals("success")) {
 			session.setAttribute("ss_id", nick);
+			session.setAttribute("naver_id", 1);
 		}
 		model.setViewName("index");
 		return model;

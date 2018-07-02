@@ -2,14 +2,14 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <configuration>
 
-<configuration>
-    <typeAliases>
-        
-    </typeAliases>
-    <mappers>
-        <mapper resource="classpath:mapper/*.xml"/>
-    </mappers>
-</configuration>
+	<configuration>
+		<typeAliases>
+			<typeAlias alias="User" type="com.test.project.Dto.User"/>
+		</typeAliases>
+		<mappers>
+			<mapper resource="classpath:mapper/*.xml" />
+		</mappers>
+	</configuration>
 
 
 </configuration>

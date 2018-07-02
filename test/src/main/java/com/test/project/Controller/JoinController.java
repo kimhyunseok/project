@@ -62,12 +62,33 @@ public class JoinController {
     logger.info("================IdChk End=================");
     return map;
   }
+  /**
+   * @메소드명 : userjoin
+   * @작성일 : 2018. 7. 2. 오후 9:12:07
+   * @작성자 : KHS
+   * @설명 :
+   */
   @RequestMapping(value = "/UserJoin", method = { RequestMethod.GET, RequestMethod.POST })
-  public ModelAndView join(User user,HttpServletRequest request) {
+  public ModelAndView userjoin(User user,HttpServletRequest request) {
     logger.info("================join Start=================");
     ModelAndView model =new ModelAndView();
     model.setViewName("redirect:http://localhost:8080/");
     service.UserJoin(user);
+    logger.info("================join End=================");
+    return model;
+  }
+  /**
+   * @메소드명 : userUpdate
+   * @작성일 : 2018. 7. 2. 오후 9:12:20
+   * @작성자 : KHS
+   * @설명 :
+   */
+  @RequestMapping(value = "/UserUpdate", method = { RequestMethod.GET, RequestMethod.POST })
+  public ModelAndView userUpdate(User user,HttpServletRequest request) {
+    logger.info("================join Start=================");
+    ModelAndView model =new ModelAndView();
+    model.setViewName("redirect:http://localhost:8080/");
+    service.UserUpdate(user);
     logger.info("================join End=================");
     return model;
   }

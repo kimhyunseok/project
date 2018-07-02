@@ -22,4 +22,11 @@ public class UserService {
   public int UserJoin(User user) {
     return mapper.UserJoin(user);
   }
+
+  public User SelectUserInfo(String user_id) {
+    return mapper.SelectUserInfo(user_id);
+  }
+  public int UserUpdate(User user) {
+    return mapper.UserUpdate(user);
+  }
 }

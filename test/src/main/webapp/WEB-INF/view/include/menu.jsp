@@ -42,7 +42,22 @@
 					<i class="fas fa-building"></i> 소개 <i class="fas fa-building shortmenu animate"></i>
 				</a>
 			</li>
-
+			<c:choose>
+				<c:when test="${sessionScope.ss_id ne null}">
+					<li class="nav-item dropdown">
+						<a class="nav-link  text-white" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fas fa-bicycle"></i>마이페이지<i class="fas fas fa-bicycle shortmenu animate"></i>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+							<div class="list-group">
+								<a href="http://localhost:8080/memberUpdate" class="list-group-item list-group-item-action">정보수정</a>
+								<a href="#" class="list-group-item list-group-item-action">야구</a>
+								<a href="#" class="list-group-item list-group-item-action">자전거</a>
+							</div>
+						</div>
+					</li>
+				</c:when>
+			</c:choose>
 		</ul>
 		<!-- 로그인 Start -->
 		<ul class="navbar-nav ml-md-auto d-md-flex">

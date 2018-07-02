@@ -18,17 +18,37 @@
 	<insert id="UserJoin" parameterType="com.test.project.Dto.User">
 		INSERT INTO tb_user
 		(
-		`user_id`,
-		`user_pw`,
-		`user_email_1`,
-		`user_email_2`)
+			`user_id`,
+			`user_pw`,
+			`user_email_1`,
+			`user_email_2`
+		)
 		VALUES
 		(
-		#{user_id},
-		#{user_pw},
-		#{user_email_1},
-		#{user_email_2}
+			#{user_id},
+			#{user_pw},
+			#{user_email_1},
+			#{user_email_2}
 		);
-
 	</insert>
+	<select id="SelectUserInfo" parameterType="String" resultType="com.test.project.Dto.User">
+		SELECT
+			user_id,
+			user_pw,
+			user_email_1,
+			user_email_2
+		FROM
+			TB_USER
+		WHERE
+			user_id = #{param}
+	</select>
+	<update id="UserUpdate" parameterType="com.test.project.Dto.User" >
+		UPDATE tb_user
+		SET
+			`user_id` =#{user_id},
+			`user_pw` =#{user_pw},
+			`user_email_1` =#{user_email_1},
+			`user_email_2` = #{user_email_2}
+		WHERE `user_id` = #{user_id} ;
+	</update>
 </mapper>
