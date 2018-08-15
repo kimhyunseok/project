@@ -1,7 +1,11 @@
+body, table, div, p {font-family:'Nanum Gothic';}
+
 body {
 	background: #f3f3f3;
 }
 
+
+출처: http://it77.tistory.com/126 [시원한물냉의 사람사는 이야기]
 #wrapper {
 	padding: 90px 0px;
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.project.Dao.UserDao;
-import com.test.project.Dto.User;
+import com.test.project.Dto.UserBean;
 
 @Service
 public class UserService {
@@ -15,18 +15,18 @@ public class UserService {
     return mapper.UserCnt(user_id);
   }
   
-  public int LoginChk(User user) {
+  public int LoginChk(UserBean user) {
     return mapper.LoginChk(user);
   }
   
-  public int UserJoin(User user) {
+  public int UserJoin(UserBean user) {
     return mapper.UserJoin(user);
   }
 
-  public User SelectUserInfo(String user_id) {
+  public UserBean SelectUserInfo(String user_id) {
     return mapper.SelectUserInfo(user_id);
   }
-  public int UserUpdate(User user) {
+  public int UserUpdate(UserBean user) {
     return mapper.UserUpdate(user);
   }
 }

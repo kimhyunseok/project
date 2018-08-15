@@ -27,7 +27,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.test.project.NaverLoginBO;
-import com.test.project.Dto.User;
+import com.test.project.Dto.UserBean;
 import com.test.project.Service.UserService;
 
 /**
@@ -80,7 +80,7 @@ public class LoginController {
 	 */
 	@ResponseBody
 	@RequestMapping("/LoginChk.ajax")
-	public HashMap<String, Object> loginChk(User user, HttpServletRequest request) {
+	public HashMap<String, Object> loginChk(UserBean user, HttpServletRequest request) {
 		logger.info("================Login Start=================");
 		final int LOGIN_ID_FAIL = 3;
 		final int LOGIN_PW_FAIL = 4;
@@ -144,10 +144,11 @@ public class LoginController {
 		JsonObject list = element.getAsJsonObject().get("response").getAsJsonObject();
 		String nick = list.get("nickname").getAsString();
 		String name = list.get("name").getAsString();
-		
+	  String id   = list.get("id").getAsString();
+    System.out.println("-------------"+list.toString());
 		if (msg.equals("success")) {
 			session.setAttribute("ss_id", nick);
-			session.setAttribute("naver_id", 1);
+			session.setAttribute("naver_id",id);
 		}
 		model.setViewName("index");
 		return model;

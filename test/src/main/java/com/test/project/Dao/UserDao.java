@@ -2,13 +2,13 @@ package com.test.project.Dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.test.project.Dto.User;
+import com.test.project.Dto.UserBean;
 
 @Mapper
 public interface UserDao {
 	public int UserCnt(String user_id);
-	public int LoginChk(User user);
-	public int UserJoin(User user);
-	public int UserUpdate(User user);
-  public User SelectUserInfo(String user_id);
+	public int LoginChk(UserBean user);
+	public int UserJoin(UserBean user);
+	public int UserUpdate(UserBean user);
+  public UserBean SelectUserInfo(String user_id);
 }

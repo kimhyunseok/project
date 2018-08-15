@@ -3,19 +3,19 @@
 <div id="fakeLoader"></div>
 <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-primary center">
 	<span class="navbar-toggler-icon leftmenutrigger "></span>
-	<a class="navbar-brand nav-link " href="#">동아리 채널</a>
+	<a class="navbar-brand nav-link " href="http://localhost:8080/">동아리 채널</a>
 	<button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarText">
 		<ul class="navbar-nav animate side-nav">
 			<li class="nav-item dropdown">
-				<a class="nav-link text-white" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+				<a class="nav-link text-white" href="http://localhost:8080/circle/circleList" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" >
 					<i class="fas fa-users"></i> 모임 <i class="fas fa-users	shortmenu animate"></i>
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
 					<div class="list-group">
-						<a href="#" class="list-group-item list-group-item-action">문화</a>
+						<a href="http://localhost:8080/circle/circleList" class="list-group-item list-group-item-action">문화</a>
 						<a href="#" class="list-group-item list-group-item-action">여행</a>
 					</div>
 				</div>
@@ -51,8 +51,7 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown2">
 							<div class="list-group">
 								<a href="http://localhost:8080/memberUpdate" class="list-group-item list-group-item-action">정보수정</a>
-								<a href="#" class="list-group-item list-group-item-action">야구</a>
-								<a href="#" class="list-group-item list-group-item-action">자전거</a>
+								<a href="http://localhost:8080/circle/circleInsert" class="list-group-item list-group-item-action">동아리등록</a>
 							</div>
 						</div>
 					</li>
@@ -81,14 +80,14 @@
 				</c:when>
 				<c:when test="${sessionScope.ss_id ne null}">
 					<li class="nav-item">
-						<a class="nav-link text-white" href="#">
+						<a class="nav-link text-white" href="#" data-toggle="tooltip" data-placement="bottom" title="회원정보수정">
 							<i class="fas fa-address-book"></i>
 							<c:out value="${sessionScope.ss_id}" />
 							님
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link text-white" href="http://localhost:8080/logout">
+						<a class="nav-link text-white" href="http://localhost:8080/logout" data-toggle="tooltip" data-placement="bottom" title="로그아웃">
 							<i class="fas fa-sign-in-alt"></i> Logout
 						</a>
 					</li>

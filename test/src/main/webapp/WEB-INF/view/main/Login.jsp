@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/view/include/head.jsp" />
 <body>
 
-	<div id="wrapper" class="animate">
+	<div id="wrapper" class="animate" >
 		<jsp:include page="/WEB-INF/view/include/menu.jsp" />
 		<div class="container-fluid">
 			<div class="row">
@@ -14,8 +14,10 @@
 
 							<!-- form card login -->
 							<div class="card rounded-0">
-								<div class="card-header">
-									<h3 class="mb-0">Login</h3>
+								<div class="card-header bg-info text-center">
+									<br>
+									<h3 class="mb-0 text-white" >LOGIN</h3>
+									<br>
 								</div>
 								<div class="card-body">
 									<form class="form" action="http://localhost:8080/LoginChk" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
@@ -54,6 +56,7 @@
 			</div>
 			<!--/row-->
 		</div>
+		
 </body>
 </html>
 <script type="text/javascript">

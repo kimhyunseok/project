@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class User {
+public class UserBean {
 	private String user_id;
 	private String user_pw;
 	private String user_email_2;

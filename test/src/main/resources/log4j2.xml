@@ -13,28 +13,41 @@
   </Appenders>
 
   <Loggers>
-    <!-- Log everything in custom package -->
-    <Logger name="com.boraji.tutorial.springboot" level="debug" additivity="false">
-      <AppenderRef ref="Console" />
-      <AppenderRef ref="File" />
-    </Logger>
+    <!-- Appenders -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %5p [%c] %m%n" />
+        </layout>  
+    </appender>
+     
+    <appender name="console-infolog" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %5p %m%n" />
+        </layout>  
+    </appender>
+     
+    <!-- Application Loggers -->
+    <logger name="first" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="console"/>
+    </logger>
+     
+    <!-- Query Loggers -->
+    <logger name="jdbc.sqlonly" additivity="false"> 
+        <level value="INFO"/> 
+        <appender-ref ref="console-infolog"/> 
+    </logger>
+     
+    <logger name="jdbc.resultsettable" additivity="false"> 
+        <level value="INFO"/> 
+        <appender-ref ref="console"/> 
+    </logger> 
+ 
+    <!-- Root Logger -->
+    <root>
+        <priority value="off"/>
+        <appender-ref ref="console" />
+    </root>
 
-    <!-- Log everything in Spring Boot -->
-    <Logger name="org.springframework.boot" level="debug" additivity="false">
-      <AppenderRef ref="Console" />
-      <AppenderRef ref="File" />
-    </Logger>
-
-    <!-- Log everything in Spring Core -->
-    <Logger name="org.springframework.core" level="debug" additivity="false">
-      <AppenderRef ref="Console" />
-      <AppenderRef ref="File" />
-    </Logger>
-
-    <Root level="error">
-      <AppenderRef ref="Console" />
-      <AppenderRef ref="File" />
-    </Root>
-    
   </Loggers>
 </Configuration>

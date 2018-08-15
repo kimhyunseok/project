@@ -28,7 +28,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.test.project.NaverLoginBO;
-import com.test.project.Dto.User;
+import com.test.project.Dto.UserBean;
 import com.test.project.Service.UserService;
 
 /**
@@ -53,7 +53,7 @@ public class JoinController {
    */
   @RequestMapping(value = "/IdChk.ajax", method = { RequestMethod.GET, RequestMethod.POST })
   @ResponseBody
-  public HashMap<String, Object> IdChk(User user, HttpServletRequest request) {
+  public HashMap<String, Object> IdChk(UserBean user, HttpServletRequest request) {
     logger.info("================IdChk Start=================");
     HashMap<String, Object> map = new HashMap<String, Object>();
     String user_id = user.getUser_id();
@@ -69,7 +69,7 @@ public class JoinController {
    * @설명 :
    */
   @RequestMapping(value = "/UserJoin", method = { RequestMethod.GET, RequestMethod.POST })
-  public ModelAndView userjoin(User user,HttpServletRequest request) {
+  public ModelAndView userjoin(UserBean user,HttpServletRequest request) {
     logger.info("================join Start=================");
     ModelAndView model =new ModelAndView();
     model.setViewName("redirect:http://localhost:8080/");
@@ -84,7 +84,7 @@ public class JoinController {
    * @설명 :
    */
   @RequestMapping(value = "/UserUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-  public ModelAndView userUpdate(User user,HttpServletRequest request) {
+  public ModelAndView userUpdate(UserBean user,HttpServletRequest request) {
     logger.info("================join Start=================");
     ModelAndView model =new ModelAndView();
     model.setViewName("redirect:http://localhost:8080/");

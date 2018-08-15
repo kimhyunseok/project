@@ -7,7 +7,7 @@
 		FROM TB_USER
 			WHERE USER_ID LIKE #{param}
 	</select>
-	<select id="LoginChk" parameterType="com.test.project.Dto.User" resultType="int">
+	<select id="LoginChk" parameterType="com.test.project.Dto.UserBean" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
@@ -15,7 +15,7 @@
 		WHERE
 		user_id = #{user_id} AND user_pw =#{user_pw}
 	</select>
-	<insert id="UserJoin" parameterType="com.test.project.Dto.User">
+	<insert id="UserJoin" parameterType="com.test.project.Dto.UserBean">
 		INSERT INTO tb_user
 		(
 			`user_id`,
@@ -31,7 +31,7 @@
 			#{user_email_2}
 		);
 	</insert>
-	<select id="SelectUserInfo" parameterType="String" resultType="com.test.project.Dto.User">
+	<select id="SelectUserInfo" parameterType="String" resultType="com.test.project.Dto.UserBean">
 		SELECT
 			user_id,
 			user_pw,
@@ -42,7 +42,7 @@
 		WHERE
 			user_id = #{param}
 	</select>
-	<update id="UserUpdate" parameterType="com.test.project.Dto.User" >
+	<update id="UserUpdate" parameterType="com.test.project.Dto.UserBean" >
 		UPDATE tb_user
 		SET
 			`user_id` =#{user_id},

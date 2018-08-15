@@ -8,6 +8,10 @@
 	<div id="wrapper" class="animate">
 		<jsp:include page="/WEB-INF/view/include/menu.jsp" />
 		<div class="container-fluid">
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb ">
+				<li class="breadcrumb-item active" aria-current="page">Home/정보수정</li>
+			</ol>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row">
@@ -194,7 +198,7 @@
       }
     });
     $(".update").click(function() {
-      if ($("#user_pw").val() ==$("#user_b_pw").val()) {
+      if ($("#user_pw").val() == $("#user_b_pw").val()) {
         alert("기존비밀번호와 같습니다.");
         $("#user_pw").text("");
         $("#user_pw").focus();

@@ -1,24 +1,33 @@
 package com.test.project.Controller;
 
-import java.io.IOException;
-import java.util.HashMap;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.test.project.NaverLoginBO;
-import com.test.project.Dto.User;
+import com.test.project.Dto.UserBean;
 import com.test.project.Service.UserService;
+
+import lombok.Value;
 
 /**
  * @패키지 com.test.project.Controller
@@ -75,21 +84,40 @@ public class HomeController {
     model.addObject("user", 2);
     model.setViewName("main/member");
     Object user_id = session.getAttribute("ss_id");
-    if(user_id!="") {
-      User user =service.SelectUserInfo(user_id.toString());
+    if (user_id != "") {
+      UserBean user = service.SelectUserInfo(user_id.toString());
       model.addObject("user", 2);
       model.addObject("user_info", user);
     }
     logger.info("================memberUpdate End=================");
     return model;
   }
-  /*
-   * @ResponseBody
-   * 
-   * @RequestMapping("/LoginChk") public HashMap<String, Object> loginChk( HttpServletRequest request) { logger.info("================Login Start================="); HashMap<String, Object> map = new HashMap<String, Object>();
-   * 
-   * logger.info("================Login End=================");
-   * 
-   * return map; }
-   */
+  
+  @RequestMapping("/main/UploadComplete")
+  public ModelAndView test(HttpSession session) {
+    logger.info("================memberUpdate Start=================");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("main/UploadComplete");
+    logger.info("================memberUpdate End=================");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : imageUpload
+   * @작성일 : 2018. 7. 3. 오후 7:50:33
+   * @작성자 : KHS
+   * @설명 :이미지 업로드
+   */ 
+
+
 }
+
+/*
+ * @ResponseBody
+ * 
+ * @RequestMapping("/LoginChk") public HashMap<String, Object> loginChk( HttpServletRequest request) { logger.info("================Login Start================="); HashMap<String, Object> map = new HashMap<String, Object>();
+ * 
+ * logger.info("================Login End=================");
+ * 
+ * return map; }
+ */
