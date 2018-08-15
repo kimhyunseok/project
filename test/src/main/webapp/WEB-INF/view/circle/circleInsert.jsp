@@ -93,19 +93,7 @@
 <script>
   $(function() {
     $(".map").click(function() {
-      $.ajax({
-      url : 'https://openapi.naver.com/v1/map/geocode',
-      data : {
-      key : '30acVBn_RNTBZdDAcwhu',
-      encoding : 'utf-8',
-      coord : 'LatLng',
-      output : 'json',
-      query : '주부토로 449번길'
-      },
-      dataType : 'json',
-      }).done(function(data) {
-        console.log( data.result );
-      });
+    
     });
 
     CKEDITOR.replace('editor', {//해당 이름으로 된 textarea에 에디터를 적용
