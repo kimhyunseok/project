@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FileBean {
-
   private String file_o_name;
   private String file_name;
   private String filename;
@@ -21,11 +20,6 @@ public class FileBean {
   public String toString() {
     return "FileBean [file_o_name=" + file_o_name + ", file_name=" + file_name + ", filename=" + filename + ", file_url=" + file_url + ", file_size=" + file_size + ", file_in_date=" + file_in_date + ", file_no=" + file_no + "]";
   }
-
-
-
-
-  
 }
 
 

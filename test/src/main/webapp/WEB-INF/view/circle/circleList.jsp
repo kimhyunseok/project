@@ -11,7 +11,7 @@
 		<div class="container-fluid ">
 			<nav aria-label="breadcrumb">
 			<ol class="breadcrumb ">
-				<li class="breadcrumb-item active" aria-current="page">Home/동아리리스트</li>
+				<li class="breadcrumb-item active" aria-current="page">Home/${requestScope.title}</li>
 			</ol>
 			</nav>
 			<div class="container">
@@ -112,7 +112,7 @@
 				</div>
 			</div>
 
-
+	<jsp:include page="/WEB-INF/view/include/footer.jsp" />
 		</div>
 </body>
 </html>

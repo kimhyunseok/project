@@ -21,7 +21,7 @@ public class NaverLoginBO {
 	// URL에 설정한 정보입니다.
 	// state: 애플리케이션이 생성한 상태 토큰
 	private final static String CLIENT_ID = "30acVBn_RNTBZdDAcwhu"; // 네이버API Client ID
-	private final static String CLIENT_SECRET = "MVlKdYwTGH";
+	private final static String CLIENT_SECRET = "Si1F3zLXWa";
 	private final static String REDIRECT_URI = "http://localhost:8080/callback";
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL */

@@ -67,6 +67,7 @@ public class HomeController {
     ModelAndView model = new ModelAndView();
     model.addObject("user", 1);
     model.setViewName("main/member");
+    model.addObject("title", "회원가입");
     logger.info("================member End=================");
     return model;
   }
@@ -89,6 +90,7 @@ public class HomeController {
       model.addObject("user", 2);
       model.addObject("user_info", user);
     }
+    model.addObject("title", "정보수정");
     logger.info("================memberUpdate End=================");
     return model;
   }
@@ -101,15 +103,6 @@ public class HomeController {
     logger.info("================memberUpdate End=================");
     return model;
   }
-  
-  /**
-   * @메소드명 : imageUpload
-   * @작성일 : 2018. 7. 3. 오후 7:50:33
-   * @작성자 : KHS
-   * @설명 :이미지 업로드
-   */ 
-
-
 }
 
 /*

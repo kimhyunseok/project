@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<nav aria-label="breadcrumb">
 			<ol class="breadcrumb ">
-				<li class="breadcrumb-item active" aria-current="page">Home/정보수정</li>
+				<li class="breadcrumb-item active" aria-current="page">Home/${requestScope.title}</li>
 			</ol>
 			<div class="row">
 				<div class="col-md-12">

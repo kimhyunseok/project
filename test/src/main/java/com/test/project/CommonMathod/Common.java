@@ -2,9 +2,13 @@ package com.test.project.CommonMathod;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.test.project.Dto.FileBean;
 import com.test.project.Service.FileService;
 
@@ -43,7 +48,6 @@ public class Common {
     Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
     HashMap<String, Object> map = new HashMap<String, Object>();
     FileBean vo =new FileBean();
-    System.out.println("ssssssssssssssssssssssssss");
     logger.info("------------- file start -------------");
     while (iterator.hasNext()) {
       img = multipartHttpServletRequest.getFile(iterator.next());
@@ -69,7 +73,6 @@ public class Common {
     UUID uuid = UUID.randomUUID();
     
     String fileName = uuid.toString() + "_" + originalFileName;
-    System.out.println("파일이름:" + fileName);
     // 저장경로 폴더 생성
     File file = new File(filePath);
     
@@ -84,7 +87,6 @@ public class Common {
       map.put("uploaded", 1);
       map.put("fileName", fileName);
       map.put("url", "http://localhost:8080/resources/upload_img/" + location + "/" + fileName);
-      System.out.println("url:" + map.get("url"));
     } catch (IllegalStateException e) {
       e.printStackTrace();
     } catch (IOException e) {
@@ -94,7 +96,8 @@ public class Common {
     
     vo.setFile_o_name(originalFileName);
     vo.setFile_name(fileName);
-    vo.setFile_url("http://localhost:8080/resources/upload_img/" + location + "/");
+    vo.setFile_url("http://localhost:8080/resources/upload_img/" + location + "/"+ fileName);
+   
     // DB에 파일내역 insert
     map.put("vo",vo);
     

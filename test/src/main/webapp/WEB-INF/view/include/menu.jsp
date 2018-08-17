@@ -38,9 +38,16 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link text-white" href="#" title="Comment">
+			
+				<a class="nav-link text-white" id="navbarDropdown3" href="#" title="Comment" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="fas fa-building"></i> 소개 <i class="fas fa-building shortmenu animate"></i>
 				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+					<div class="list-group">
+						<a href="#" class="list-group-item list-group-item-action">회사소개</a>
+						<a href="http://localhost:8080/board/eventList" class="list-group-item list-group-item-action">이벤트</a>
+					</div>
+				</div>
 			</li>
 			<c:choose>
 				<c:when test="${sessionScope.ss_id ne null}">
@@ -52,6 +59,7 @@
 							<div class="list-group">
 								<a href="http://localhost:8080/memberUpdate" class="list-group-item list-group-item-action">정보수정</a>
 								<a href="http://localhost:8080/circle/circleInsert" class="list-group-item list-group-item-action">동아리등록</a>
+								<a href="http://localhost:8080/circle/circleInsert" class="list-group-item list-group-item-action">내 동아리목록</a>
 							</div>
 						</div>
 					</li>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=30acVBn_RNTBZdDAcwhu"></script>
 <div class="container-fluid">
 	<footer class="footer">
 		<div class="footerHeader"></div>
@@ -50,7 +51,6 @@
 	</footer>
 </div>
 <script>
-
   var mapOptions = {
   center : new naver.maps.LatLng(37.3595704, 127.105399),
   zoom : 20,
@@ -59,31 +59,11 @@
     position : naver.maps.Position.TOP_RIGHT
   }
   };
-  //지도 컨트롤
-  $("#controls").on("click", function(e) {
-    e.preventDefault();
-
-    if (map.getOptions("scaleControl")) {
-      map.setOptions({ //모든 지도 컨트롤 숨기기
-      scaleControl : false,
-      logoControl : false,
-      mapDataControl : false,
-      zoomControl : false,
-      mapTypeControl : false
-      });
-      $(this).removeClass('control-on');
-    } else {
-      map.setOptions({ //모든 지도 컨트롤 보이기
-      scaleControl : true,
-      logoControl : true,
-      mapDataControl : true,
-      zoomControl : true,
-      mapTypeControl : true
-      });
-      $(this).addClass('control-on');
-    }
-  });
   var map = new naver.maps.Map('map', mapOptions);
+  var markerOptions = new naver.maps.Marker({
+  position : new naver.maps.LatLng(37.3595704, 127.105399),
+  map : map
+  });
 </script>
 </script>
 

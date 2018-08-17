@@ -70,11 +70,12 @@ public class JoinController {
    */
   @RequestMapping(value = "/UserJoin", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView userjoin(UserBean user,HttpServletRequest request) {
-    logger.info("================join Start=================");
+    logger.info("================userjoin Start=================");
     ModelAndView model =new ModelAndView();
     model.setViewName("redirect:http://localhost:8080/");
     service.UserJoin(user);
-    logger.info("================join End=================");
+    model.addObject("title", "회원가입");
+    logger.info("================userjoin End=================");
     return model;
   }
   /**
@@ -85,11 +86,12 @@ public class JoinController {
    */
   @RequestMapping(value = "/UserUpdate", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView userUpdate(UserBean user,HttpServletRequest request) {
-    logger.info("================join Start=================");
+    logger.info("================userUpdate Start=================");
     ModelAndView model =new ModelAndView();
     model.setViewName("redirect:http://localhost:8080/");
     service.UserUpdate(user);
-    logger.info("================join End=================");
+    model.addObject("title", "정보수정");
+    logger.info("================userUpdate End=================");
     return model;
   }
 }
