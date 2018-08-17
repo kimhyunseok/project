@@ -130,16 +130,30 @@ public class BoardController {
     HashMap<String, Object> filemap = new HashMap<String, Object>();
     if (img.isEmpty() == false) {
       filemap = method.file_upload(img, rep, req, "event");
-      FileBean FBean=(FileBean) filemap.get("vo");
-      int no=FBean.getFile_no();
-      //게시판 파일번호저장
-      bean.setBoard_fileNo(no);
+      Boolean tf = (Boolean) filemap.get("tf");
+      if (tf == true) {
+        FileBean FBean = (FileBean) filemap.get("vo");
+        int no = FBean.getFile_no();
+        // 게시판 파일번호저장
+        bean.setBoard_fileNo(no);
+        model.setViewName("redirect:/board/event/eventList");
+      } else {
+        try {
+          rep.setContentType("text/html; charset=UTF-8");
+          PrintWriter out = rep.getWriter();
+          out.println("<script>alert('엑셀,한글파일만 됩니다.');</script>");
+          out.println("<script>window.history.back();</script>");
+          out.flush();
+        } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
     }
     map.put("bean", bean);
     map.put("dbtable", "tb_event_board");
-    logger.info("입력정보:" + map.toString());
     BSevice.board_Insert(map);
-    model.setViewName("redirect:http://localhost:8080/board/event/eventList");
+    model.setViewName("board/event/eventInsert");
     logger.info("이벤트등록처리-end");
     return model;
   }
@@ -191,6 +205,7 @@ public class BoardController {
     logger.info("공지사항등록-end");
     return model;
   }
+  
   /**
    * @메소드명 : noticeInsert_ok
    * @작성일 : 2018. 8. 18. 오전 1:46:36
@@ -204,19 +219,33 @@ public class BoardController {
     HashMap<String, Object> filemap = new HashMap<String, Object>();
     if (img.isEmpty() == false) {
       filemap = method.file_upload(img, rep, req, "notice");
-      FileBean FBean=(FileBean) filemap.get("vo");
-      int no=FBean.getFile_no();
-      //게시판 파일번호저장
-      bean.setBoard_fileNo(no);
+      Boolean tf = (Boolean) filemap.get("tf");
+      if (tf == true) {
+        FileBean FBean = (FileBean) filemap.get("vo");
+        int no = FBean.getFile_no();
+        // 게시판 파일번호저장
+        bean.setBoard_fileNo(no);
+        model.setViewName("redirect:/board/notice/noticeList");
+      } else {
+        try {
+          rep.setContentType("text/html; charset=UTF-8");
+          PrintWriter out = rep.getWriter();
+          out.println("<script>alert('엑셀,한글파일만 됩니다.');</script>");
+          out.println("<script>window.history.back();</script>");
+          out.flush();
+        } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
     }
     map.put("bean", bean);
     map.put("dbtable", "tb_notice_board");
+    model.setViewName("board/notice/noticeInsert");
     BSevice.board_Insert(map);
-    model.setViewName("redirect:http://localhost:8080/board/notice/noticeList");
     logger.info("공지사항등록처리-end");
     return model;
   }
-  
   
   /**
    * @메소드명 : qnaList
@@ -265,29 +294,45 @@ public class BoardController {
     logger.info("QnA등록페이지-end");
     return model;
   }
+  
   /**
-  * @메소드명 : qnaInsert_ok
-  * @작성일 : 2018. 7. 3. 오후 7:15:34
-  * @작성자 : KHS
-  * @설명 : QnA등록처리
-  */
- @RequestMapping("board/qna/qnaInsert_ok")
- public ModelAndView qnaInsert_ok(ModelAndView model, HttpServletResponse rep, HttpServletRequest req, @ModelAttribute("BoardBean") BoardBean bean, MultipartFile img) {
-   logger.info("QnA등록처리-start");
-   HashMap<String, Object> map = new HashMap<String, Object>();
-   HashMap<String, Object> filemap = new HashMap<String, Object>();
-   if (img.isEmpty() == false) {
-     filemap = method.file_upload(img, rep, req, "qna");
-     FileBean FBean=(FileBean) filemap.get("vo");
-     int no=FBean.getFile_no();
-     //게시판 파일번호저장
-     bean.setBoard_fileNo(no);
-   }
-   map.put("bean", bean);
-   map.put("dbtable", "tb_qna_board");
-   BSevice.board_Insert(map);
-   model.setViewName("redirect:http://localhost:8080/board/qna/qnaList");
-   logger.info("QnA등록처리-end");
-   return model;
- }
+   * @메소드명 : qnaInsert_ok
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 : QnA등록처리
+   */
+  @RequestMapping("board/qna/qnaInsert_ok")
+  public ModelAndView qnaInsert_ok(ModelAndView model, HttpServletResponse rep, HttpServletRequest req, @ModelAttribute("BoardBean") BoardBean bean, MultipartFile img) {
+    logger.info("QnA등록처리-start");
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    HashMap<String, Object> filemap = new HashMap<String, Object>();
+    if (img.isEmpty() == false) {
+      filemap = method.file_upload(img, rep, req, "qna");
+      Boolean tf = (Boolean) filemap.get("tf");
+      if (tf == true) {
+      FileBean FBean = (FileBean) filemap.get("vo");
+      int no = FBean.getFile_no();
+      model.setViewName("redirect:/board/qna/qnaList");
+      // 게시판 파일번호저장
+      bean.setBoard_fileNo(no);
+      }else {
+        try {
+          rep.setContentType("text/html; charset=UTF-8");
+          PrintWriter out = rep.getWriter();
+          out.println("<script>alert('엑셀,한글파일만 됩니다.');</script>");
+          out.println("<script>window.history.back();</script>");
+          out.flush();
+        } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
+    }
+    map.put("bean", bean);
+    map.put("dbtable", "tb_qna_board");
+    model.setViewName("board/qna/qnaInsert");
+    BSevice.board_Insert(map);
+    logger.info("QnA등록처리-end");
+    return model;
+  }
 }
