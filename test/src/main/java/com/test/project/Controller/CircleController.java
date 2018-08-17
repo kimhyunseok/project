@@ -137,7 +137,7 @@ public class CircleController {
   @ResponseBody
   @RequestMapping(value = "/img_upload")
   public HashMap<String, Object> imgUpload(HttpServletRequest request, HttpServletResponse response, MultipartFile img) {
-    HashMap<String, Object> map = method.file_upload(img, response, request, "circle");
+    HashMap<String, Object> map = method.edtImg_Upload(img, response, request, "circle");
     FileBean bean = (FileBean) map.get("vo");
     service.file_Insert(bean);
     System.out.println("insert>>>>>>>>>>>>"+bean.toString());

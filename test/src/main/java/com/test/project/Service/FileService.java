@@ -18,7 +18,7 @@ public class FileService {
   
   private static Logger logger = LogManager.getLogger(FileService.class);
   @Autowired
-  FileDao mapper;
+  private FileDao mapper;
   
   
   public int file_Insert(FileBean file) {

@@ -9,7 +9,7 @@ import com.test.project.Dto.UserBean;
 @Service
 public class UserService {
   @Autowired
-  UserDao mapper;
+  private UserDao mapper;
   
   public int UserCnt(String user_id) {
     return mapper.UserCnt(user_id);

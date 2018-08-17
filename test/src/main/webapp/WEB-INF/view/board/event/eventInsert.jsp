@@ -24,17 +24,23 @@
 				<div class="card rounded-0">
 
 					<div class="card-body">
-						<form class="form" method="Post" action="http://localhost:8080/circle/circleInsert_ok" enctype="multipart/form-data">
+						<form class="form" method="Post" action="http://localhost:8080/board/event/eventInsert_ok" enctype="multipart/form-data">
 							<div class="form-group row">
 								<label for="example-text-input" class="col-2 col-form-label bg-light font-weight-bold">이벤트제목</label>
 								<div class="col-10">
-									<input class="form-control" type="text" name="circle_Nm" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
+									<input class="form-control" type="text" name=board_nm value="" id="example-text-input" placeholder="ex)홍길동" required="required">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">이벤트내용</label>
 								<div class="col-10">
-									<textarea name="circle_Content" id="editor"></textarea>
+									<textarea name="board_content" id="editor"></textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">첨부파일</label>
+								<div class="col-10">
+									<input class="form-control" type="file" name="img" value=""  required="required">
 								</div>
 							</div>
 							<div class="form-row  justify-content-md-center ">

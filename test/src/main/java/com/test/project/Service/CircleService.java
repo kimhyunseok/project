@@ -20,7 +20,7 @@ public class CircleService {
   
   private static Logger logger = LogManager.getLogger(CircleService.class);
   @Autowired
-  CircleDao mapper;
+  private CircleDao mapper;
   
   public int Circle_insert(CircleBean bean ) {
     // TODO Auto-generated method stub
