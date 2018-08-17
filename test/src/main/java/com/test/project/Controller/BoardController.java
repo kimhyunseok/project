@@ -61,5 +61,148 @@ import com.test.project.Service.UserService;
 @Controller
 public class BoardController {
   private static Logger logger = LogManager.getLogger(BoardController.class);
- 
+  
+  /**
+   * @메소드명 : eventList
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :이벤트목록
+   */
+  @RequestMapping("board/eventList")
+  public ModelAndView eventList() {
+    logger.info("circleList-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("board/eventList");
+    model.addObject("title", "이벤트목록");
+    logger.info("circleList-end");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : eventview
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :이벤트보기
+   */
+  @RequestMapping("board/eventview")
+  public ModelAndView eventview() {
+    logger.info("eventview-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("event/eventview");
+    model.addObject("title", "이벤트보기");
+    logger.info("eventview-start");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : eventInsert
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :이벤트등록
+   */
+  @RequestMapping("board/eventInsert")
+  public ModelAndView eventInsert() {
+    logger.info("eventInsert-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("event/eventInsert");
+    model.addObject("title", "이벤트등록");
+    logger.info("eventInsert-end");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : noticeList
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :공지사항목록
+   */
+  @RequestMapping("board/noticeList")
+  public ModelAndView noticeList() {
+    logger.info("noticeList-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("board/noticeList");
+    model.addObject("title", "공지사항목록");
+    logger.info("noticeList-end");
+    return model;
+  }
+  
+  /**
+   * @메소드명 :noticeview
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :공지사항보기
+   */
+  @RequestMapping("board/noticeview")
+  public ModelAndView noticeview() {
+    logger.info("noticeview-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("notice/noticeview");
+    model.addObject("title", "공지사항보기");
+    logger.info("noticeview-start");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : Cricle
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :공지사항등록
+   */
+  @RequestMapping("board/noticeInsert")
+  public ModelAndView noticeInsert() {
+    logger.info("noticeInsert-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("notice/noticeInsert");
+    model.addObject("title", "공지사항등록");
+    logger.info("noticeInsert-end");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : qnaList
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :이벤트목록
+   */
+  @RequestMapping("board/qnaList")
+  public ModelAndView qnaList() {
+    logger.info("qnaList-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("board/qnaList");
+    model.addObject("title", "QnA목록");
+    logger.info("qnaList-end");
+    return model;
+  }
+  
+  /**
+   * @메소드명 :qnaview
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :QnA리스트
+   */
+  @RequestMapping("board/qnaview")
+  public ModelAndView qnaview() {
+    logger.info("qnaview-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("qna/qnaview");
+    model.addObject("title", "QnA목록");
+    logger.info("qnaview-start");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : qnaInsert
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :  QnA등록
+   */
+  @RequestMapping("board/qnaInsert")
+  public ModelAndView qnaInsert() {
+    logger.info("qnaInsert-start");
+    ModelAndView model = new ModelAndView();
+    model.setViewName("qna/qnaInsert");
+    model.addObject("title", "QnA등록");
+    logger.info("qnaInsert-end");
+    return model;
+  }
 }
