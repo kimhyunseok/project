@@ -28,7 +28,7 @@
 							<div class="form-group row">
 								<label for="example-text-input" class="col-2 col-form-label bg-light font-weight-bold">이벤트제목</label>
 								<div class="col-10">
-									<input class="form-control" type="text" name=board_nm value="" id="example-text-input" placeholder="ex)홍길동" required="required">
+									<input class="form-control" type="text" name="board_title" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
 								</div>
 							</div>
 							<div class="form-group row">

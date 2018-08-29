@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8""%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,7 +23,7 @@
 									<h3 class="mb-0">
 										<c:choose>
 											<c:when test="${user eq 1}">Login</c:when>
-											<c:otherwise>È¸¿øÁ¤º¸¼öÁ¤</c:otherwise>
+											<c:otherwise>íšŒì›ì •ë³´ìˆ˜ì •</c:otherwise>
 										</c:choose>
 									</h3>
 								</div>
@@ -33,34 +33,39 @@
 											<form id="join" method="post" action="http://localhost:8080/UserJoin">
 												<div class="form-row">
 													<div class="col-sm-8 form-group">
-														<label>¾ÆÀÌµğ </label><span class="regForm text-danger">*</span> <input name="user_id" type="text" id="user_id" class="form-control" placeholder="" required>
+														<label>ì•„ì´ë”” </label><span class="regForm text-danger">*</span> <input name="user_id" type="text" id="user_id" class="form-control" placeholder="" required>
 													</div>
 													<!-- form-id end.// -->
 													<div class="col form-group">
 														<label>&nbsp; </label>
-														<button class="btn btn-info btn-block" id="idchk">Áßº¹È®ÀÎ</button>
+														<button class="btn btn-info btn-block" id="idchk">ì¤‘ë³µí™•ì¸</button>
 													</div>
 													<!-- form-group end.// -->
 												</div>
-												<div class="form-group">
-													<label>ÆĞ½º¿öµå</label><span class="regForm text-danger">*</span> <input name="user_pw" id="user_pw" class="form-control pwd1" type="password" required>
+												<div class="form-row">
+													<div class="col-sm-12 form-group">
+														<label>ì´ë¦„ </label><span class="regForm text-danger">*</span> <input name="user_nm" type="text" id="user_nm" class="form-control" placeholder="" required>
+													</div>
 												</div>
 												<div class="form-group">
-													<label>ÆĞ½º¿öµå È®ÀÎ</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
+													<label>íŒ¨ìŠ¤ì›Œë“œ</label><span class="regForm text-danger">*</span> <input name="user_pw" id="user_pw" class="form-control pwd1" type="password" required>
+												</div>
+												<div class="form-group">
+													<label>íŒ¨ìŠ¤ì›Œë“œ í™•ì¸</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
 												</div>
 												<div class="form-group">
 													<font name="check"><br /></font>
 												</div>
 												<div class="form-row">
 													<div class="form-group col-md-12">
-														<label>ÀÌ¸ŞÀÏ</label><span class="regForm text-danger">*</span>
+														<label>ì´ë©”ì¼</label><span class="regForm text-danger">*</span>
 														<div class="form-inline">
 															<input type="text" name="user_email_1" class="form-control col-md-5" required id="user_email"> <span class="col-md-1">@</span> <select name="user_email_2" id="inputState" class="form-control col-md-6">
 																<option value="naver.com">naver.com</option>
 																<option value="gmail.com">gmail.com</option>
 																<option value="nate.com">nate.com</option>
 																<option value="hanmail.net">hanmail.net</option>
-																<option value="custom">Á÷Á¢ÀÔ·Â</option>
+																<option value="custom">ì§ì ‘ì…ë ¥</option>
 															</select>
 														</div>
 													</div>
@@ -68,9 +73,9 @@
 												<div class="form-row  justify-content-md-center ">
 													<div class="row">
 														<div class="form-group">
-															<button type="submit" class="btn btn-primary join">°¡ÀÔÇÏ±â</button>
+															<button type="submit" class="btn btn-primary join">ê°€ì…í•˜ê¸°</button>
 															&nbsp;
-															<button type="reset" class="btn btn-secondary">Ãë¼Ò</button>
+															<button type="reset" class="btn btn-secondary">ì·¨ì†Œ</button>
 														</div>
 													</div>
 													<!-- form-group// -->
@@ -79,30 +84,30 @@
 										<c:otherwise>
 											<form id="join" method="post" action="http://localhost:8080/UserUpdate">
 												<div class="form-group">
-													<label>¾ÆÀÌµğ </label><span class="regForm text-danger">*</span> <input name="user_id" type="text" id="user_id" class="form-control" value="${user_info.user_id}" placeholder="" readonly>
+													<label>ì•„ì´ë”” </label><span class="regForm text-danger">*</span> <input name="user_id" type="text" id="user_id" class="form-control" value="${user_info.user_id}" placeholder="" readonly>
 												</div>
 												<div class="form-group">
-													<label>ÆĞ½º¿öµå</label><span class="regForm text-danger">*</span> <input id="user_b_pw" value="${user_info.user_pw}" class="form-control pwd1" type="password" readonly>
+													<label>íŒ¨ìŠ¤ì›Œë“œ</label><span class="regForm text-danger">*</span> <input id="user_b_pw" value="${user_info.user_pw}" class="form-control pwd1" type="password" readonly>
 												</div>
 												<div class="form-group">
-													<label>ÆĞ½º¿öµå È®ÀÎ</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
+													<label>íŒ¨ìŠ¤ì›Œë“œ í™•ì¸</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
 												</div>
 												<div class="form-group">
-													<label>»õ·Î¿î ÆĞ½º¿öµå</label><span class="regForm text-danger">*</span> <input name="user_pw" type="password" id="user_pw" value="" class="form-control pwd1">
+													<label>ìƒˆë¡œìš´ íŒ¨ìŠ¤ì›Œë“œ</label><span class="regForm text-danger">*</span> <input name="user_pw" type="password" id="user_pw" value="" class="form-control pwd1">
 												</div>
 												<div class="form-group">
 													<font name="check"><br /></font>
 												</div>
 												<div class="form-row">
 													<div class="form-group col-md-12">
-														<label>ÀÌ¸ŞÀÏ</label><span class="regForm text-danger">*</span>
+														<label>ì´ë©”ì¼</label><span class="regForm text-danger">*</span>
 														<div class="form-inline">
 															<input type="text" name="user_email_1" class="form-control col-md-5" required id="user_email" value="${user_info.user_email_1}"> <span class="col-md-1">@</span> <select name="user_email_2" value="${user_info.user_email_2}" id="inputState" class="form-control col-md-6">
 																<option value="naver.com">naver.com</option>
 																<option value="gmail.com">gmail.com</option>
 																<option value="nate.com">nate.com</option>
 																<option value="hanmail.net">hanmail.net</option>
-																<option value="custom">Á÷Á¢ÀÔ·Â</option>
+																<option value="custom">ì§ì ‘ì…ë ¥</option>
 															</select>
 														</div>
 													</div>
@@ -110,9 +115,9 @@
 												<div class="form-row  justify-content-md-center ">
 													<div class="row">
 														<div class="form-group">
-															<button type="submit" class="btn btn-primary update">Á¤º¸¼öÁ¤</button>
+															<button type="submit" class="btn btn-primary update">ì •ë³´ìˆ˜ì •</button>
 															&nbsp;
-															<button type="reset" class="btn btn-secondary">Ãë¼Ò</button>
+															<button type="reset" class="btn btn-secondary">ì·¨ì†Œ</button>
 														</div>
 													</div>
 													<!-- form-group// -->
@@ -141,7 +146,7 @@
     var pwdchk = false;
     $("#idchk").click(function() {
       if ($("#user_id").val() == "") {
-        alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä");
+        alert("ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
       } else {
         var id = $("#user_id").val();
         $.ajax({
@@ -154,9 +159,9 @@
           idchk = msg.idchk;
           if (idchk == 1) {
             idchk = false;
-            alert("ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù");
+            alert("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤");
           } else if (idchk == 0) {
-            alert("»ç¿ë°¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù");
+            alert("ì‚¬ìš©ê°€ëŠ¥í•œ ì•„ì´ë””ì…ë‹ˆë‹¤");
             idchk = true;
             $("#user_id").attr('readonly', 'readonly');
             $("#idchk").attr('readonly', 'readonly');
@@ -165,7 +170,7 @@
         });
       }
     });
-    /* Áßº¹È®ÀÎ end// */
+    /* ì¤‘ë³µí™•ì¸ end// */
 
     $('.pwd1').keyup(function() {
       $('font[name=check]').html('<br>');
@@ -174,37 +179,40 @@
     $('.pwd2').keyup(function() {
       if ($('.pwd1').val() == $('.pwd2').val()) {
         $('font[name=check]').html('<br>');
-        $('font[name=check]').html("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù");
+        $('font[name=check]').html("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤");
         $('font[name=check]').css("color", "blue");
         pwdchk = false;
       } else {
         $('font[name=check]').html('<br>');
-        $('font[name=check]').html("ºñ¹Ğ¹øÈ£°¡ Æ²¸²´Ï´Ù.");
+        $('font[name=check]').html("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦¼ë‹ˆë‹¤.");
         $('font[name=check]').css("color", "red");
         pwdchk = true;
       }
     });
-    /* ºñ¹øÃ¼Å© end// */
+    /* ë¹„ë²ˆì²´í¬ end// */
     $(".join").click(function() {
       if (idchk == false) {
-        alert("Áßº¹È®ÀÎÀ» ÇØÁÖ¼¼¿ä");
+        alert("ì¤‘ë³µí™•ì¸ì„ í•´ì£¼ì„¸ìš”");
         return false;
       } else if (pwdchk == true) {
-        alert("ºñ¹Ğ¹øÈ£°¡ Æ²¸²´Ï´Ù.");
+        alert("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦¼ë‹ˆë‹¤.");
         return false;
       } else if ($("#user_email").val() == null) {
-        alert("ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä");
+        alert("ì´ë©”ì¼ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
+        return false;
+      }else if($("#user_nm").val() == null){
+        alert("ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
         return false;
       }
     });
     $(".update").click(function() {
       if ($("#user_pw").val() == $("#user_b_pw").val()) {
-        alert("±âÁ¸ºñ¹Ğ¹øÈ£¿Í °°½À´Ï´Ù.");
+        alert("ê¸°ì¡´ë¹„ë°€ë²ˆí˜¸ì™€ ê°™ìŠµë‹ˆë‹¤.");
         $("#user_pw").text("");
         $("#user_pw").focus();
         return false;
       } else if ($("#user_email").val() == null) {
-        alert("ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä");
+        alert("ì´ë©”ì¼ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
         return false;
       }
     });

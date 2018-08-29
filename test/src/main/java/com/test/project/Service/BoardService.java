@@ -1,5 +1,8 @@
 package com.test.project.Service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,8 +30,33 @@ public class BoardService {
   @Autowired
   private BoardDao mapper;
   
+  /**
+   * @메소드명 : board_Insert
+   * @작성일 : 2018. 8. 18. 오후 4:25:00
+   * @작성자 : KHS
+   * @설명 : 게시판 등록
+   */
   public int board_Insert(HashMap<String, Object> map) {
     // TODO Auto-generated method stub
     return mapper.board_Insert(map);
+    
+  }
+  /**
+   * @메소드명 : board_Cnt
+   * @작성일 : 2018. 8. 18. 오후 4:25:11
+   * @작성자 : KHS
+   * @설명 :게시판 총갯수
+   */
+  public int board_Cnt(String db) {
+    return mapper.board_Cnt(db);
+  }
+  /**
+   * @메소드명 : board_list
+   * @작성일 : 2018. 8. 29. 오후 2:09:51
+   * @작성자 : KHS
+   * @설명 :게시판리스트
+   */
+  public ArrayList<BoardBean> board_list(HashMap<String, Object> map) {
+    return mapper.board_list(map);
   }
 }

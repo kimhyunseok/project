@@ -3,13 +3,13 @@
 <mapper namespace="com.test.project.Dao.UserDao">
 	<select id="UserCnt" parameterType="String" resultType="int">
 		SELECT
-			COUNT(*)
+			COUNT(seq)
 		FROM TB_USER
 			WHERE USER_ID LIKE #{param}
 	</select>
 	<select id="LoginChk" parameterType="com.test.project.Dto.UserBean" resultType="int">
 		SELECT
-			COUNT(*)
+			COUNT(seq)
 		FROM
 			TB_USER
 		WHERE
@@ -19,6 +19,7 @@
 		INSERT INTO tb_user
 		(
 			`user_id`,
+			`user_nm`,
 			`user_pw`,
 			`user_email_1`,
 			`user_email_2`
@@ -26,6 +27,7 @@
 		VALUES
 		(
 			#{user_id},
+			#{user_nm},
 			#{user_pw},
 			#{user_email_1},
 			#{user_email_2}
@@ -34,6 +36,7 @@
 	<select id="SelectUserInfo" parameterType="String" resultType="com.test.project.Dto.UserBean">
 		SELECT
 			user_id,
+			user_nm,
 			user_pw,
 			user_email_1,
 			user_email_2

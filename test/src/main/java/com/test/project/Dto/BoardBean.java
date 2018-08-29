@@ -7,6 +7,7 @@ import lombok.Setter;
 public class BoardBean {
   private int    board_no;
   private String board_nm;
+  private String board_title;
   private String board_content;
   private String board_in_date;
   private int board_view_cnt;

@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -47,6 +49,7 @@ import com.test.project.Dto.BoardBean;
 import com.test.project.Dto.CircleBean;
 import com.test.project.Dto.FileBean;
 import com.test.project.Dto.UserBean;
+import com.test.project.Dto.pagingBean;
 import com.test.project.Service.BoardService;
 import com.test.project.Service.CircleService;
 import com.test.project.Service.FileService;
@@ -69,6 +72,8 @@ public class BoardController {
   @Autowired
   private Common method;
   
+  private pagingBean test;
+  
   /**
    * @메소드명 : eventList
    * @작성일 : 2018. 7. 3. 오후 7:15:34
@@ -76,10 +81,24 @@ public class BoardController {
    * @설명 :이벤트목록
    */
   @RequestMapping("board/event/eventList")
-  public ModelAndView eventList() {
+  public ModelAndView eventList(HttpServletRequest req) {
     logger.info("이벤트목록-start");
+    // 전체리스트 개수
+    int listCnt = BSevice.board_Cnt("tb_event_board");
+    System.out.println(listCnt);
+    Enumeration reqName = req.getParameterNames();
+    int num=Integer.parseInt(req.getParameter("pageNum"));
+    test= new pagingBean(listCnt, num);
+    HashMap<String,Object> map= new HashMap<String,Object>();
+    map.put("db_table", "tb_event_board");
+    map.put("start",test.getStartIndex());
+
+    ArrayList<BoardBean> list = BSevice.board_list(map);
+    
     ModelAndView model = new ModelAndView();
     model.setViewName("board/event/eventList");
+    model.addObject("pagination", test);
+    model.addObject("list",list);
     model.addObject("title", "이벤트목록");
     logger.info("이벤트목록-end");
     return model;
@@ -153,7 +172,6 @@ public class BoardController {
     map.put("bean", bean);
     map.put("dbtable", "tb_event_board");
     BSevice.board_Insert(map);
-    model.setViewName("board/event/eventInsert");
     logger.info("이벤트등록처리-end");
     return model;
   }

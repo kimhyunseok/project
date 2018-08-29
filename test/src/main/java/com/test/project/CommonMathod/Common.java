@@ -119,7 +119,7 @@ public class Common {
     String extand = filname.substring(filname.lastIndexOf(".") + 1, filname.length());
     HashMap<String, Object> map = new HashMap<String, Object>();
     FileBean vo = new FileBean();
-    if (extand == "hwp" || extand == "xls" || extand == "xlsx") {
+    if (extand.equals("hwp")|| extand.equals("xls") || extand.equals("xlsx")) {
       while (iterator.hasNext()) {
         img = multipartHttpServletRequest.getFile(iterator.next());
         if (img.isEmpty() == false) {
@@ -168,9 +168,9 @@ public class Common {
       map.put("tf", true);
       // DB에 파일내역 insert
       service.file_Insert(vo);
-      return map;
-    }
+    }else {
     map.put("tf", false);
+    }
     return map;
   }
   

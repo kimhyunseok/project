@@ -45,7 +45,7 @@
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown2">
 					<div class="list-group">
 						<a href="#" class="list-group-item list-group-item-action">회사소개</a>
-						<a href="http://localhost:8080/board/eventList" class="list-group-item list-group-item-action">이벤트</a>
+						<a href="http://localhost:8080/board/event/eventList?pageNum=1" class="list-group-item list-group-item-action">이벤트</a>
 					</div>
 				</div>
 			</li>

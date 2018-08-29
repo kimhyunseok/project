@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <link href="http://localhost:8080/css/circle.css" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/view/include/head.jsp" />
@@ -58,34 +60,64 @@
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
-								<th scope="col">#</th>
-								<th scope="col">이름</th>
-								<th scope="col">성</th>
-								<th scope="col">아이디</th>
+								<th scope="col" width="10%">No</th>
+								<th scope="col" width="60%">글제목</th>
+								<th scope="col" width="15%">작성자</th>
+								<th scope="col" width="15%">작성일</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
-							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>Jacob</td>
-								<td>Thornton</td>
-								<td>@fat</td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>Larry</td>
-								<td>the Bird</td>
-								<td>@twitter</td>
-							</tr>
+							<c:forEach var="list" items="${list}">
+								<tr>
+									<th scope="row">${list.board_no}</th>
+									<td><a class="btn btn-default" href="http://localhost:8080/board/event/eventView?No=${list.board_no}" >${list.board_nm}</a></td>
+									<td>관리자</td>
+									<td>${fn:substring(list.board_in_date,0,11)}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
+					<div class="container ">
+						<div class="form-row  justify-content-md-center ">
+							<ul class="pagination">
+								<c:if test="${pagination.curRange ne 1 }">
+									<li class="page-item">
+										<a class="page-link" href="http://localhost:8080/board/event/eventList?pageNum=1">[처음]</a>
+									</li>
+								</c:if>
+								<c:if test="${pagination.curPage ne 1}">
+									<li class="page-item">
+										<a class="page-link" href="http://localhost:8080/board/event/eventList?pageNum=${pagination.prevPage}">[이전]</a>
+									</li>
+								</c:if>
+								<c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+									<c:choose>
+										<c:when test="${pageNum eq  pagination.curPage}">
+											<li class="page-item active">
+												<a class="page-link" href="http://localhost:8080/board/event/eventList?pageNum=${pageNum}">${pageNum }</a>
+											</li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item">
+												<a class="page-link" href="http://localhost:8080/board/event/eventList?pageNum=${pageNum}">${pageNum}</a>
+											</li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${pagination.curPage ne pagination.pageCnt && pagination.pageCnt > 0}">
+									<li class="page-item">
+										<a class="page-link" href="http://localhost:8080/board/event/eventList?pageNum=${pagination.nextPage}">[다음]</a>
+									</li>
+								</c:if>
+								<c:if test="${pagination.curRange ne pagination.rangeCnt && pagination.rangeCnt > 0}">
+									<li class="page-item">
+										<a class="page-link" href="http://localhost:8080/board/event/eventList?pageNum=${pagination.pageCnt}">[끝]</a>
+									<li class="page-item">
+								</c:if>
 
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 			<jsp:include page="/WEB-INF/view/include/footer.jsp" />
