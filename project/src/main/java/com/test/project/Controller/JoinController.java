@@ -10,24 +10,19 @@
 package com.test.project.Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.catalina.connector.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.test.project.NaverLoginBO;
 import com.test.project.Dto.UserBean;
 import com.test.project.Service.UserService;
 
@@ -62,6 +57,7 @@ public class JoinController {
     logger.info("================IdChk End=================");
     return map;
   }
+  
   /**
    * @메소드명 : userjoin
    * @작성일 : 2018. 7. 2. 오후 9:12:07
@@ -69,15 +65,23 @@ public class JoinController {
    * @설명 :
    */
   @RequestMapping(value = "/UserJoin", method = { RequestMethod.GET, RequestMethod.POST })
-  public ModelAndView userjoin(UserBean user,HttpServletRequest request) {
+  public String userjoin(UserBean user, HttpServletRequest request, HttpServletResponse response) {
     logger.info("================userjoin Start=================");
-    ModelAndView model =new ModelAndView();
-    model.setViewName("redirect:http://localhost:8080/");
     service.UserJoin(user);
-    model.addObject("title", "회원가입");
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out;
+    try {
+      out = response.getWriter();
+      out.println("<script>alert('계정이 등록 되었습니다');</script>");
+      out.flush();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     logger.info("================userjoin End=================");
-    return model;
+    return "index";
   }
+  
   /**
    * @메소드명 : userUpdate
    * @작성일 : 2018. 7. 2. 오후 9:12:20
@@ -85,9 +89,9 @@ public class JoinController {
    * @설명 :
    */
   @RequestMapping(value = "/UserUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-  public ModelAndView userUpdate(UserBean user,HttpServletRequest request) {
+  public ModelAndView userUpdate(UserBean user, HttpServletRequest request) {
     logger.info("================userUpdate Start=================");
-    ModelAndView model =new ModelAndView();
+    ModelAndView model = new ModelAndView();
     model.setViewName("redirect:http://localhost:8080/");
     service.UserUpdate(user);
     model.addObject("title", "정보수정");

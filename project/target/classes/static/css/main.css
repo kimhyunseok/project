@@ -4,10 +4,8 @@ body {
 	background: #f3f3f3;
 }
 
-
-출처: http://it77.tistory.com/126 [시원한물냉의 사람사는 이야기]
 #wrapper {
-	padding: 90px 0px;
+	padding: 94px 0px 10px 60px
 }
 
 .navbar-expand-lg .navbar-nav.side-nav {
@@ -39,11 +37,9 @@ body {
 		margin: 7px 20px 4px 0;
 		cursor: pointer;
 	}
-	#wrapper {
-		padding: 90px 15px 15px 75px;
-	}
+	
 	#wrapper.open {
-		padding: 90px 15px 15px 225px;
+		padding: 0px;
 	}
 	.navbar-nav.side-nav.open {
 		left: 0;
@@ -63,7 +59,7 @@ body {
 		background: #60636c;
 		box-shadow: 2px 1px 2px rgba(0, 0, 0, .1);
 		position: fixed;
-		top: 56px;
+		top: 76px;
 		flex-direction: column !important;
 		left: -140px;
 		width: 200px;
@@ -173,3 +169,18 @@ footer iframe {
 .sm li a img {
 	width: 32px;
 }
+
+#search_btn1{
+	width: 90%;
+}
+#search_btn2{
+	width: 50px;
+}
+
+
+
+
+
+
+
+   

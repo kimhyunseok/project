@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-
-<link href="http://localhost:8080/css/circle.css" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<link href="http://localhost:8080/css/style.css" rel="stylesheet">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/view/include/head.jsp" />
@@ -19,6 +19,7 @@
 		</ol>
 		</nav>
 		<div class="container-fluid">
+
 			<div class="col-md-10 mx-auto">
 
 				<!-- form card login -->
@@ -26,34 +27,131 @@
 
 					<div class="card-body">
 						<form class="form" method="Post" action="http://localhost:8080/circle/circleInsert_ok" enctype="multipart/form-data">
-							<table class="table table-bordered">
-								
-								<tbody>
-									<tr>
-										<td width="200px"><span for="" class="  font-weight-bold">이벤트제목</span></td>
-										<td>Doe</td>
-									</tr>
-									<tr>
-										<td width="200px"><span for="" class="  font-weight-bold">작성자</span></td>
-										<td>Moe</td>
-									</tr>
-									<tr>
-										<td colspan="2" ><div class="container"><div class="row">July</div></div></td>
-									</tr>
-									<tr>
-										<td width="200px"><span for="" class="  font-weight-bold">첨부파일</span></td>
-										<td>Moe</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="form-row  justify-content-md-center ">
-								<div class="form-group">
-									<button type="submit" class="btn btn-primary join">등록</button>
-									&nbsp;
-									<button type="reset" class="btn btn-secondary">취소</button>
+							<div id="container">
+								<!-- 게시물 읽기 시작 { -->
+								<article id="bo_v" style="width:100%"> <header>
+								<h2 id="bo_v_title">
+									<h3>${View.board_nm}</h3>
+								</h2>
+								</header> <section id="bo_v_info">
+								<h2>페이지 정보</h2>
+								<span class="sound_only">작성자:관리자</span> </span> </span> </strong> <span class="sound_only">댓글</span> <strong> <i class="fas fa-comment"></i> 3건
+								</strong> <span class="sound_only">조회</span> <strong><i class="fa fa-eye" aria-hidden="true"></i> 79회</strong> <strong class="if_date"><span class="sound_only">작성일</span>&nbsp;<i class="far fa-calendar-alt"></i> 18-12-20 11:07</strong> </section> <section id="bo_v_atc">
+								<h2 id="bo_v_atc_title">본문</h2>
+
+								<div id="bo_v_img"></div>
+
+								<!-- 본문 내용 시작 { -->
+								<div id="bo_v_con">
+									<p>dddddddddd</p>
 								</div>
-								<!-- form-group// -->
+								<!-- } 본문 내용 끝 --> <!--  추천 비추천 시작 { --> <!-- }  추천 비추천 끝 --> </section> <!-- 게시물 상단 버튼 시작 { -->
+								<div id="bo_v_top">
+
+									<ul class="bo_v_left">
+										<li>
+											<a href="./password.php?w=u&amp;bo_table=sorigyeol&amp;wr_id=77&amp;page=" class="btn_b01 btn">
+												<i class="fas fa-user-edit"></i> 수정
+											</a>
+										</li>
+										<li>
+											<a href="./password.php?w=d&amp;bo_table=sorigyeol&amp;wr_id=77&amp;page=" class="btn_b01 btn" onclick="del(this.href); return false;">
+												<i class="fas fa-trash-alt"></i> 삭제
+											</a>
+										</li>
+									</ul>
+
+									<ul class="bo_v_com">
+										<li>
+											<a href="http://localhost:8080/board/event/eventList?pageNum=1" class="btn btn-default">
+												<i class="fa fa-list" aria-hidden="true"></i> 목록
+											</a>
+										</li>
+										<li>
+											<a href="./write.php?w=r&amp;bo_table=sorigyeol&amp;wr_id=77" class="btn_b01 btn">
+												<i class="fa fa-reply" aria-hidden="true"></i> 답변
+											</a>
+										</li>
+										<li>
+											<a href="http://localhost:8080/board/event/eventInsert" class="btn_b02 btn">
+												<i class="fas fa-edit"></i> 글쓰기
+											</a>
+										</li>
+									</ul>
+
+									<ul class="bo_v_nb">
+										<li class="btn_prv">
+											<span class="nb_tit"><i class="fa fa-caret-up" aria-hidden="true"></i> 이전글</span>
+											<a href="http://localhost:8080/board/event/eventView?pageNum=${View.pre_no}">${View.pre_nm}</a>
+											<span class="nb_date">${fn:substring(View.pre_date,0,11)}</span>
+										</li>
+										<li class="btn_next">
+											<span class="nb_tit"><i class="fa fa-caret-down" aria-hidden="true"></i> 다음글</span>
+											<a href="http://localhost:8080/board/event/eventView?pageNum=${View.next_no}">${View.next_nm}</a>
+											<span class="nb_date">${fn:substring(View.next_date,0,11)}</span>
+										</li>
+									</ul>
+								</div>
+
+								<button type="button" class="cmt_btn">
+									<i class="fas fa-comments"></i> 댓글목록
+								</button>
+								<!-- 댓글 시작 { --> 
+								<section id="bo_vc">
+								<h2>댓글목록</h2>
+								<c:forEach var="list" items="${Reply}">
+								
+								<article id="c_1822" <c:if test="${1 ne list.reply_level}"> style="margin-left:50px;border-top-color:#e0e0e0" </c:if>> 
+								<header>
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-sm-12">
+											<span class="sv_wrap">
+												<noscript class="sv_nojs">
+													<span class="sv"> ${list.reply_id}님 </span>
+												</noscript>
+											</span> ㅇㅇ님 <span class="bo_vc_hdinfo"><i class="far fa-calendar-alt"></i> <time datetime="2019-01-10T09:34:00+09:00">19-01-10 09:34</time></span>
+											<!-- 댓글 출력 -->
+										</div>
+									</div>
+								</div>
+								</header>
+								<div class="cmt_contents ">
+									<p>ㅇㅇㅇㅇㅇ</p>
+									<ul class="bo_vc_act">
+										<li>
+											<a href="./board.php?bo_table=sorigyeol&amp;wr_id=77&amp;c_id=79&amp;w=c#bo_vc_w" onclick="comment_box('79', 'c'); return false;" class="btn_b03">답변</a>
+										</li>
+										<li>
+											<a href="./password.php?w=x&amp;bo_table=sorigyeol&amp;comment_id=79&amp;page=" onclick="return comment_delete();" class="btn_b03">삭제</a>
+										</li>
+									</ul>
+								</div>
+								</article>
+								</c:forEach>
+								<!-- style="margin-left:50px;border-top-color:#e0e0e0 --> <!-- 댓글 끝 } --> <span id="edit_84" class="bo_vc_w"></span><!-- 수정 --> <span id="reply_84" class="bo_vc_w"></span><!-- 답변 --> <input type="hidden" value="" id="secret_comment_84"> <textarea id="save_comment_84" style="display: none">adfasdf</textarea> </article> </section> <!-- } 댓글 끝 --> <!-- 댓글 쓰기 시작 { --> <aside id="bo_vc_w" class="bo_vc_w">
+								<h2>댓글쓰기</h2>
+
+								<form name="fviewcomment" id="fview" action="">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-sm-12">
+												
+												<textarea id="reply_content" name="reply_content" maxlength="10000" required="" class="required" title="내용" placeholder="댓글내용을 입력해주세요" style="resize: none;"></textarea>
+
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div class="col-sm-12 text-right">
+												<button type="button" class="btn btn-danger" title="등록" id="reply_btn">등록</button>
+											</div>
+										</div>
+									</div>
+								</form>
 							</div>
+
+
 						</form>
 					</div>
 					<!--/card-block-->
@@ -65,7 +163,32 @@
 </body>
 </html>
 
+
+
 <script>
+var save_before = '';
+
+function good_and_write()
+{
+    var f = document.fviewcomment;
+    if (fviewcomment_submit(f)) {
+        f.is_good.value = 1;
+        f.submit();
+    } else {
+        f.is_good.value = 0;
+    }
+}
+
+function comment_delete()
+{
+    return confirm("이 댓글을 삭제하시겠습니까?");
+}
+
+
+$(function() {
+  $("#bo_v_atc").viewimageresize();
+});
+
 function point(lat,lng){
   var mapOptions = {
       center: new naver.maps.LatLng(lat, lng),
@@ -77,8 +200,34 @@ function point(lat,lng){
     map: map
 });
 }
+
   $(function() {
     $("#crops2").chained("#kind1");
+    
+    
+    $("#reply_btn").click(function(){
+      var content = "";
+      content=$("#reply_content").val();
+      $.ajax({
+        type : "POST",
+        url : "http://localhost:8080/board/event/eventReply_Ins.ajax",
+        async : false,
+        data: {
+          "board_no": ${View.board_no},
+          "content": content
+      },
+        dataType : "json",
+        cache: false,
+        success: function(data){    
+         alert("저장되었습니다.");
+         },
+        error : function (data) {
+         alert('죄송합니다. 잠시 후 다시 시도해주세요.');
+         return false;
+        }  
+       }); 
+    });
+    
     $("#search").click(function() {
       var width=500;
       var height=650;

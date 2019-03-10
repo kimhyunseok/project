@@ -27,17 +27,17 @@ import com.test.project.Service.FileService;
  * @설명:
  */
 @Controller
-public class Common {
+public class CFileUploadMathod {
   
-  private static Logger logger = LogManager.getLogger(Common.class);
+  private static Logger logger = LogManager.getLogger(CFileUploadMathod.class);
   @Autowired
   private FileService service;
   
   /**
-   * @메소드명 : file_Insert
-   * @작성일 : 2018. 8. 12. 오후 1:07:29
-   * @작성자 : KHS
-   * @설명 :에디터 파일 업로드
+   * @메소드명 : edtImg_Upload
+   * @작성일 : 2019. 3. 9. 오후 9:27:26
+   * @작성자 : 김현석
+   * @설명 :
    */
   public HashMap<String, Object> edtImg_Upload(MultipartFile img, HttpServletResponse response, HttpServletRequest request, String location) {
     // TODO Auto-generated method stub
@@ -46,6 +46,7 @@ public class Common {
     Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
     HashMap<String, Object> map = new HashMap<String, Object>();
     FileBean vo = new FileBean();
+    String filePath;
     while (iterator.hasNext()) {
       img = multipartHttpServletRequest.getFile(iterator.next());
       if (img.isEmpty() == false) {
@@ -62,7 +63,7 @@ public class Common {
     // 파일 기본경로
     String defaultPath = request.getSession().getServletContext().getRealPath("/");
     // 파일 기본경로 _ 상세경로
-    String filePath = defaultPath + "resources" + File.separator + "upload_img" + File.separator + location + File.separator;
+    filePath = defaultPath + "resources" + File.separator + "upload_img" + File.separator + location + File.separator;
     System.out.println("----------" + filePath);
     String originalFileName = img.getOriginalFilename();
     String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -96,12 +97,11 @@ public class Common {
     
     // DB에 파일내역 insert
     map.put("vo", vo);
-    service.file_Insert(vo);
     return map;
   }
   
   /**
-   * @메소드명 : file_Insert
+   * @메소드명 : file_upload
    * @작성일 : 2018. 8. 12. 오후 1:07:29
    * @작성자 : KHS
    * @설명 :파일 업로드
@@ -115,58 +115,58 @@ public class Common {
     String extand = filname.substring(filname.lastIndexOf(".") + 1, filname.length());
     HashMap<String, Object> map = new HashMap<String, Object>();
     FileBean vo = new FileBean();
-    if (extand.equals("hwp")|| extand.equals("xls") || extand.equals("xlsx")) {
-      while (iterator.hasNext()) {
-        img = multipartHttpServletRequest.getFile(iterator.next());
-        if (img.isEmpty() == false) {
-          
-          logger.info("------------- file start -------------");
-          logger.info("name : " + img.getContentType());
-          logger.info("filename : " + img.getOriginalFilename());
-          logger.info("size : " + img.getSize());
-          vo.setFile_size(img.getSize());
-          logger.info("-------------- file end --------------\n");
-        }
+    String defaultPath = null;
+    String filePath = null;
+    
+    while (iterator.hasNext()) {
+      img = multipartHttpServletRequest.getFile(iterator.next());
+      
+      if (img.isEmpty() == false) {
         
+        logger.info("------------- file start -------------");
+        logger.info("name : " + img.getContentType());
+        logger.info("filename : " + img.getOriginalFilename());
+        logger.info("size : " + img.getSize());
+        vo.setFile_size(img.getSize());
+        logger.info("-------------- file end --------------\n");
       }
-      // String filePath = "\\upload_img\\";
-      // 파일 기본경로
-      String defaultPath = request.getSession().getServletContext().getRealPath("/");
-      // 파일 기본경로 _ 상세경로
-      String filePath = defaultPath + "resources" + File.separator + "upload_img" + File.separator + location + File.separator;
-      System.out.println("----------" + filePath);
-      String originalFileName = img.getOriginalFilename();
-      String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-      UUID uuid = UUID.randomUUID();
       
-      String fileName = uuid.toString() + "_" + originalFileName;
-      // 저장경로 폴더 생성
-      File file = new File(filePath);
-      
-      if (file.exists() == false) {
-        file.mkdirs();
-      }
-      file = new File(filePath + fileName);
-      try {
-        img.transferTo(file);
-      } catch (IllegalStateException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      vo.setFile_o_name(originalFileName);
-      vo.setFile_name(fileName);
-      vo.setFile_url("http://localhost:8080/resources/upload_img/" + location + "/" + fileName);
-      vo.setFile_location(location);
-      map.put("vo", vo);
-      map.put("tf", true);
-      // DB에 파일내역 insert
-      service.file_Insert(vo);
-    }else {
-    map.put("tf", false);
     }
+    // String filePath = "\\upload_img\\";
+    // 파일 기본경로
+    defaultPath = request.getSession().getServletContext().getRealPath("/");
+    // 파일 기본경로 _ 상세경로
+    if (extand.equals("jpg") || extand.equals("png")) {
+      filePath = defaultPath + "resources" + File.separator + "upload_img" + File.separator + location + File.separator;
+    } else if (extand.equals("hwp") || extand.equals("xlsx")) {
+      filePath = defaultPath + "resources" + File.separator + "upload_file" + File.separator + location + File.separator;
+    }
+    String originalFileName = img.getOriginalFilename();
+    String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+    UUID uuid = UUID.randomUUID();
+    String fileName = uuid.toString() + "_" + originalFileName;
+    // 저장경로 폴더 생성
+    File file = new File(filePath);
+    
+    if (file.exists() == true) {
+      file.mkdirs();
+    }
+    file = new File(filePath + fileName);
+    try {
+      img.transferTo(file);
+    } catch (IllegalStateException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    vo.setFile_o_name(originalFileName);
+    vo.setFile_name(fileName);
+    vo.setFile_url("http://localhost:8080/resources/upload_img/" + location + "/");
+    vo.setFile_location(location);
+    service.file_Insert(vo);
+    map.put("vo", vo);
     return map;
   }
   

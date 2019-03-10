@@ -3,13 +3,13 @@
 <mapper namespace="com.test.project.Dao.UserDao">
 	<select id="UserCnt" parameterType="String" resultType="int">
 		SELECT
-			COUNT(seq)
+			COUNT(user_id)
 		FROM TB_USER
 			WHERE USER_ID LIKE #{param}
 	</select>
 	<select id="LoginChk" parameterType="com.test.project.Dto.UserBean" resultType="int">
 		SELECT
-			COUNT(seq)
+			COUNT(user_id)
 		FROM
 			TB_USER
 		WHERE

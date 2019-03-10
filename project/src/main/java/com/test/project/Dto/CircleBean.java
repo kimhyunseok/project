@@ -1,8 +1,6 @@
 package com.test.project.Dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @패키지   com.test.project.Dto

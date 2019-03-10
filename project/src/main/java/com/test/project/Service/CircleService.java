@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.test.project.Dao.CircleDao;
 import com.test.project.Dto.CircleBean;
-import com.test.project.Dto.FileBean;
 /**
  * @패키지   com.test.project.Service
  * @파일이름  FileService.java

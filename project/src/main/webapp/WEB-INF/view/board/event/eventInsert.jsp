@@ -7,8 +7,8 @@
 <jsp:include page="/WEB-INF/view/include/head.jsp" />
 <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=30acVBn_RNTBZdDAcwhu"></script>
-<body>
 
+<body>
 	<div id="wrapper" class="animate">
 		<jsp:include page="/WEB-INF/view/include/menu.jsp" />
 
@@ -28,26 +28,26 @@
 							<div class="form-group row">
 								<label for="example-text-input" class="col-2 col-form-label bg-light font-weight-bold">이벤트제목</label>
 								<div class="col-10">
-									<input class="form-control" type="text" name="board_title" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
+									<input class="form-control" type="text" name="board_nm" maxlength="50" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">이벤트내용</label>
+								<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold" >이벤트내용</label>
 								<div class="col-10">
-									<textarea name="board_content" id="editor"></textarea>
+									<textarea name="board_content" id="editor" data-maxlen=’1′></textarea>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">첨부파일</label>
 								<div class="col-10">
-									<input class="form-control" type="file" name="img" value=""  required="required">
+								<input type="file"  name="file" > 
 								</div>
 							</div>
 							<div class="form-row  justify-content-md-center ">
 								<div class="form-group">
 									<button type="submit" class="btn btn-primary join">등록</button>
 									&nbsp;
-									<button type="reset" class="btn btn-secondary">취소</button>
+									<button type="button" class="btn btn-secondary" id="b_Cancelbtn">취소</button>
 								</div>
 								<!-- form-group// -->
 							</div>
@@ -63,12 +63,20 @@
 </html>
 
 <script>
+
   $(function() {
+   
+    //chkeditor 불러오기
     CKEDITOR.replace('editor', {//해당 이름으로 된 textarea에 에디터를 적용
     width : '100%',
     height : '400px',
+    
     filebrowserUploadUrl : 'http://localhost:8080/img_upload?CKEditor=contents&CKEditorFuncNum=1&langCode=ko'
     });
+ 
+  $("#b_Cancelbtn").click(function(){
+    location.replace('http://localhost:8080/board/event/eventList?pageNum=1');
+  });
 
   });
 </script>

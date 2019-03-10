@@ -13,12 +13,12 @@ import lombok.Setter;
  */
 @Data
 public class UserBean {
+  private int seq;
 	private String user_id;
 	private String user_nm;
 	private String user_pw;
-	private String user_email_2;
 	private String user_email_1;
-	private int seq;
+	private String user_email_2;
 	private String user_in_date;
 	private String user_mod_date;
 	private String user_del_date;

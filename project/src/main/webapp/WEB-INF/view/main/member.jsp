@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8""%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/view/include/head.jsp" />
 <body>
-
 	<div id="wrapper" class="animate">
 		<jsp:include page="/WEB-INF/view/include/menu.jsp" />
 		<div class="container-fluid">
@@ -22,7 +21,7 @@
 								<div class="card-header">
 									<h3 class="mb-0">
 										<c:choose>
-											<c:when test="${user eq 1}">Login</c:when>
+											<c:when test="${user eq 1}">회원가입</c:when>
 											<c:otherwise>회원정보수정</c:otherwise>
 										</c:choose>
 									</h3>
@@ -38,7 +37,7 @@
 													<!-- form-id end.// -->
 													<div class="col form-group">
 														<label>&nbsp; </label>
-														<button class="btn btn-info btn-block" id="idchk">중복확인</button>
+														<button type="button" s class="btn btn-info btn-block" id="idchk">중복확인</button>
 													</div>
 													<!-- form-group end.// -->
 												</div>
@@ -52,9 +51,6 @@
 												</div>
 												<div class="form-group">
 													<label>패스워드 확인</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
-												</div>
-												<div class="form-group">
-													<font name="check"><br /></font>
 												</div>
 												<div class="form-row">
 													<div class="form-group col-md-12">
@@ -70,10 +66,44 @@
 														</div>
 													</div>
 												</div>
+												<div class="form-row">
+													<div class="form-group col-md-12">
+														<label>성별</label><span class="regForm text-danger">*</span>
+														<div class="form-inline">
+															<label for="r2_1"><input type="radio" id="r2_1" name="r2" checked>남자</label> <label for="r2_2"><input type="radio" id="r2_2" name="r2">여자</label>
+														</div>
+													</div>
+												</div>
+												<div class="form-row">
+													<div class="form-group col-md-12">
+														<label>연령대</label><span class="regForm text-danger">*</span>
+														<div class="form-inline">
+															<select name="" value="" id="inputState" class="form-control col-md-12">
+																<option value="naver.com">10대이상</option>
+																<option value="gmail.com">20대이상</option>
+																<option value="nate.com">30대이상</option>
+																<option value="hanmail.net">40대이상</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<label>주소</label>
+													<div class="form-group form-inline">
+														<input class="form-control" style="width: 100px;" placeholder="우편번호" name="circle_PostNum" id="addr1" type="text" readonly="readonly" required="required">
+													</div>
+													<div class="form-group">
+														<input class="form-control" placeholder="도로명 주소" name="circle_Addr1" id="addr2" type="text" readonly="readonly" required="required" /> <input class="form-control" placeholder="상세주소" name="circle_Addr2" id="addr3" type="text" required="required" />
+													</div>
+													<div class=" form-inline">
+														<button type="button" class='form-control ' id="search">찾기</button>
+													</div>
+
+												</div>
 												<div class="form-row  justify-content-md-center ">
 													<div class="row">
 														<div class="form-group">
-															<button type="submit" class="btn btn-primary join">가입하기</button>
+															<button type="button" id="JoinBtn" class="btn btn-primary join">가입하기</button>
 															&nbsp;
 															<button type="reset" class="btn btn-secondary">취소</button>
 														</div>
@@ -142,8 +172,54 @@
 </html>
 <script type="text/javascript">
   $(document).ready(function() {
-    var idchk = false;
+    var db_idchk = 0;
+    var idchk = 0;
     var pwdchk = false;
+    
+    $("#search").click(function() {
+      var width=500;
+      var height=650;
+      new daum.Postcode({
+        oncomplete : function(data) {
+          // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+          var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+         
+          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          console.log(data.zonecode);
+          console.log(fullRoadAddr);
+          
+          $("#addr1").val(data.zonecode);
+          $("#addr2").val(fullRoadAddr);
+          //검색된 주소를 비동기통신을 통해서 좌표를 얻는다
+          $.ajax({
+            type : 'post',
+            url : 'http://localhost:8080/mapPosition_ajax',
+            data : {
+              'address' : fullRoadAddr
+            }, //encodeURIComponent로 인코딩하여 넘깁니다.
+
+            dataType : 'json',
+            timeout : 10000,
+            cache : false,
+            error : function(x, e) {
+              alert('요청하신 작업을 수행하던 중 예상치 않게 중지되었습니다.\n\n다시 시도해 주십시오.');
+            },
+            success : function(data) {
+              var myObj = JSON.parse(data.map);
+              var lng = myObj.result.items[0].point.x;
+              var lat = myObj.result.items[0].point.y;
+              $("#point").val(lat+","+lng);
+              point(lat, lng);
+            }
+          });
+        }
+        }).open({
+        left:(window.screen.width/2)-(width/2),
+        top:(window.screen.height/2)-(height/2)
+      });
+    });
+    
     $("#idchk").click(function() {
       if ($("#user_id").val() == "") {
         alert("아이디를 입력해주세요");
@@ -156,13 +232,13 @@
           "user_id" : id
         },
         success : function(msg) {
-          idchk = msg.idchk;
-          if (idchk == 1) {
-            idchk = false;
+          db_idchk = msg.idchk;
+          if (db_idchk == 1) {
+            idchk = 1;
             alert("이미 존재하는 아이디입니다");
-          } else if (idchk == 0) {
+          } else if (db_idchk == 0) {
             alert("사용가능한 아이디입니다");
-            idchk = true;
+            idchk = 2;
             $("#user_id").attr('readonly', 'readonly');
             $("#idchk").attr('readonly', 'readonly');
           }
@@ -190,7 +266,7 @@
       }
     });
     /* 비번체크 end// */
-    $(".join").click(function() {
+    $("#JoinBtn").click(function() {
       if (idchk == false) {
         alert("중복확인을 해주세요");
         return false;
@@ -200,10 +276,18 @@
       } else if ($("#user_email").val() == null) {
         alert("이메일을 입력해주세요");
         return false;
-      }else if($("#user_nm").val() == null){
+      } else if ($("#user_nm").val() == null) {
         alert("이름을 입력해주세요");
         return false;
+      } else if (idchk == 0) {
+        alert("아이디 중복확인해주세요.");
+        return false;
+      } else if (idchk == 1) {
+        alert("이미 존재하는 아이디입니다");
+        return false;
       }
+      $("#join").submit();
+
     });
     $(".update").click(function() {
       if ($("#user_pw").val() == $("#user_b_pw").val()) {
@@ -214,8 +298,16 @@
       } else if ($("#user_email").val() == null) {
         alert("이메일을 입력해주세요");
         return false;
+      } else if (idchk == 0) {
+        alert("아이디 중복확인해주세요.");
+        return false;
+      } else if (idchk == 1) {
+        alert("이미 존재하는 아이디입니다");
+        return false;
       }
     });
+    
+    
   });
 </script>
 

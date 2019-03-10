@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,7 @@ import com.test.project.Service.UserService;
  * @설명:
  */
 @Controller
+@SpringBootApplication
 public class HomeController {
   
   private static Logger logger = LogManager.getLogger(HomeController.class);
@@ -86,6 +88,7 @@ public class HomeController {
     logger.info("================memberUpdate End=================");
     return model;
   }
+  
 }
 
 /*

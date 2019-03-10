@@ -34,7 +34,7 @@
 			#{circle_Addr1},       
 			#{circle_Addr2},       
 			#{circle_Point},       
-			#{circle_in_date},     
+			NOW(),     
 			#{circle_Logo_Fileno}
 		)
 	</insert>

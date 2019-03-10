@@ -1,4 +1,9 @@
-
-.ck-editor__editable{
+.ck-editor__editable {
 	height: 500px
+}
+
+.opt {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
 }

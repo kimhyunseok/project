@@ -13,7 +13,6 @@
 <link href="http://localhost:8080/webjars/bootstrap/4.0.0/dist/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="http://localhost:8080/webjars/bootstrap/4.0.0/dist/js/bootstrap.min.js"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link href="http://localhost:8080/css/main.css" rel="stylesheet">
 <script src="http://localhost:8080/js/main.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -22,6 +21,8 @@
 <script src="http://localhost:8080/js/bootstrap-clockpicker.min.js"></script>
 <link href="http://localhost:8080/css/bootstrap-clockpicker.min.css" rel="stylesheet">
 <!-- include summernote css/js-->
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+ <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 <script src="http://localhost:8080/editor/js/HuskyEZCreator.js"></script>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
@@ -30,4 +31,3 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>동아리채널</title>
 </head>
- 

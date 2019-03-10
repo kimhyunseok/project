@@ -57,7 +57,7 @@
 		<div class="container-fluid">
 			<div class="container ">
 				<div class="row">
-					<table class="table">
+					<table class="table ">
 						<thead class="thead-dark">
 							<tr>
 								<th scope="col" width="10%">No</th>
@@ -66,16 +66,33 @@
 								<th scope="col" width="15%">작성일</th>
 							</tr>
 						</thead>
-						<tbody>
-							<c:forEach var="list" items="${list}">
+						<tbody class="table table-bordered">
+							<c:if test="${null ne list}">
+								<c:forEach var="list" items="${list}">
+									<tr>
+										<th scope="row">${list.board_no}</th>
+										<td><a class="btn btn-default" href="http://localhost:8080/board/event/eventView?pageNum=${list.board_no}">${list.board_nm}</a></td>
+										<td>관리자</td>
+										<td>${fn:substring(list.board_in_date,0,11)}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${empty list}">
 								<tr>
-									<th scope="row">${list.board_no}</th>
-									<td><a class="btn btn-default" href="http://localhost:8080/board/event/eventView?No=${list.board_no}" >${list.board_nm}</a></td>
-									<td>관리자</td>
-									<td>${fn:substring(list.board_in_date,0,11)}</td>
+									<td scope="row" colspan="4" align="center">등록된 글이 없습니다</td>
 								</tr>
-							</c:forEach>
+							</c:if>
+
 						</tbody>
+						<tfoot>
+							<tr>
+								<td scope="row" align="right" colspan="4">
+								<button type="button" class="btn" id="b_Insert">등록</button>
+								<button type="button" class="btn">수정</button>
+								<button type="button" class="btn">삭제</button>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 					<div class="container ">
 						<div class="form-row  justify-content-md-center ">
@@ -125,5 +142,10 @@
 </body>
 </html>
 <script type="text/javascript">
-  
+$(function() {
+ $('#b_Insert').click(function(){
+   location.replace('http://localhost:8080/board/event/eventInsert');
+ });
+})
+ 
 </script>

@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -132,8 +133,8 @@ public class LoginController {
 	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView callback(ModelAndView model, @RequestParam String code, @RequestParam String state,
 			HttpSession session) throws IOException {
-
 		logger.info("================callback Start=================");
+		UserBean user=new UserBean();
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
 		// 로그인 사용자 정보를 읽어온다.
@@ -147,6 +148,12 @@ public class LoginController {
 	  String id   = list.get("id").getAsString();
     System.out.println("-------------"+list.toString());
 		if (msg.equals("success")) {
+		  logger.info("success");
+/*		  user.setUser_id("id");
+		  user.setUser_id("id");
+		  user.setUser_id("id");
+		  user.setUser_id("id");
+		  Service.UserJoin();*/
 			session.setAttribute("ss_id", nick);
 			session.setAttribute("naver_id",id);
 		}

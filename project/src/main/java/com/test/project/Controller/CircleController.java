@@ -1,23 +1,16 @@
 package com.test.project.Controller;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
-import javax.servlet.http.HttpServlet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -26,29 +19,19 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.test.project.NaverLoginBO;
-import com.test.project.CommonMathod.Common;
-import com.test.project.Dao.FileDao;
+import com.test.project.CommonMathod.CFileUploadMathod;
 import com.test.project.Dto.CircleBean;
 import com.test.project.Dto.FileBean;
-import com.test.project.Dto.UserBean;
 import com.test.project.Service.CircleService;
 import com.test.project.Service.FileService;
-import com.test.project.Service.UserService;
 
 /**
  * @패키지 com.test.project.Controller
@@ -65,7 +48,7 @@ public class CircleController {
   private FileService service;
   @Autowired
   private CircleService cService;
-  private Common method = new Common();
+  private CFileUploadMathod method = new CFileUploadMathod();
   
   /**
    * @메소드명 : Cricle
@@ -78,7 +61,7 @@ public class CircleController {
     ModelAndView model = new ModelAndView();
     logger.info("circleList-start");
     model.setViewName("circle/circleList");
-    model.addObject("title","이벤트목록");
+    model.addObject("title", "이벤트목록");
     return model;
   }
   
@@ -93,9 +76,10 @@ public class CircleController {
     ModelAndView model = new ModelAndView();
     logger.info("circleInsert-start");
     model.setViewName("circle/circleInsert");
-    model.addObject("title","이벤트목록");
+    model.addObject("title", "이벤트목록");
     return model;
   }
+  
   /**
    * @메소드명 : circleInsert_ok
    * @작성일 : 2018. 8. 17. 오전 12:40:21
@@ -103,29 +87,26 @@ public class CircleController {
    * @설명 :동아리 등록처리
    */
   @RequestMapping("circle/circleInsert_ok")
-  public ModelAndView circleInsert_ok(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("CircleBean") CircleBean bean,MultipartFile img) {
-    ModelAndView model = new ModelAndView();
-    logger.info("circleInsert_ok-시작");
+  public String circleInsert_ok(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("CircleBean") CircleBean bean, @RequestParam(value = "logo", required = false) MultipartFile img) {
+    logger.info("동아리등록처리-start");
     HashMap<String, Object> map = method.file_upload(img, response, request, "circle");
-    String url=(String) map.get("url");
-    FileBean FBean =(FileBean) map.get("vo");
+    // String url=(String) map.get("url");
+    FileBean FBean = (FileBean) map.get("vo");
     service.file_Insert(FBean);
     bean.setCircle_Logo_Fileno(FBean.getFile_no());
-    //동아리 db에 저장하는 로직
     cService.Circle_insert(bean);
     try {
       response.setContentType("text/html; charset=UTF-8");
       PrintWriter out = response.getWriter();
-      out.println("<script>alert('등록완료.');</script>");
-      //out.println("<script>window.location.replace(\"http://localhost:8080/\");</script>");
+      out.println("<script>alert('동아리를 등록되었습니다.');</script>");
+      // out.println("<script>window.location.replace(\"http://localhost:8080/\");</script>");
       out.flush();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    model.setViewName("/index");
-    logger.info("circleInsert_ok-end");
-    return model;
+    logger.info("동아리등록처리-finish");
+    return "index";
   }
   
   /**
@@ -139,8 +120,8 @@ public class CircleController {
   public HashMap<String, Object> imgUpload(HttpServletRequest request, HttpServletResponse response, MultipartFile img) {
     HashMap<String, Object> map = method.edtImg_Upload(img, response, request, "circle");
     FileBean bean = (FileBean) map.get("vo");
+    logger.info("----------chkEditor_이미지등록" + bean.toString() + "-------------");
     service.file_Insert(bean);
-    System.out.println("insert>>>>>>>>>>>>"+bean.toString());
     return map;
   }
   

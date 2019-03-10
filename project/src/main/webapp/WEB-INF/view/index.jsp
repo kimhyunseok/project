@@ -223,6 +223,7 @@
 		<jsp:include page="/WEB-INF/view/include/footer.jsp" />
 	</div>
 
+
 </body>
 </html>
 
