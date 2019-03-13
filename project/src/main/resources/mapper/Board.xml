@@ -71,7 +71,7 @@
 		`board_content` = ${list.board_no},
 		`board_nm`		=${list.board_nm},
 		`board_fileNo`	=${list.board_fileNo},
-		`board_mod_date`=NOW(),
+		`board_mod_date`=NOW()
 		WHERE BOARD_NO=${list.board_no}
 	</update>
 	<update

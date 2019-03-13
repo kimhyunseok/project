@@ -162,8 +162,8 @@ public class CFileUploadMathod {
     vo.setFile_name(fileName);
     vo.setFile_url("http://localhost:8080/resources/upload_img/" + location + "/");
     vo.setFile_location(location);
-    service.file_Insert(vo);
     map.put("vo", vo);
+    
     return map;
   }
   

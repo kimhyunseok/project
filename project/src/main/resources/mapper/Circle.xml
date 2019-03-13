@@ -39,4 +39,87 @@
 		)
 	</insert>
 	
+	<select
+		id="Circle_Cnt"
+		parameterType="String"
+		resultType="int">
+		SELECT 
+		count(a.circle_No)as circle_No 
+		FROM tb_circle  a
+		INNER JOIN tb_file b 
+		ON a.circle_Logo_Fileno = b.file_no
+	</select>
+	<select
+		id="Circle_List"
+		parameterType="Hashmap"
+		resultType="Hashmap">
+		SELECT
+		`circle_No`,        
+			`circle_Nm`,          
+			`circle_Kind`,        
+			`circle_PNum`,        
+			`circle_Cnt`,         
+			`circle_Content`,     
+			`circle_Date`,        
+			`circle_Time`,        
+			`circle_PostNum`,     
+			`circle_Addr1`,       
+			`circle_Addr2`,       
+			`circle_Point`,       
+			`circle_in_date`,     
+			a.`circle_Logo_Fileno`, 
+            b.`file_name`,
+            b.`file_url`
+		FROM tb_circle a 
+		INNER JOIN tb_file b 
+		ON a.circle_Logo_Fileno = b.file_no
+		ORDER BY circle_No ASC LIMIT #{start}, 12
+		
+	</select>
+	<select
+		id="Circle_View"
+		parameterType="Hashmap"
+		resultType="com.test.project.Dto.BoardBean">
+		SELECT A.*
+		FROM (
+		SELECT
+		`BOARD_NO`,
+		`BOARD_CONTENT`,
+		`BOARD_NM`,
+		`BOARD_FILENO`,
+		`BOARD_IN_DATE`,
+		`BOARD_DEL_DATE`,
+		`BOARD_MOD_DATE`,
+		LEAD(BOARD_NO, 1) OVER (ORDER BY BOARD_NO DESC) AS NEXT_NO,
+		LEAD(BOARD_NM, 1, '다음글이 없습니다') OVER (ORDER BY BOARD_NO DESC) AS NEXT_NM,
+		LEAD(BOARD_IN_DATE, 1, null) OVER (ORDER BY BOARD_NO DESC) AS NEXT_DATE,
+		LAG(BOARD_NO, 1) OVER (ORDER BY BOARD_NO DESC) AS PRE_NO,
+		LAG(BOARD_NM, 1, '이전글이 없습니다') OVER (ORDER BY BOARD_NO DESC) AS PRE_NM,
+		LAG(BOARD_IN_DATE, 1, null) OVER (ORDER BY BOARD_NO DESC) AS PRE_DATE
+		FROM ${db_table}
+		) A
+		WHERE A.BOARD_NO = ${board_No};
+
+	</select>
+	
+	<update
+		id="Circle_upt"
+		parameterType="hashmap">
+		UPDATE ${db_table}
+		SET
+		`board_content` = ${list.board_no},
+		`board_nm`		=${list.board_nm},
+		`board_fileNo`	=${list.board_fileNo},
+		`board_mod_date`=NOW(),
+		WHERE BOARD_NO=${list.board_no}
+	</update>
+	<update
+		id="Circle_del"
+		parameterType="hashmap">
+		UPDATE ${db_table}
+		SET
+		`board_del_chk` = "Y"
+		WHERE board_no=${num}
+	</update>
+	
 </mapper>

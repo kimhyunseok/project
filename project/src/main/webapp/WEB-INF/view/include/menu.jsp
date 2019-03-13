@@ -14,7 +14,7 @@
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
 					<div class="list-group">
-						<a href="http://localhost:8080/circle/circleList" class="list-group-item list-group-item-action">문화</a>
+						<a href="http://localhost:8080/circle/circleList?pageNum=1" class="list-group-item list-group-item-action">문화</a>
 						<a href="#" class="list-group-item list-group-item-action">여행</a>
 					</div>
 				</div>

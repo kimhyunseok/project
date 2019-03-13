@@ -11,7 +11,7 @@
 		id="board_List"
 		parameterType="Hashmap"
 		resultType="com.test.project.Dto.BoardBean">
-		SELECT 
+		SELECT
 		BOARD_NO,
 		BOARD_NM,
 		BOARD_CONTENT,
@@ -68,8 +68,11 @@
 		parameterType="hashmap">
 		UPDATE ${db_table}
 		SET
-		`board_del_chk` = "Y"
-		WHERE board_no=${num}
+		`board_content` = ${list.board_no},
+		`board_nm`		=${list.board_nm},
+		`board_fileNo`	=${list.board_fileNo},
+		`board_mod_date`=NOW()
+		WHERE BOARD_NO=${list.board_no}
 	</update>
 	<update
 		id="board_del"

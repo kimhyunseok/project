@@ -75,7 +75,7 @@
 									<input type="text" name="circle_Date" class='form-control' id="datepicker" required="required">
 								</div>
 							</div>
-							<div class="form-group row">
+							<!-- <div class="form-group row">
 								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 시간</label>
 								<div class="col-10">
 									<div class="input-group clockpicker">
@@ -83,7 +83,7 @@
 										</span>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group row">
 								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 위치</label>
 								<div class="col-10">
@@ -107,7 +107,7 @@
 							<div class="form-group row">
 								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 로고</label>
 								<div class="col-10">
-									<input type="file" name="logo" class="form-control">
+									<input type="file" name="logo" class="form-control"  accept=" .jpg, .png" >
 								</div>
 							</div>
 							<div class="form-row  justify-content-md-center ">

@@ -3,7 +3,6 @@ package com.test.project.Controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -76,7 +75,6 @@ public class BoardController {
     ArrayList<BoardBean> list;
     int listCnt = BSevice.board_Cnt("tb_event_board");
     // 전체리스트 개수
-    Enumeration reqName = req.getParameterNames();
     int curNum = Integer.parseInt(req.getParameter("pageNum"));
     test = new pagingBean(listCnt, curNum);
     map.put("db_table", "tb_event_board");

@@ -38,9 +38,9 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">첨부파일</label>
+									<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold" >첨부파일</label>
 									<div class="col-10">
-										<input type="file" name="file">
+										<input type="file" name="file" accept=".hwp, .jpg, .png"> 
 									</div>
 								</div>
 								<div class="form-row  justify-content-md-center ">

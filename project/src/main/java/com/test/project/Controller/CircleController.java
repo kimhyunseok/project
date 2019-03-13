@@ -6,11 +6,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -25,11 +26,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.test.project.CommonMathod.CFileUploadMathod;
 import com.test.project.Dto.CircleBean;
 import com.test.project.Dto.FileBean;
+import com.test.project.Dto.pagingBean;
 import com.test.project.Service.CircleService;
 import com.test.project.Service.FileService;
 
@@ -49,6 +51,7 @@ public class CircleController {
   @Autowired
   private CircleService cService;
   private CFileUploadMathod method = new CFileUploadMathod();
+  private pagingBean test;
   
   /**
    * @메소드명 : Cricle
@@ -57,11 +60,25 @@ public class CircleController {
    * @설명 :동아리리스트
    */
   @RequestMapping("circle/circleList")
-  public ModelAndView Cricle() {
+  public ModelAndView Cricle(HttpServletRequest req) {
     ModelAndView model = new ModelAndView();
-    logger.info("circleList-start");
+    logger.info("동아리리스트-start");
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    ArrayList<CircleBean> list;
+    int listCnt = cService.Circle_Cnt();
+    // 전체리스트 개수
+    int curNum = Integer.parseInt(req.getParameter("pageNum"));
+    // 현재 페이지
+    
+    test = new pagingBean(listCnt, curNum, 12);
+    logger.info(">>>>>>>>>>>>>" + listCnt + " " + curNum);
+    map.put("start", test.getStartIndex());
+    list = cService.Circle_List(map);
+    model.addObject("list", list);
+    model.addObject("pagination", test);
     model.setViewName("circle/circleList");
-    model.addObject("title", "이벤트목록");
+    model.addObject("title", "동아리목록");
+    logger.info("동아리리스트-end");
     return model;
   }
   
@@ -91,22 +108,24 @@ public class CircleController {
     logger.info("동아리등록처리-start");
     HashMap<String, Object> map = method.file_upload(img, response, request, "circle");
     // String url=(String) map.get("url");
+    
     FileBean FBean = (FileBean) map.get("vo");
     service.file_Insert(FBean);
     bean.setCircle_Logo_Fileno(FBean.getFile_no());
+    logger.info(">>>>>>>>>" + bean.toString());
     cService.Circle_insert(bean);
     try {
       response.setContentType("text/html; charset=UTF-8");
       PrintWriter out = response.getWriter();
       out.println("<script>alert('동아리를 등록되었습니다.');</script>");
-      // out.println("<script>window.location.replace(\"http://localhost:8080/\");</script>");
+      
       out.flush();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
     logger.info("동아리등록처리-finish");
-    return "index";
+    return "redirect:http://localhost:8080/circle/circleList?pageNum=1";
   }
   
   /**

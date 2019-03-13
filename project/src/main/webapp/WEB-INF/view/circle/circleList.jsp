@@ -58,64 +58,100 @@
 		</div>
 		<div class="container-fluid">
 			<div class="container ">
-				<div class="row">
+				<c:forEach var="list" items="${list}" varStatus="stat">
+					<!-- row --/// -->
+					
+					<c:if test="${ (stat.index)%4 eq 0}">
+						<div class="row">
+					</c:if>
 					<div class="col-sm-3 ">
-						<div class="card " OnClick="location.href ='http://www.naver.com'" style="cursor:pointer;" >
-							<div class="card-header">
-								<img class="card-img-top" src="/img/circle/test.png" alt="image" style="width: 100%">
+					
+					<div class="card">
+						<div class="card-block">
+							<figure class="profile"> <img class="card-img-top" src="${list.file_url}/${list.file_name}" width="200px" height="300px" alt="image" style="width: 100%"> </figure>
+							<h4 class="card-title mt-3">${list.circle_Nm}</h4>
+							<div class="meta">
+								<a>인원:${list.circle_PNum}명</a>
 							</div>
-							<div class="card-body">
-								<h4 class="card-title">John Doe</h4>
-								<p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-							</div>
-							<div class="card-footer">Footer</div>
+							<div class="card-text">주소:${list.circle_Addr1}${list.circle_Addr2}</div>
+							<div class="card-text">날짜:${list.circle_Date}</div>
+						</div>
+						<div class="card-footer">
+							<small></small>
+							<button class="btn btn-secondary float-right btn-sm">show</button>
 						</div>
 					</div>
-					<div class="col-sm-3">
-						<div class="card " OnClick="location.href ='http://www.naver.com'" style="cursor:pointer;" >
-							<div class="card-header">
-								<img class="card-img-top" src="/img/circle/test.png" alt="image" style="width: 100%">
-							</div>
-							<div class="card-body">
-								<h4 class="card-title">John Doe</h4>
-								<p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-							</div>
-							<div class="card-footer">Footer</div>
-						</div>
+					
+						
 					</div>
-					<div class="col-sm-3">
-						<div class="card " OnClick="location.href ='http://www.naver.com'" style="cursor:pointer;" >
-							<div class="card-header">
-								<img class="card-img-top" src="/img/circle/test.png" alt="image" style="width: 100%">
-							</div>
-							<div class="card-body">
-								<h4 class="card-title">John Doe</h4>
-								<p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-							</div>
-							<div class="card-footer">Footer</div>
-						</div>
-						<!--/.Card-->
-					</div>
-					<div class="col-sm-3">
-						<div class="card " OnClick="location.href ='http://www.naver.com'" style="cursor:pointer;" >
-							<div class="card-header">
-								<img class="card-img-top" src="/img/circle/test.png" alt="image" style="width: 100%; border-color:">
-							</div>
-							<div class="card-body">
-								<h4 class="card-title">John Doe</h4>
-								<p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-							</div>
-							<div class="card-footer">Footer</div>
-						</div>
-						<!--/.Card-->
-					</div>
-				</div>
+					<c:if test="${ (stat.count)%4 eq 0}">
 			</div>
+			</c:if>
+			</c:forEach>
 
-	<jsp:include page="/WEB-INF/view/include/footer.jsp" />
 		</div>
+	</div>
+
+	<div class="container ">
+		<div class="col-sm-12">
+			<div class="form-row  justify-content-md-center ">
+				<ul class="pagination">
+					<c:if test="${pagination.curRange ne 1 }">
+						<li class="page-item">
+							<a class="page-link" href="http://localhost:8080/circle/circleList?pageNum=1">[처음]</a>
+						</li>
+					</c:if>
+					<c:if test="${pagination.curPage ne 1}">
+						<li class="page-item">
+							<a class="page-link" href="http://localhost:8080/circle/circleList?pageNum=${pagination.prevPage}">[이전]</a>
+						</li>
+					</c:if>
+					<c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage}">
+						<c:choose>
+							<c:when test="${pageNum eq  pagination.curPage}">
+								<li class="page-item active">
+									<a class="page-link" href="http://localhost:8080/circle/circleList?pageNum=${pageNum}">${pageNum }</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item">
+									<a class="page-link" href="http://localhost:8080/circle/circleList?pageNum=${pageNum}">${pageNum}</a>
+								</li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${pagination.curPage ne pagination.pageCnt && pagination.pageCnt > 0}">
+						<li class="page-item">
+							<a class="page-link" href="http://localhost:8080/circle/circleList?pageNum=${pagination.nextPage}">[다음]</a>
+						</li>
+					</c:if>
+					<c:if test="${pagination.curRange ne pagination.rangeCnt && pagination.rangeCnt > 0}">
+						<li class="page-item">
+							<a class="page-link" href="http://localhost:8080/circle/circleList?pageNum=${pagination.pageCnt}">[끝]</a>
+						<li class="page-item">
+					</c:if>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-12 text-right">
+			<button type="button" class="btn" id="b_Insert">등록</button>
+			<button type="button" class="btn" id="del_btn">삭제</button>
+		</div>
+	</div>
+
+	</div>
+	<jsp:include page="/WEB-INF/view/include/footer.jsp" />
+	</div>
+	</div>
+
+
+	</div>
 </body>
 </html>
 <script type="text/javascript">
-
+  $(function() {
+    $('#b_Insert').click(function() {
+      location.replace('http://localhost:8080/circle/circleInsert');
+    });
+  });
 </script>
