@@ -24,7 +24,7 @@
 	</insert>
 	<select
 		id="file_Select"
-		parameterType="int" resultType="com.test.project.Dto.FileBean">
+		parameterType="hashmap" resultType="com.test.project.Dto.FileBean">
 		SELECT `file_no`,
 			`file_name`,
 			`file_o_name`,
@@ -33,5 +33,20 @@
 		FROM `tb_file` 
 		WHERE file_no=${value}
 	</select>
+	
+	<update
+		id="file_Update"
+		parameterType="com.test.project.Dto.FileBean">
+		
+		
+		UPDATE `tb_file` SET 
+			
+			`file_name` =${file_name},
+			`file_o_name`=${file_o_name},
+			`file_url`=${file_url},
+			`file_size`=${file_size}
+		FROM `tb_file` 
+		WHERE file_no=${board_fileNo}
+	</update>
 
 </mapper>

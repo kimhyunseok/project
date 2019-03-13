@@ -66,4 +66,16 @@ public class BoardService implements BoardDao {
   public BoardBean board_View(HashMap<String, Object> map) {
     return mapper.board_View(map);
   }
+  
+  @Override
+  public void board_del(HashMap<String, Object> map) {
+    // TODO Auto-generated method stub
+    mapper.board_del(map);
+  }
+  
+  @Override
+  public void board_upt(HashMap<String, Object> map) {
+    // TODO Auto-generated method stub
+    mapper.board_upt(map);
+  }
 }

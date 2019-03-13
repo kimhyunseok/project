@@ -24,6 +24,7 @@ public class BoardBean {
   private String pre_nm;
   private String next_date;
   private String pre_date;
+  private String board_del_chk;
   
   @Override
   public String toString() {

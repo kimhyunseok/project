@@ -68,15 +68,12 @@ public class CFileUploadMathod {
     String originalFileName = img.getOriginalFilename();
     String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
     UUID uuid = UUID.randomUUID();
-    
     String fileName = uuid.toString() + "_" + originalFileName;
     // 저장경로 폴더 생성
     File file = new File(filePath);
-    
     if (file.exists() == false) {
       file.mkdirs();
     }
-    
     // 서버에 파일 write
     file = new File(filePath + fileName);
     try {

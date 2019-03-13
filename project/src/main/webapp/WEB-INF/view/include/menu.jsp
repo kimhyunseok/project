@@ -68,7 +68,7 @@
 
 
 		<a class="navbar-brand nav-link " href="http://localhost:8080/">
-			<img src="http://localhost:8080/img/logo.png" class="img-rounded" alt="Cinque Terre" width="90" height="50">
+			 <img src="http://localhost:8080/img/logo.png" class="img-rounded" alt="Cinque Terre" width="90" height="50">
 		</a>
 
 
@@ -107,9 +107,9 @@
 			</c:when>
 			<c:when test="${sessionScope.ss_id ne null}">
 				<li class="nav-item">
-					<a class="nav-link text-white" href="#" data-toggle="tooltip" data-placement="bottom" title="회원정보수정">
+					<a class="nav-link text-white" href="http://localhost:8080/memberUpdate" data-toggle="tooltip" data-placement="bottom" title="회원정보수정">
 						<i class="fas fa-address-book"></i>
-						<c:out value="${sessionScope.ss_id}" />
+						<c:out value="${sessionScope.ss_nm}" />
 						님
 					</a>
 				</li>

@@ -29,101 +29,86 @@
 								<div class="card-body">
 									<c:choose>
 										<c:when test="${user eq 1}">
-											<form id="join" method="post" action="http://localhost:8080/UserJoin">
-												<div class="form-row">
-													<div class="col-sm-8 form-group">
-														<label>아이디 </label><span class="regForm text-danger">*</span> <input name="user_id" type="text" id="user_id" class="form-control" placeholder="" required>
-													</div>
-													<!-- form-id end.// -->
-													<div class="col form-group">
-														<label>&nbsp; </label>
-														<button type="button" s class="btn btn-info btn-block" id="idchk">중복확인</button>
-													</div>
-													<!-- form-group end.// -->
-												</div>
-												<div class="form-row">
-													<div class="col-sm-12 form-group">
-														<label>이름 </label><span class="regForm text-danger">*</span> <input name="user_nm" type="text" id="user_nm" class="form-control" placeholder="" required>
-													</div>
-												</div>
-												<div class="form-group">
-													<label>패스워드</label><span class="regForm text-danger">*</span> <input name="user_pw" id="user_pw" class="form-control pwd1" type="password" required>
-												</div>
-												<div class="form-group">
-													<label>패스워드 확인</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
-												</div>
-												<div class="form-row">
-													<div class="form-group col-md-12">
-														<label>이메일</label><span class="regForm text-danger">*</span>
-														<div class="form-inline">
-															<input type="text" name="user_email_1" class="form-control col-md-5" required id="user_email"> <span class="col-md-1">@</span> <select name="user_email_2" id="inputState" class="form-control col-md-6">
-																<option value="naver.com">naver.com</option>
-																<option value="gmail.com">gmail.com</option>
-																<option value="nate.com">nate.com</option>
-																<option value="hanmail.net">hanmail.net</option>
-																<option value="custom">직접입력</option>
-															</select>
+												<form id="join" method="post" action="http://localhost:8080/UserJoin">
+												
+													<div class="form-row">
+														<div class="col-sm-8 form-group">
+															<label>아이디 </label><span class="regForm text-danger">*</span> 
+															<input name="user_id" type="text" id="user_id" class="form-control" placeholder="" required  <c:if test="${null ne list.user_id}"> value="${list.user_id}" readonly</c:if>>
 														</div>
-													</div>
-												</div>
-												<div class="form-row">
-													<div class="form-group col-md-12">
-														<label>성별</label><span class="regForm text-danger">*</span>
-														<div class="form-inline">
-															<label for="r2_1"><input type="radio" id="r2_1" name="r2" checked>남자</label> <label for="r2_2"><input type="radio" id="r2_2" name="r2">여자</label>
+														<!-- form-id end.// -->
+														<div class="col form-group">
+															<label>&nbsp; </label>
+															<button type="button" class="btn btn-info btn-block" id="idchk">중복확인</button>
 														</div>
+														<!-- form-group end.// -->
 													</div>
-												</div>
-												<div class="form-row">
-													<div class="form-group col-md-12">
-														<label>연령대</label><span class="regForm text-danger">*</span>
-														<div class="form-inline">
-															<select name="" value="" id="inputState" class="form-control col-md-12">
-																<option value="naver.com">10대이상</option>
-																<option value="gmail.com">20대이상</option>
-																<option value="nate.com">30대이상</option>
-																<option value="hanmail.net">40대이상</option>
-															</select>
+													<div class="form-row">
+														<div class="col-sm-12 form-group">
+															<label>이름 </label><span class="regForm text-danger">*</span> 
+															<input name="user_nm" type="text" id="user_nm" class="form-control" placeholder="" required <c:if test="${null ne list.user_nm}"> value="${list.user_nm}" readonly</c:if>>
 														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label>주소</label>
-													<div class="form-group form-inline">
-														<input class="form-control" style="width: 100px;" placeholder="우편번호" name="circle_PostNum" id="addr1" type="text" readonly="readonly" required="required">
 													</div>
 													<div class="form-group">
-														<input class="form-control" placeholder="도로명 주소" name="circle_Addr1" id="addr2" type="text" readonly="readonly" required="required" /> <input class="form-control" placeholder="상세주소" name="circle_Addr2" id="addr3" type="text" required="required" />
+														<label>패스워드</label><span class="regForm text-danger">*</span> <input name="user_pw" id="user_pw" class="form-control pwd1" type="password" required>
 													</div>
-													<div class=" form-inline">
-														<button type="button" class='form-control ' id="search">찾기</button>
+													<div class="form-group">
+														<label>패스워드 확인</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
 													</div>
-
-												</div>
-												<div class="form-row  justify-content-md-center ">
-													<div class="row">
-														<div class="form-group">
-															<button type="button" id="JoinBtn" class="btn btn-primary join">가입하기</button>
-															&nbsp;
-															<button type="reset" class="btn btn-secondary">취소</button>
+													<div class="form-row">
+														<div class="form-group col-md-12">
+															<label>이메일</label><span class="regForm text-danger">*</span>
+															<div class="form-inline">
+																<input type="text" name="user_email_1" class="form-control col-md-5" required id="user_email" <c:if test="${null ne list.user_email_1}"> value="${list.user_email_1}" readonly   </c:if>> <span class="col-md-1">@</span> 
+																<select name="user_email_2" id="selectMail" class="form-control col-md-6" <c:if test="${null ne list.user_email_2}"> readonly  disabled </c:if>>
+																	<option <c:if test="${'gmail.com' eq list.user_email_2}"> selected    </c:if> value="gmail.com">gmail.com</option>
+																	<option <c:if test="${'nate.com' eq list.user_email_2}"> selected    </c:if> value="nate.com">nate.com</option>
+																	<option <c:if test="${'naver.com' eq list.user_email_2}"> selected    </c:if> value="naver.com">naver.com</option>
+																	<option <c:if test="${'hanmail.net' eq list.user_email_2}"> selected  </c:if>value="hanmail.net">hanmail.net</option>
+																</select>
+															</div>
 														</div>
 													</div>
-													<!-- form-group// -->
-												</div>
+													
+													<div class="form-group">
+														<label>주소</label>
+														<div class="form-group form-inline">
+															<input class="form-control" style="width: 100px;" placeholder="우편번호" name="circle_PostNum" id="addr1" type="text" readonly="readonly" required="required">
+														</div>
+														<div class="form-group">
+															<input class="form-control" placeholder="도로명 주소" name="circle_Addr1" id="addr2" type="text" readonly="readonly" required="required" /> <input class="form-control" placeholder="상세주소" name="circle_Addr2" id="addr3" type="text" required="required" />
+														</div>
+														<div class=" form-inline">
+															<button type="button" class='form-control ' id="search">찾기</button>
+														</div>
+
+													</div>
+													<div class="form-row  justify-content-md-center ">
+														<div class="row">
+															<div class="form-group">
+																<button type="button" id="JoinBtn" class="btn btn-primary join">가입하기</button>
+																&nbsp;
+																<button type="reset" class="btn btn-secondary">취소</button>
+															</div>
+														</div>
+														<!-- form-group// -->
+													</div>
+											
 										</c:when>
 										<c:otherwise>
 											<form id="join" method="post" action="http://localhost:8080/UserUpdate">
 												<div class="form-group">
-													<label>아이디 </label><span class="regForm text-danger">*</span> <input name="user_id" type="text" id="user_id" class="form-control" value="${user_info.user_id}" placeholder="" readonly>
+													<label>아이디 </label><span class="regForm text-danger">*</span> 
+													<input name="user_id" type="text" id="user_id" class="form-control " value="${user_info.user_id}" placeholder="" readonly>
 												</div>
 												<div class="form-group">
-													<label>패스워드</label><span class="regForm text-danger">*</span> <input id="user_b_pw" value="${user_info.user_pw}" class="form-control pwd1" type="password" readonly>
+													<label>패스워드</label><span class="regForm text-danger">*</span> <input id="user_b_pw" value="${user_info.user_pw}" class="form-control" type="password" readonly>
 												</div>
 												<div class="form-group">
-													<label>패스워드 확인</label><span class="regForm text-danger">*</span> <input class="form-control pwd2" type="password" required>
+													<label>새로운 패스워드 </label><span class="regForm text-danger">*</span> <input class="form-control pwd1" type="password" required>
 												</div>
 												<div class="form-group">
-													<label>새로운 패스워드</label><span class="regForm text-danger">*</span> <input name="user_pw" type="password" id="user_pw" value="" class="form-control pwd1">
+													<label>새로운 패스워드 확인</label><span class="regForm text-danger">*</span> <input name="user_pw" type="password" id="user_pw" value="" class="form-control pwd2">
 												</div>
 												<div class="form-group">
 													<font name="check"><br /></font>
@@ -132,12 +117,12 @@
 													<div class="form-group col-md-12">
 														<label>이메일</label><span class="regForm text-danger">*</span>
 														<div class="form-inline">
-															<input type="text" name="user_email_1" class="form-control col-md-5" required id="user_email" value="${user_info.user_email_1}"> <span class="col-md-1">@</span> <select name="user_email_2" value="${user_info.user_email_2}" id="inputState" class="form-control col-md-6">
-																<option value="naver.com">naver.com</option>
-																<option value="gmail.com">gmail.com</option>
-																<option value="nate.com">nate.com</option>
-																<option value="hanmail.net">hanmail.net</option>
-																<option value="custom">직접입력</option>
+															<input type="text" name="user_email_1" class="form-control col-md-5" required id="user_email"  <c:if test="${null ne user_info.user_email_1}"> value="${user_info.user_email_1}" readonly   </c:if>> <span class="col-md-1">@</span> 
+															<select name="user_email_2"  <c:if test="${null ne user_info.user_email_2}"> readonly  disabled </c:if>  id="selectMail" class="form-control col-md-6">
+																<option value="naver.com" <c:if test="${'naver.com' eq user_info.user_email_2}"> selected  </c:if>>naver.com</option>
+																<option value="gmail.com" <c:if test="${'gmail.com' eq user_info.user_email_2}"> selected  </c:if>>gmail.com</option>
+																<option value="nate.com"  <c:if test="${'nate.com' eq user_info.user_email_2}"> selected  </c:if>>nate.com</option>
+																<option value="hanmail.net" <c:if test="${'hanmail.net' eq user_info.user_email_2}"> selected  </c:if>>hanmail.net</option>
 															</select>
 														</div>
 													</div>
@@ -286,25 +271,26 @@
         alert("이미 존재하는 아이디입니다");
         return false;
       }
+      $('#selectMail').attr('disabled', false);
       $("#join").submit();
 
     });
     $(".update").click(function() {
       if ($("#user_pw").val() == $("#user_b_pw").val()) {
         alert("기존비밀번호와 같습니다.");
-        $("#user_pw").text("");
-        $("#user_pw").focus();
+        $(".pwd1",".pwd2").val();
+        $(".pwd1").focus();
         return false;
       } else if ($("#user_email").val() == null) {
         alert("이메일을 입력해주세요");
         return false;
-      } else if (idchk == 0) {
-        alert("아이디 중복확인해주세요.");
-        return false;
-      } else if (idchk == 1) {
+      }  else if (idchk == 1) {
         alert("이미 존재하는 아이디입니다");
         return false;
       }
+      $('#selectMail').attr('disabled', false);
+      //$("#join").submit();
+      
     });
     
     

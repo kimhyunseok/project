@@ -46,6 +46,7 @@ import com.test.project.Service.FileService;
  * @작성날짜 2019. 3. 10. 오후 10:11:38
  * @설명:
  */
+
 @Controller
 public class BoardController {
   private static Logger logger = LogManager.getLogger(BoardController.class);
@@ -59,6 +60,8 @@ public class BoardController {
   private CFileUploadMathod method;
   private ModelAndView model = new ModelAndView();
   private pagingBean test;
+  @Autowired
+  private FileService Fservice;
   
   /**
    * @메소드명 : eventList
@@ -97,14 +100,19 @@ public class BoardController {
   public ModelAndView eventView(HttpServletResponse rep, HttpServletRequest req) {
     logger.info("이벤트보기-start");
     String pageNum = req.getParameter("pageNum");
-    HashMap<String, Object> map = new HashMap<String, Object>();
+    HashMap<String, Object> map1 = new HashMap<String, Object>();
+    HashMap<String, Object> map2 = new HashMap<String, Object>();
     BoardBean view = null;
     FileBean bean = null;
-    map.put("db_table", "tb_event_board");
-    map.put("board_No", pageNum);
-    view = BSevice.board_View(map);
+    map1.put("db_table", "tb_event_board");
+    map1.put("board_No", pageNum);
+    view = BSevice.board_View(map1);
     bean = FSevice.file_Select(view.getBoard_fileNo());
-    ArrayList<BRelplyBean> list = BReSevice.reply_List(pageNum);
+    
+    map2.put("db_table", "tb_event_board_reply");
+    map2.put("board_No", pageNum);
+    ArrayList<BRelplyBean> list = BReSevice.reply_List(map2);
+    
     model.setViewName("board/event/eventView");
     model.addObject("title", "이벤트보기");
     model.addObject("View", view);
@@ -127,9 +135,86 @@ public class BoardController {
     HashMap<String, Object> map = new HashMap<String, Object>();
     String board_no = request.getParameter("board_no");
     map.put("board_no", board_no);
+    map.put("db_table", "tb_event_board_reply");
     map.put("board_content", content);
     BReSevice.reply_Insert(map);
     
+    // map.put("content", "succes");
+    logger.info("이벤트댓글-end");
+    return map;
+  }
+  
+  /**
+   * @메소드명 : eventReReply_Ins
+   * @작성일 : 2019. 3. 10. 오후 10:11:48
+   * @작성자 : 김현석
+   * @설명 :
+   */
+  @ResponseBody
+  @RequestMapping("board/event/eventReReply_Ins.ajax")
+  public HashMap<String, Object> eventReReply_Ins(HttpServletResponse rep, HttpServletRequest request, BRelplyBean bean) {
+    logger.info("이벤트댓글-start");
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    String board_no = request.getParameter("board_no");
+    String board_level = request.getParameter("board_level");
+    String reply_no = request.getParameter("reply_no");
+    
+    map.put("board_no", bean.getBoard_no());
+    map.put("reply_no", bean.getReply_no());
+    map.put("db_table", "tb_event_board_reply");
+    map.put("reply_content", bean.getReply_content());
+    int max = BReSevice.reply_max(map);
+    map.put("reply_level", BReSevice.reply_max(map));
+    BReSevice.Rereply_Insert(map);
+    
+    // map.put("content", "succes");
+    logger.info("이벤트댓글-end");
+    return map;
+  }
+  
+  /**
+   * @메소드명 : eventReReply_Udt
+   * @작성일 : 2019. 3. 10. 오후 10:11:48
+   * @작성자 : 김현석
+   * @설명 :
+   */
+  @ResponseBody
+  @RequestMapping("board/event/Reply_Upt.ajax")
+  public HashMap<String, Object> Reply_Udt(HttpServletResponse rep, HttpServletRequest request, BRelplyBean bean) {
+    logger.info("이벤트댓글-start");
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    
+    String reply_no = request.getParameter("reply_no");
+    
+    map.put("reply_no", bean.getReply_no());
+    map.put("db_table", "tb_event_board_reply");
+    map.put("reply_content", bean.getReply_content());
+    BReSevice.reply_upt(map);
+    
+    // map.put("content", "succes");
+    logger.info("이벤트댓글-end");
+    return map;
+  }
+  
+  /**
+   * @메소드명 : Reply_Del
+   * @작성일 : 2019. 3. 10. 오후 10:11:48
+   * @작성자 : 김현석
+   * @설명 :
+   */
+  @ResponseBody
+  @RequestMapping("board/event/Reply_Del.ajax")
+  public HashMap<String, Object> Reply_Del(HttpServletResponse rep, HttpServletRequest request, BRelplyBean bean) {
+    logger.info("이벤트댓글-start");
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    String reply_no = request.getParameter("reply_no");
+    String del_type = request.getParameter("del_type");
+    map.put("reply_no", bean.getReply_no());
+    map.put("db_table", "tb_event_board_reply");
+    map.put("reply_content", bean.getReply_content());
+    map.put("del_type", del_type);
+    logger.info(">>>>>>>>>>>>>" + map.toString());
+    BReSevice.reply_del(map);
     // map.put("content", "succes");
     logger.info("이벤트댓글-end");
     return map;
@@ -144,8 +229,8 @@ public class BoardController {
   @RequestMapping("board/event/eventInsert")
   public ModelAndView eventInsert(HttpServletResponse rep, HttpServletRequest req) {
     logger.info("이벤트등록페이지-start");
-    model.setViewName("board/event/eventInsert");
     model.addObject("title", "이벤트등록");
+    model.setViewName("board/event/eventInsert");
     logger.info("이벤트등록페이지-end");
     return model;
   }
@@ -176,7 +261,7 @@ public class BoardController {
     }
     String orgname = multipartFile.getOriginalFilename();
     
-    // 확장자 구하기
+    // 1.확장자 구하기
     String exc = orgname.substring(orgname.lastIndexOf(".") + 1, orgname.length());
     
     if (multipartFile.isEmpty() == false) {
@@ -217,174 +302,83 @@ public class BoardController {
   }
   
   /**
-   * @메소드명 : noticeList
+   * @메소드명 : eventDelete
    * @작성일 : 2018. 7. 3. 오후 7:15:34
    * @작성자 : KHS
-   * @설명 :공지사항목록
+   * @설명 :이벤트등록페이지
    */
-  @RequestMapping("board/noticeList")
-  public ModelAndView noticeList() {
-    logger.info("공지사항목록-start");
-    model.setViewName("board/notice/noticeList");
-    model.addObject("title", "공지사항목록");
-    logger.info("공지사항목록-end");
-    return model;
-  }
-  
-  /**
-   * @메소드명 :noticeview
-   * @작성일 : 2018. 7. 3. 오후 7:15:34
-   * @작성자 : KHS
-   * @설명 :공지사항보기
-   */
-  @RequestMapping("board/qna/noticeView")
-  public ModelAndView noticeView() {
-    logger.info("공지사항보기-start");
-    model.setViewName("board/notice/noticeView");
-    model.addObject("title", "공지사항보기");
-    logger.info("공지사항보기-start");
-    return model;
-  }
-  
-  /**
-   * @메소드명 : noticeInsert
-   * @작성일 : 2018. 7. 3. 오후 7:15:34
-   * @작성자 : KHS
-   * @설명 :공지사항등록페이지
-   */
-  @RequestMapping("board/notice/noticeInsert")
-  public ModelAndView noticeInsert() {
-    logger.info("공지사항등록-start");
-    model.setViewName("/board/notice/noticeInsert");
-    model.addObject("title", "공지사항등록");
-    logger.info("공지사항등록-end");
-    return model;
-  }
-  
-  /**
-   * @메소드명 : noticeInsert_ok
-   * @작성일 : 2018. 8. 18. 오전 1:46:36
-   * @작성자 : KHS
-   * @설명 :공지사항등록처리
-   */
-  @RequestMapping("board/notice/noticeInsert_ok")
-  public ModelAndView noticeInsert_ok(ModelAndView model, HttpServletResponse rep, HttpServletRequest req, @ModelAttribute("BoardBean") BoardBean bean, MultipartFile img) {
-    logger.info("공지사항등록처리-start");
+  @RequestMapping("board/event/eventDelete")
+  public ModelAndView eventDelete(HttpServletResponse rep, HttpServletRequest req) {
+    logger.info("이벤트삭제처리-start");
     HashMap<String, Object> map = new HashMap<String, Object>();
-    HashMap<String, Object> filemap = new HashMap<String, Object>();
-    if (img.isEmpty() == false) {
-      filemap = method.file_upload(img, rep, req, "notice");
-      Boolean tf = (Boolean) filemap.get("tf");
-      if (tf == true) {
-        FileBean FBean = (FileBean) filemap.get("vo");
-        int no = FBean.getFile_no();
-        // 게시판 파일번호저장
-        bean.setBoard_fileNo(no);
-        model.setViewName("redirect:/board/notice/noticeList");
-      } else {
-        try {
-          rep.setContentType("text/html; charset=UTF-8");
-          PrintWriter out = rep.getWriter();
-          out.println("<script>alert('엑셀,한글파일만 됩니다.');</script>");
-          out.println("<script>window.history.back();</script>");
-          out.flush();
-        } catch (IOException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      }
+    String test[] = req.getParameterValues("chk");
+    for (String num : test) {
+      map.put("num", num);
+      map.put("db_table", "tb_event_board");
+      BSevice.board_del(map);
     }
-    map.put("bean", bean);
-    map.put("dbtable", "tb_notice_board");
-    model.setViewName("board/notice/noticeInsert");
-    BSevice.board_Insert(map);
-    logger.info("공지사항등록처리-end");
+    model.setViewName("redirect:http://localhost:8080/board/event/eventList?pageNum=1");
+    logger.info("이벤트삭제처리-end");
     return model;
   }
   
   /**
-   * @메소드명 : qnaList
+   * @메소드명 : eventUpdate
    * @작성일 : 2018. 7. 3. 오후 7:15:34
    * @작성자 : KHS
-   * @설명 :이벤트목록
+   * @설명 :이벤트등록페이지
    */
-  @RequestMapping("board/qnaList")
-  public ModelAndView qnaList() {
-    logger.info("qnaList-start");
-    model.setViewName("board/qna/qnaList");
-    model.addObject("title", "QnA목록");
-    logger.info("qnaList-end");
-    return model;
-  }
-  
-  /**
-   * @메소드명 :qnaview
-   * @작성일 : 2018. 7. 3. 오후 7:15:34
-   * @작성자 : KHS
-   * @설명 :QnA리스트
-   */
-  @RequestMapping("board/qna/qnaView")
-  public ModelAndView qnaview() {
-    logger.info("qnaview-start");
-    model.setViewName("board/qna/qnaView");
-    model.addObject("title", "QnA목록");
-    logger.info("qnaview-start");
-    return model;
-  }
-  
-  /**
-   * @메소드명 : qnaInsert
-   * @작성일 : 2018. 7. 3. 오후 7:15:34
-   * @작성자 : KHS
-   * @설명 : QnA등록페이지
-   */
-  @RequestMapping("board/qna/qnaInsert")
-  public ModelAndView qnaInsert() {
-    logger.info("QnA등록페이지-start");
-    model.setViewName("board/qna/qnaInsert");
-    model.addObject("title", "QnA등록");
-    logger.info("QnA등록페이지-end");
-    return model;
-  }
-  
-  /**
-   * @메소드명 : qnaInsert_ok
-   * @작성일 : 2018. 7. 3. 오후 7:15:34
-   * @작성자 : KHS
-   * @설명 : QnA등록처리
-   */
-  @RequestMapping("board/qna/qnaInsert_ok")
-  public ModelAndView qnaInsert_ok(ModelAndView model, HttpServletResponse rep, HttpServletRequest req, @ModelAttribute("BoardBean") BoardBean bean, MultipartFile img) {
-    logger.info("QnA등록처리-start");
+  @RequestMapping("board/event/eventUpdate")
+  public ModelAndView eventUpdate(HttpServletResponse rep, HttpServletRequest req) {
+    logger.info("이벤트수정처리-start");
     HashMap<String, Object> map = new HashMap<String, Object>();
-    HashMap<String, Object> filemap = new HashMap<String, Object>();
-    if (img.isEmpty() == false) {
-      filemap = method.file_upload(img, rep, req, "qna");
-      Boolean tf = (Boolean) filemap.get("tf");
-      if (tf == true) {
-        FileBean FBean = (FileBean) filemap.get("vo");
-        int no = FBean.getFile_no();
-        model.setViewName("redirect:/board/qna/qnaList");
-        // 게시판 파일번호저장
-        bean.setBoard_fileNo(no);
-      } else {
-        try {
-          rep.setContentType("text/html; charset=UTF-8");
-          PrintWriter out = rep.getWriter();
-          out.println("<script>alert('엑셀,한글파일만 됩니다.');</script>");
-          out.println("<script>window.history.back();</script>");
-          out.flush();
-        } catch (IOException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      }
-    }
-    map.put("bean", bean);
-    map.put("dbtable", "tb_qna_board");
-    model.setViewName("board/qna/qnaInsert");
-    BSevice.board_Insert(map);
-    logger.info("QnA등록처리-end");
+    String num = req.getParameter("chk");
+    map.put("board_No", num);
+    map.put("db_table", "tb_event_board");
+    BoardBean bean = BSevice.board_View(map);
+    FileBean fbean = FSevice.file_Select(bean.getBoard_fileNo());
+    model.addObject("list", bean);
+    model.addObject("flist", fbean);
+    model.addObject("title", "이벤트수정");
+    model.setViewName("board/event/eventUpdate");
+    logger.info("이벤트수정처리-end");
     return model;
   }
+  
+  /**
+   * @메소드명 : eventUpdate_k
+   * @작성일 : 2018. 7. 3. 오후 7:15:34
+   * @작성자 : KHS
+   * @설명 :이벤트등록페이지
+   */
+  @RequestMapping("board/event/eventUpdate_k")
+  public ModelAndView eventUpdate_k(BoardBean bean, HttpServletResponse rep, HttpServletRequest req) {
+    logger.info("이벤트수정처리-start");
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
+    Iterator<String> iterator = mhsr.getFileNames();
+    MultipartFile multipartFile = null;
+    HashMap<String, Object> filemap = new HashMap<String, Object>();
+    // 1.파일업로드 유무검사
+    if (multipartFile.isEmpty() == false) {
+      logger.info("파일저장처리-start");
+      filemap = method.file_upload(multipartFile, rep, req, "event");// 파일저장
+      FileBean FBean = (FileBean) filemap.get("vo");
+      map.put("bean", bean);
+      map.put("board_fileNo", FBean.getFile_no());
+      Fservice.file_Update(filemap);
+      BSevice.board_Insert(map);
+      // 게시판 파일번호저장
+      logger.info("파일저장처리-end");
+    }
+    
+    map.put("db_table", "tb_event_board");
+    map.put("list", bean);
+    BSevice.board_upt(map);
+    FileBean fbean = FSevice.file_Select(bean.getBoard_fileNo());
+    model.setViewName("redirect:http://localhost:8080/board/event/eventList?pageNum=1");
+    logger.info("이벤트수정처리-end");
+    return model;
+  }
+  
 }

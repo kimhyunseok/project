@@ -12,9 +12,11 @@ package com.test.project.Controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.catalina.connector.Response;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.test.project.Dto.UserBean;
 import com.test.project.Service.UserService;
 
@@ -41,10 +44,57 @@ public class JoinController {
   UserService service;
   
   /**
+   * @메소드명 : member
+   * @작성일 : 2018. 7. 2. 오후 9:36:31
+   * @작성자 : KHS
+   * @설명 : 회원가입
+   */
+  @RequestMapping("/member")
+  public ModelAndView member(String namel, HttpServletRequest request) {
+    logger.info("================member Start=================");
+    ModelAndView model = new ModelAndView();
+    UserBean bean = new UserBean();
+    String name = request.getParameter("user_nm");
+    String id = request.getParameter("user_id");
+    String mail1 = request.getParameter("user_email_1");
+    String mail2 = request.getParameter("user_email_2");
+    bean.setUser_nm(name);
+    bean.setUser_id(id);
+    bean.setUser_email_1(mail1);
+    bean.setUser_email_2(mail2);
+    model.addObject("list", bean);
+    model.addObject("user", 1);
+    model.setViewName("main/member");
+    model.addObject("title", "회원가입");
+    logger.info("================member End=================");
+    return model;
+  }
+  
+  /**
+   * @메소드명 : memberUpdate
+   * @작성일 : 2018. 7. 2. 오후 9:36:11
+   * @작성자 : KHS
+   * @설명 : 회원정보수정
+   */
+  @RequestMapping("/memberUpdate")
+  public ModelAndView memberUpdate(HttpSession session) {
+    logger.info("================memberUpdate Start=================");
+    ModelAndView model = new ModelAndView();
+    model.addObject("user", 2);
+    model.setViewName("main/member");
+    Object user_id = session.getAttribute("ss_id");
+    UserBean user = service.SelectUserInfo(user_id.toString());
+    model.addObject("user_info", user);
+    model.addObject("title", "정보수정");
+    logger.info("================memberUpdate End=================");
+    return model;
+  }
+  
+  /**
    * @메소드명 : joinChk
    * @작성일 : 2018. 6. 29. 오전 1:25:45
    * @작성자 : KHS
-   * @설명 : 회원가입
+   * @설명 : 회원가입_idchk
    */
   @RequestMapping(value = "/IdChk.ajax", method = { RequestMethod.GET, RequestMethod.POST })
   @ResponseBody
@@ -65,9 +115,11 @@ public class JoinController {
    * @설명 :
    */
   @RequestMapping(value = "/UserJoin", method = { RequestMethod.GET, RequestMethod.POST })
-  public String userjoin(UserBean user, HttpServletRequest request, HttpServletResponse response) {
+  public String userjoin(UserBean user, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
     logger.info("================userjoin Start=================");
     service.UserJoin(user);
+    session.setAttribute("ss_id", user.getUser_nm());
+    session.setAttribute("naver_id", user.getUser_id());
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out;
     try {

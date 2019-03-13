@@ -82,12 +82,18 @@
 									<ul class="bo_v_nb">
 										<li class="btn_prv">
 											<span class="nb_tit"><i class="fa fa-caret-up" aria-hidden="true"></i> 이전글</span>
-											<a href="http://localhost:8080/board/event/eventView?pageNum=${View.pre_no}">${View.pre_nm}</a>
+											<c:if test="${null  ne  View.pre_no}">
+												<a href="http://localhost:8080/board/event/eventView?pageNum=${View.pre_no}">${View.pre_nm}</a>
+											</c:if>
+											<c:if test="${null  eq View.pre_no}">${View.pre_nm}</c:if>
 											<span class="nb_date">${fn:substring(View.pre_date,0,11)}</span>
 										</li>
 										<li class="btn_next">
 											<span class="nb_tit"><i class="fa fa-caret-down" aria-hidden="true"></i> 다음글</span>
-											<a href="http://localhost:8080/board/event/eventView?pageNum=${View.next_no}">${View.next_nm}</a>
+											<c:if test="${null  ne  View.next_no}">
+												<a href="http://localhost:8080/board/event/eventView?pageNum=${View.next_no}">${View.next_nm}</a>
+											</c:if>
+											<c:if test="${null  eq View.next_no}">${View.next_nm}</c:if>
 											<span class="nb_date">${fn:substring(View.next_date,0,11)}</span>
 										</li>
 									</ul>
@@ -96,70 +102,112 @@
 								<button type="button" class="cmt_btn">
 									<i class="fas fa-comments"></i> 댓글목록
 								</button>
-								<!-- 댓글 시작 { --> 
-								<section id="bo_vc">
+								<!-- 댓글 시작 { --> <section id="bo_vc">
 								<h2>댓글목록</h2>
-								<c:forEach var="list" items="${Reply}">
-								
-								<article id="c_1822" <c:if test="${1 ne list.reply_level}"> style="margin-left:50px;border-top-color:#e0e0e0" </c:if>> 
-								<header>
-								<div class="container-fluid">
-									<div class="row">
-										<div class="col-sm-12">
-											<span class="sv_wrap">
-												<noscript class="sv_nojs">
-													<span class="sv"> ${list.reply_id}님 </span>
-												</noscript>
-											</span> ㅇㅇ님 <span class="bo_vc_hdinfo"><i class="far fa-calendar-alt"></i> <time datetime="2019-01-10T09:34:00+09:00">19-01-10 09:34</time></span>
-											<!-- 댓글 출력 -->
-										</div>
-									</div>
-								</div>
-								</header>
-								<div class="cmt_contents ">
-									<p>ㅇㅇㅇㅇㅇ</p>
-									<ul class="bo_vc_act">
-										<li>
-											<a href="./board.php?bo_table=sorigyeol&amp;wr_id=77&amp;c_id=79&amp;w=c#bo_vc_w" onclick="comment_box('79', 'c'); return false;" class="btn_b03">답변</a>
-										</li>
-										<li>
-											<a href="./password.php?w=x&amp;bo_table=sorigyeol&amp;comment_id=79&amp;page=" onclick="return comment_delete();" class="btn_b03">삭제</a>
-										</li>
-									</ul>
-								</div>
-								</article>
-								</c:forEach>
-								<!-- style="margin-left:50px;border-top-color:#e0e0e0 --> <!-- 댓글 끝 } --> <span id="edit_84" class="bo_vc_w"></span><!-- 수정 --> <span id="reply_84" class="bo_vc_w"></span><!-- 답변 --> <input type="hidden" value="" id="secret_comment_84"> <textarea id="save_comment_84" style="display: none">adfasdf</textarea> </article> </section> <!-- } 댓글 끝 --> <!-- 댓글 쓰기 시작 { --> <aside id="bo_vc_w" class="bo_vc_w">
-								<h2>댓글쓰기</h2>
+								<c:forEach var="list" begin="0" items="${Reply}" varStatus="status">
 
-								<form name="fviewcomment" id="fview" action="">
+									<article class="c_1822" <c:if test="${1 ne list.reply_level}"> style="margin-left:50px;border-top-color:#e0e0e0" </c:if>>
+
 									<div class="container-fluid">
 										<div class="row">
 											<div class="col-sm-12">
-												
-												<textarea id="reply_content" name="reply_content" maxlength="10000" required="" class="required" title="내용" placeholder="댓글내용을 입력해주세요" style="resize: none;"></textarea>
+												<span class="sv_wrap">
+													<noscript class="sv_nojs">
+														<span class="sv"> ${list.reply_id}님 </span>
+													</noscript>
+												</span> ${list.reply_id}님 <span class="bo_vc_hdinfo"><i class="far fa-calendar-alt"></i> <time datetime="2019-01-10">${fn:substring(list.reply_in_date,0,11)}</time></span>
+												<!-- 댓글 출력 -->
+											</div>
+										</div>
+									</div>
 
+									<div class="cmt_contents ">
+										<p>${list.reply_content}</p>
+										<ul class="bo_vc_act">
+											<li>
+												<c:if test="${1 ne list.reply_level}">
+												</c:if>
+												<c:if test="${1 eq list.reply_level}">
+													<button type="button" class="btn reply" data-count="${status.index}">답변</button>
+												</c:if>
+
+											</li>
+											<li>
+												<button type="button" class="btn reply_upt" id="" data-type="All" data-id="${list.reply_no}" data-count="${status.index}">수정</button>
+											</li>
+											<li>
+												<c:if test="${1 eq list.reply_level}">
+													<button type="button" class="btn reply_del" id="" data-type="All" data-id="${list.reply_no}" data-count="${status.index}">삭제</button>
+												</c:if>
+												<c:if test="${1 ne list.reply_level}">
+													<button type="button" class="btn reply_del" id="" data-id="${list.reply_no}" data-count="${status.index}">삭제</button>
+												</c:if>
+											</li>
+										</ul>
+									</div>
+
+									<div class="container-fluid " id="reply_area${status.index}" style="display: none">
+										<input type="hidden" name="board_no" class="board_no" value="${list.board_no}"> <input type="hidden" name="reply_no" class="reply_no" value="${list.reply_no}"> <input type="hidden" name="reply_level" class="reply_level" value="${list.reply_level}">
+										<div class="row">
+											<div class="col-sm-12">
+												<textarea class="reply_content form-control" name="reply_content" maxlength="10000" title="내용" placeholder="댓글내용을 입력해주세요" style="resize: none;"></textarea>
 											</div>
 										</div>
 										<br>
 										<div class="row">
 											<div class="col-sm-12 text-right">
-												<button type="button" class="btn btn-danger" title="등록" id="reply_btn">등록</button>
+												<button type="button" class="btn btn-danger Rereply_btn" title="등록" data-count="${status.index}">등록</button>
 											</div>
 										</div>
 									</div>
-								</form>
+									<div class="container-fluid " id="reply_Udtarea${status.index}" style="display: none">
+										<input type="hidden" name="reply_no" class="reply_no" value="${list.reply_no}">
+										<div class="row">
+											<div class="col-sm-12">
+												<textarea class="reply_content form-control" name="reply_content" maxlength="10000" title="내용" placeholder="댓글내용을 입력해주세요" style="resize: none;"></textarea>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div class="col-sm-12 text-right">
+												<button type="button" class="btn btn-danger Rereply_Ubtn" title="수정" data-count="${status.index}">수정</button>
+											</div>
+										</div>
+									</div>
+						</form>
+						</article>
+						</c:forEach>
+						</section>
+						<!-- style="margin-left:50px;border-top-color:#e0e0e0 -->
+						<!-- 댓글 끝 } -->
+						<!-- } 댓글 끝 -->
+						<!-- 댓글 쓰기 시작 { -->
+						<form name="fviewcomment" id="fview" action="">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-sm-12">
+										<textarea class="form-control reply_content" name="reply_content" maxlength="10000" required="" class="required" title="내용" placeholder="댓글내용을 입력해주세요" style="resize: none;"></textarea>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-sm-12 text-right">
+										<button type="button" class="btn btn-danger" title="등록" id="reply_btn">등록</button>
+									</div>
+								</div>
 							</div>
-
-
 						</form>
 					</div>
-					<!--/card-block-->
-				</div>
-				<!-- /form card login -->
-			</div>
 
+
+					</form>
+				</div>
+				<!--/card-block-->
+			</div>
+			<!-- /form card login -->
 		</div>
+
+	</div>
 </body>
 </html>
 
@@ -203,11 +251,124 @@ function point(lat,lng){
 
   $(function() {
     $("#crops2").chained("#kind1");
+    $( ".reply" ).click(function() {
+    var jquery= $("#reply_area"+$(this).data("count"));
+      $( jquery).toggle( "slow" );
+    });
+    $( ".reply_upt" ).click(function() {
+      var jquery= $("#reply_Udtarea"+$(this).data("count"));
+        $( jquery).toggle( "slow" );
+      });
+    $(".Rereply_btn").click(function(){
+      var content = "";
+      content=$("#reply_area"+$(this).data("count"));
+      var data ={
+          "board_no":$("#reply_area"+$(this).data("count")+" .board_no").val(),
+          "reply_no":$("#reply_area"+$(this).data("count")+" .reply_no").val(),
+          "reply_level":$("#reply_area"+$(this).data("count")+" .reply_level").val(),
+          "reply_content":$("#reply_area"+$(this).data("count")+" .reply_content").val()
+          };
+      $.ajax({
+        type : "POST",
+        url : "http://localhost:8080/board/event/eventReReply_Ins.ajax",
+        async : false,
+        data:  data,
+        dataType : "json",
+        cache: false,
+        success: function(data){    
+         alert("저장되었습니다.");
+         location.reload();
+         },
+        error : function (data) {
+         alert('죄송합니다. 잠시 후 다시 시도해주세요.');
+         return false;
+        }  
+       }); 
+    });
+    //답글수정시작
+    $(".Rereply_Ubtn").click(function(){
+      var content = "";
+      content=$("#reply_Udtarea"+$(this).data("count"));
+      var data ={
+          "reply_no":$("#reply_Udtarea"+$(this).data("count")+" .reply_no").val(),
+          "reply_content":$("#reply_Udtarea"+$(this).data("count")+" .reply_content").val()
+          };
+      $.ajax({
+        type : "POST",
+        url : "http://localhost:8080/board/event/Reply_Upt.ajax",
+        async : false,
+        data:  data,
+        dataType : "json",
+        cache: false,
+        success: function(data){    
+         alert("수정하셨습니다.");
+         location.reload();
+         },
+        error : function (data) {
+         alert('죄송합니다. 잠시 후 다시 시도해주세요.');
+         return false;
+        }  
+       }); 
+    });
+    //답글수정끝
+  //답글삭제시작
+    $(".reply_del").click(function(){
+      var content = "";
+      var data ={
+          "reply_no":$(this).data("id"),
+          "del_type":$(this).data("type"),
+          };
+      $.ajax({
+        type : "POST",
+        url : "http://localhost:8080/board/event/Reply_Del.ajax",
+        async : false,
+        data:  data,
+        dataType : "json",
+        cache: false,
+        success: function(data){    
+         alert("삭제하셨습니다.");
+         location.reload();
+         },
+        error : function (data) {
+         alert('죄송합니다. 잠시 후 다시 시도해주세요.');
+         return false;
+        }  
+       }); 
+    });
+    
+    //답글수정 끝
+    $(".Rereply_btn").click(function(){
+      var content = "";
+      content=$("#reply_area"+$(this).data("count"));
+      var data ={
+          "board_no":$("#reply_area"+$(this).data("count")+" .board_no").val(),
+          "reply_no":$("#reply_area"+$(this).data("count")+" .reply_no").val(),
+          "reply_level":$("#reply_area"+$(this).data("count")+" .reply_level").val(),
+          "reply_content":$("#reply_area"+$(this).data("count")+" .reply_content").val()
+          };
+      $.ajax({
+        type : "POST",
+        url : "http://localhost:8080/board/event/eventReReply_Ins.ajax",
+        async : false,
+        data:  data,
+        dataType : "json",
+        cache: false,
+        success: function(data){    
+         alert("저장되었습니다.");
+         location.reload();
+         },
+        error : function (data) {
+         alert('죄송합니다. 잠시 후 다시 시도해주세요.');
+         return false;
+        }  
+       }); 
+    });
+    
     
     
     $("#reply_btn").click(function(){
       var content = "";
-      content=$("#reply_content").val();
+      content=$(".reply_content").val();
       $.ajax({
         type : "POST",
         url : "http://localhost:8080/board/event/eventReply_Ins.ajax",

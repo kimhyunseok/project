@@ -33,25 +33,37 @@ public class BReplyService implements BReplyDao {
   }
   
   @Override
-  public int reply_Cnt(String db) {
-    // TODO Auto-generated method stub
-    return 0;
+  public ArrayList<BRelplyBean> reply_List(HashMap<String, Object> map) {
+    return mapper.reply_List(map);
   }
   
   @Override
-  public ArrayList<BRelplyBean> reply_List(String pageNum) {
-    return mapper.reply_List(pageNum);
+  public void reply_del(HashMap<String, Object> map) {
+    // TODO Auto-generated method stub
+    mapper.reply_del(map);
   }
   
   @Override
-  public void reply_del() {
-    // TODO Auto-generated method stub
-    
+  public void reply_upt(HashMap<String, Object> map) {
+    mapper.reply_upt(map);
   }
   
   @Override
-  public void reply_upt() {
+  public void Rereply_Insert(HashMap<String, Object> map) {
     // TODO Auto-generated method stub
-    
+    mapper.Rereply_Insert(map);
   }
+  
+  @Override
+  public int reply_max(HashMap<String, Object> map) {
+    // TODO Auto-generated method stub
+    return mapper.reply_max(map);
+  }
+  
+  @Override
+  public int reply_Cnt(HashMap<String, Object> map) {
+    // TODO Auto-generated method stub
+    return mapper.reply_Cnt(map);
+  }
+  
 }

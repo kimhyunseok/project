@@ -1,5 +1,7 @@
 package com.test.project.Dao;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.test.project.Dto.FileBean;
@@ -36,7 +38,7 @@ public interface FileDao {
    * @작성자 : 김현석
    * @설명 :
    */
-  public int file_Update();
+  public void file_Update(HashMap<String, Object> map);
   
   /**
    * @메소드명 : file_Delete

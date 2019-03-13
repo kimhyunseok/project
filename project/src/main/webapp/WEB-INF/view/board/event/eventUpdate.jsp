@@ -24,23 +24,31 @@
 				<div class="card rounded-0">
 					<div class="card-body">
 					
-							<form class="form" method="Post" action="http://localhost:8080/board/event/eventInsert_ok" enctype="multipart/form-data">
+							<form class="form" method="Post" action="" enctype="multipart/form-data">
+							<input type="hidden" name="board_no" value="${list.board_no}">
 								<div class="form-group row">
 									<label for="example-text-input" class="col-2 col-form-label bg-light font-weight-bold">이벤트제목</label>
 									<div class="col-10">
-										<input class="form-control" type="text" name="board_nm"  maxlength="50" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
+										<input class="form-control" type="text" name="board_nm" <c:if test="${null ne list.board_nm}">value="${list.board_nm}"</c:if> maxlength="50" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">이벤트내용</label>
 									<div class="col-10">
-										<textarea name="board_content" id="editor1" data-maxlen=’1′></textarea>
+										<textarea name="board_content" id="editor" data-maxlen=’1′><c:if test="${null ne list.board_content}">${list.board_content}</c:if></textarea>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">첨부파일</label>
 									<div class="col-10">
-										<input type="file" name="file">
+										<input type="file"  id="test"name="file"  accept=".hwp, .jpg, .png" download>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">첨부파일</label>
+									<div class="col-10">
+										<a href="<c:url value='${flist.file_url}/${flist.file_name}'/>">${flist.file_o_name}</a>
+
 									</div>
 								</div>
 								<div class="form-row  justify-content-md-center ">
@@ -52,7 +60,6 @@
 									<!-- form-group// -->
 								</div>
 							</form>
-						
 					</div>
 					<!--/card-block-->
 				</div>
@@ -65,9 +72,10 @@
 
 <script>
   $(function() {
-   
+  
+
     //chkeditor 불러오기
-    CKEDITOR.replace('editor1', {//해당 이름으로 된 textarea에 에디터를 적용
+    CKEDITOR.replace('editor', {//해당 이름으로 된 textarea에 에디터를 적용
     width : '100%',
     height : '400px',
 

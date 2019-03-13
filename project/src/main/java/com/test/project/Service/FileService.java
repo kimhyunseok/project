@@ -1,5 +1,7 @@
 package com.test.project.Service;
 
+import java.util.HashMap;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import com.test.project.Dto.FileBean;
  * @설명:
  */
 @Service
-public class FileService {
+public class FileService implements FileDao {
   
   private static Logger logger = LogManager.getLogger(FileService.class);
   @Autowired
@@ -32,9 +34,9 @@ public class FileService {
     return dao.file_Select(fileNO);
   }
   
-  public int file_Update() {
+  public void file_Update(HashMap<String, Object> map) {
     // TODO Auto-generated method stub
-    return 0;
+    dao.file_Update(map);
   }
   
   public int file_Delete() {
