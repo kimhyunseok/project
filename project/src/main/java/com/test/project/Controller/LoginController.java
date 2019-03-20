@@ -10,6 +10,7 @@
 package com.test.project.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,14 +25,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.test.project.NaverLoginBO;
+import com.test.project.Dto.MenuBean;
 import com.test.project.Dto.UserBean;
+import com.test.project.Service.MenuService;
 import com.test.project.Service.UserService;
 
 /**
@@ -49,6 +51,8 @@ public class LoginController {
   String apiResult = null;
   @Autowired
   UserService service;
+  @Autowired
+  private MenuService MService;
   
   @Autowired
   private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
@@ -68,6 +72,10 @@ public class LoginController {
     String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
     System.out.println("네이버:" + naverAuthUrl);
     // 네이버
+    ArrayList<MenuBean> menu = MService.menu_List();
+    ArrayList<MenuBean> Smenu = MService.menu_SubList();
+    model.addObject("menu", menu);
+    model.addObject("Smenu", Smenu);
     model.addObject("url", naverAuthUrl);
     model.setViewName("main/Login");
     /* 생성한 인증 URL을 View로 전달 */
@@ -155,7 +163,7 @@ public class LoginController {
     int idx = email.indexOf("@");
     String mail1 = email.substring(0, idx);
     String mail2 = email.substring(idx + 1);
-    
+    logger.info(id);
     int idchk = service.UserCnt(id);
     if (idchk != 0) {
       if (msg.equals("success")) {
@@ -167,15 +175,13 @@ public class LoginController {
     } else {
       UserBean bean = new UserBean();
       model.addObject("user", 1);
-      RedirectView RView = new RedirectView("http://localhost:8080/member");
-      RView.setContextRelative(true);
-      RView.setExposeModelAttributes(true);
       map.put("user_nm", name);
       map.put("user_id", id);
       map.put("user_email_1", mail1);
       map.put("user_email_2", mail2);
-      model = new ModelAndView(RView, map);
+      model.addObject("list", map);
     }
+    model.setViewName("redirect:http://localhost:8080/member");
     
     return model;
   }

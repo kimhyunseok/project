@@ -22,7 +22,7 @@ public interface FileDao {
    * @작성자 : 김현석
    * @설명 :
    */
-  public int file_Insert(FileBean file);
+  public void file_Insert(FileBean file);
   
   /**
    * @메소드명 : file_Select

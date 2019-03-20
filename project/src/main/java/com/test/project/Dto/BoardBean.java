@@ -1,6 +1,7 @@
 package com.test.project.Dto;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @패키지 com.test.project.Dto
@@ -10,6 +11,7 @@ import lombok.Data;
  * @설명:
  */
 @Data
+@ToString
 public class BoardBean {
   private int board_no;
   private String board_nm;
@@ -25,10 +27,5 @@ public class BoardBean {
   private String next_date;
   private String pre_date;
   private String board_del_chk;
-  
-  @Override
-  public String toString() {
-    return "BoardBean [board_no=" + board_no + ", board_nm=" + board_nm + ", board_content=" + board_content + ", board_in_date=" + board_in_date + ", board_view_cnt=" + board_view_cnt + ", board_fileNo=" + board_fileNo + "]";
-  }
   
 }

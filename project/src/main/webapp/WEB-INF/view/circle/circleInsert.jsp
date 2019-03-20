@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-
+<script src="http://localhost:8080/js/plugin.js"></script>
 <link href="http://localhost:8080/css/circle.css" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/view/include/head.jsp" />
-<script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.10.0/full/ckeditor.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=30acVBn_RNTBZdDAcwhu"></script>
 <body>
 
@@ -28,41 +28,35 @@
 							<input type="hidden" name="circle_Point" id="point">
 							<div class="form-group row">
 								<label for="example-text-input" class="col-2 col-form-label bg-light font-weight-bold">동아리구분</label>
-								<div  class="col-10 form-inline">
+								<div class="col-10 form-inline">
 									<select id="kind1" name="circle_Kind" class="form-control">
-										<option value="">-- 선택 --</option>
-										<option value="0">문화</option>
-										<option value="1">스포츠</option>
-										<option value="2">강의</option>
-									</select> 
-									<select id="kind2" name="circle_Kind" class="form-control">
-										<option value="">-- 선택 --</option>
-										<option class="0" value="1">독서</option>
-										<option class="0" value="2">와인</option>
-										<option class="0" value="3">맛집</option>
-										<option class="1" value="1">축구</option>
-										<option class="1" value="2">야구</option>
+										<c:forEach items="${list}" var="view">
+											<c:if test="${view.code_Val_2==0}">
+												<option value="${view.code_Val_1}">${view.code_Nm}</option>
+											</c:if>
+										</c:forEach>
+									</select> <select id="kind2" name="circle_Kind" class="form-control">
+										<c:forEach items="${list}" var="view">
+											<c:if test="${view.code_Val_2 != 0}">
+												<option class="${view.code_Val_1}" value="${view.code_Val_2}">${view.code_Nm}</option>
+											</c:if>
+										</c:forEach>
 									</select>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="example-text-input" class="col-2 col-form-label bg-light font-weight-bold">동아리이름</label>
 								<div class="col-10">
-									<input class="form-control" type="text" name="circle_Nm" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
+									<input class="form-control" maxlength="25" type="text" name="circle_Nm" value="" id="example-text-input" placeholder="ex)홍길동" required="required">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="example-search-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 인원</label>
+								<label for="example-text-input" class="col-2 col-form-label bg-light font-weight-bold">동아리소개</label>
 								<div class="col-10">
-									<input id="spinner" type="number" name="circle_Cnt" class="form-control">
+									<textarea class="form-control" name="circle_Summary" rows="5" id="comment"></textarea>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label for="example-email-input" class="col-2 col-form-label bg-light font-weight-bold">연락처</label>
-								<div class="col-10">
-									<input class="form-control" type="tel" name="circle_PNum" value="" id="example-email-input" placeholder="01084698500" required="required">
-								</div>
-							</div>
+
 							<div class="form-group row">
 								<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 내용</label>
 								<div class="col-10">
@@ -70,20 +64,64 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 날짜</label>
-								<div class="col-10">
-									<input type="text" name="circle_Date" class='form-control' id="datepicker" required="required">
-								</div>
-							</div>
-							<!-- <div class="form-group row">
-								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 시간</label>
-								<div class="col-10">
-									<div class="input-group clockpicker">
-										<input type="text" class="form-control" name="circle_Time" value="" required="required"> <span class="input-group-addon"> <span class="glyphicon glyphicon-time"></span>
-										</span>
+								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 모임기간</label>
+								<div class="col-sm-10 form-inline">
+									<input type="text" name="circle_Date1" class="form-control col-sm-3" id="datepicker1" required="required"> <input type="hidden" name="circle_Date1_week" id="week1"> ~<input type="text" class="form-control col-sm-3" name="circle_Date2" id="datepicker2" > <input type="hidden" name="circle_Date2_week" id="week2">
+									<div class="input-group md-3">
+										<span class="input-group-text"><i class="fas fa-clock"></i></span> <input type="text" class="form-control clockpicker  " name="circle_Time" value="" required="required">
 									</div>
 								</div>
-							</div> -->
+							</div>
+							<div class="form-group row">
+								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 신청기간</label>
+								<div class="col-sm-10 form-inline">
+									<input type="text" name="circle_AplyDate1" class="form-control col-sm-3" id="datepicker3" required="required"> ~<input type="text" name="circle_AplyDate2" class="form-control col-sm-3" id="datepicker4" required="required">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-url-input" class="col-2 col-form-label bg-light font-weight-bold">유료/무료 체크</label>
+								<div class="col-10">
+									<div class="form-check-inline">
+										<label class="form-check-label"> <input type="radio" class="form-check-input" id="free_chk" name="c_group_PFchk" value="1" checked="checked">무료
+										</label>
+									</div>
+									<div class="form-check-inline">
+										<label class="form-check-label"> <input type="radio" class="form-check-input" id="pay_chk" name="c_group_PFchk" value="2">유료
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 그룹</label>
+								<div class="col-sm-10 ">
+									<table class="table table-bordered" id="group_area">
+										<thead>
+											<tr>
+												<th>그룹명</th>
+												<th>모집정원</th>
+												<th>비용</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="content">
+												<td><input type="text" name="c_groupTitle" class="form-control" required></td>
+												<td><input type="number" name="c_groupCnt" class="form-control" min="0" required></td>
+												<td><input type="text" name="c_groupPay" class="form-control circle_pay" value=0 readonly="readonly"></td>
+												<td><button type="button" class="btn btn-primary btn-lg del_group">x</button></td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="4"><button type="button" id="add_group" class="btn btn-danger btn-block">+그룹추가</button></td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+
+
 							<div class="form-group row">
 								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 위치</label>
 								<div class="col-10">
@@ -107,7 +145,7 @@
 							<div class="form-group row">
 								<label for="example-time-input" class="col-2 col-form-label bg-light font-weight-bold">동아리 로고</label>
 								<div class="col-10">
-									<input type="file" name="logo" class="form-control"  accept=" .jpg, .png" >
+									<input type="file" name="logo" class="form-control" accept=" .jpg, .png">
 								</div>
 							</div>
 							<div class="form-row  justify-content-md-center ">
@@ -187,9 +225,13 @@ function point(lat,lng){
       });
     });
 	// 텍스트에디터영역 시작
+	
     CKEDITOR.replace('editor', {//해당 이름으로 된 textarea에 에디터를 적용
     width : '100%',
     height : '400px',
+  
+    disallowedContent: 'img{width,height};',
+  
     filebrowserUploadUrl : 'http://localhost:8080/img_upload?CKEditor=contents&CKEditorFuncNum=1&langCode=ko'
     });
  	// 텍스트에디터영역 시작
@@ -200,10 +242,88 @@ function point(lat,lng){
     donetext : 'Done'
     });
  	// 시간선택영역 끝
-    $("#datepicker").datepicker({
+    $("#datepicker1").datepicker({
     dateFormat : 'yy-mm-dd',
-    minDate : 0
+    minDate : 0,
+    nextText: '다음 달', // next 아이콘의 툴팁.
+    prevText: '이전 달', // prev 아이콘의 툴팁.
+    numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
+    stepMonths: 3, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
+    yearRange: 'c-100:c+10', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+    showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. 
+    currentText: '오늘 날짜' , // 오늘 날짜로 이동하는 버튼 패널
+    closeText: '닫기',  // 닫기 버튼 패널
+    dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
+    showAnim: "slide", //애니메이션을 적용한다.
+    showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
+    dayNamesMin: ['일','월', '화', '수', '목', '금', '토'], // 요일의 한글 형식.
+    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], // 월의 한글 형식.
+    altField: "#week1",
+    altFormat: "DD"
     });
+    $('.clockpicker').clockpicker({
+      placement : 'top',
+      align : 'left',
+      donetext : 'Done'
+      });
+   	// 시간선택영역 끝
+      $(" #datepicker2").datepicker({
+      dateFormat : 'yy-mm-dd',
+      minDate : 0,
+      nextText: '다음 달', // next 아이콘의 툴팁.
+      prevText: '이전 달', // prev 아이콘의 툴팁.
+      numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
+      stepMonths: 3, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
+      yearRange: 'c-100:c+10', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+      showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. 
+      currentText: '오늘 날짜' , // 오늘 날짜로 이동하는 버튼 패널
+      closeText: '닫기',  // 닫기 버튼 패널
+      dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
+      showAnim: "slide", //애니메이션을 적용한다.
+      showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
+      dayNamesMin: ['일','월', '화', '수', '목', '금', '토'], // 요일의 한글 형식.
+      monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], // 월의 한글 형식.
+      altField: "#week2",
+      altFormat: "DD"
+      });
 
+      $(" #datepicker3,#datepicker4").datepicker({
+        dateFormat : 'yy-mm-dd',
+        minDate : 0,
+        nextText: '다음 달', // next 아이콘의 툴팁.
+        prevText: '이전 달', // prev 아이콘의 툴팁.
+        numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
+        stepMonths: 3, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
+        yearRange: 'c-100:c+10', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+        showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. 
+        currentText: '오늘 날짜' , // 오늘 날짜로 이동하는 버튼 패널
+        closeText: '닫기',  // 닫기 버튼 패널
+        dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
+        showAnim: "slide", //애니메이션을 적용한다.
+        showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
+        dayNamesMin: ['일','월', '화', '수', '목', '금', '토'], // 요일의 한글 형식.
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], // 월의 한글 형식.
+     
+        });
+   
+   	$('#group_area > tbody').on("click",'button', function() {
+      $(this).closest("tr").remove()
+    });
+      var append_html='';
+	  $("#free_chk").click(function(){
+	     $("#group_area > tbody >tr *").remove();  
+		  append_html='<tr class="content"><td><input type="text" name="c_groupTitle" class="form-control"></td><td><input type="number" name="c_groupCnt" class="form-control" min="0"></td><td><input  type="text" name="c_groupPay"  class="form-control" value=0 readonly></td><td><button type="button" class="btn btn-primary btn-lg del_group">x</button></td></tr>'
+	  });
+	  $("#pay_chk").click(function(){
+		 $("#group_area > tbody >tr *").remove();
+	     append_html='<tr class="content"><td><input type="text"  name="c_groupTitle" class="form-control"></td><td><input type="number" name="c_groupCnt" class="form-control" min="0"></td><td><input type="text"  name="c_groupPay"  class="form-control" value=0></td><td><button type="button" class="btn btn-primary btn-lg del_group">x</button></td></tr>'
+	  });
+	  $("#add_group").click(function(){
+	    if(append_html=="")
+	      append_html='<tr class="content"><td><input type="text" name="c_groupTitle" class="form-control"></td><td><input type="number" name="c_groupCnt" class="form-control" min="0"></td><td><input type="text"  name="c_groupPay"  class="form-control" value=0 readonly></td><td><button type="button" class="btn btn-primary btn-lg del_group">x</button></td></tr>'
+	 	
+	      $('#group_area  tbody').append(append_html);
+	  });
+	
   });
 </script>

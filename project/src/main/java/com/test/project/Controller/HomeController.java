@@ -1,5 +1,7 @@
 package com.test.project.Controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.test.project.Dto.MenuBean;
+import com.test.project.Service.MenuService;
 import com.test.project.Service.UserService;
 
 /**
@@ -26,6 +30,8 @@ public class HomeController {
   private static Logger logger = LogManager.getLogger(HomeController.class);
   @Autowired
   UserService service;
+  @Autowired
+  private MenuService MService;
   
   /**
    * @메소드명 : index
@@ -34,9 +40,25 @@ public class HomeController {
    * @설명 :
    */
   @RequestMapping("/")
-  public String index(String name) {
-    
-    return "index";
+  public ModelAndView index(String name, ModelAndView model) {
+    ArrayList<MenuBean> menu = MService.menu_List();
+    ArrayList<MenuBean> Smenu = MService.menu_SubList();
+    model.addObject("menu", menu);
+    model.addObject("Smenu", Smenu);
+    model.setViewName("index");
+    return model;
+  }
+  
+  @RequestMapping("include/menu")
+  public ModelAndView menu(String name, ModelAndView model) {
+    logger.info("Menu_start 시작");
+    ArrayList<MenuBean> menu = MService.menu_List();
+    ArrayList<MenuBean> Smenu = MService.menu_SubList();
+    model.addObject("list", menu);
+    model.addObject("Slist", Smenu);
+    model.setViewName("include/menu");
+    logger.info("Menu_start 끝");
+    return model;
   }
   
   @RequestMapping("/main/UploadComplete")

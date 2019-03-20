@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.project.Dao.CircleDao;
-import com.test.project.Dto.BoardBean;
 import com.test.project.Dto.CircleBean;
+import com.test.project.Dto.CircleReplyBean;
 
 /**
  * @패키지 com.test.project.Service
@@ -56,9 +56,22 @@ public class CircleService implements CircleDao {
   }
   
   @Override
-  public BoardBean Circle_View(HashMap<String, Object> map) {
+  public CircleBean Circle_View(HashMap<String, Object> map) {
     // TODO Auto-generated method stub
-    return null;
+    return mapper.Circle_View(map);
+  }
+  
+  @Override
+  public ArrayList<CircleReplyBean> Circle_ReplyView(HashMap<String, Object> map) {
+    // TODO Auto-generated method stub
+    
+    return mapper.Circle_ReplyView(map);
+  }
+  
+  @Override
+  public void Circle_Reply_Ins(HashMap<String, Object> map) {
+    // TODO Auto-generated method stub
+    mapper.Circle_Reply_Ins(map);
   }
   
 }

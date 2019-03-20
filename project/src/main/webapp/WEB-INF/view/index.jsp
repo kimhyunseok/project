@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/view/include/head.jsp" />
 <body>
 
 	<div id="wrapper" class="animate">
-		<jsp:include page="/WEB-INF/view/include/menu.jsp" />
+
+ 	<jsp:include page="/WEB-INF/view/include/menu.jsp" /> 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col">
@@ -220,8 +222,8 @@
 			<!-- row3 -->
 
 		</div>
-		<jsp:include page="/WEB-INF/view/include/footer.jsp" />
 	</div>
+		<jsp:include page="/WEB-INF/view/include/footer.jsp" />
 
 
 </body>

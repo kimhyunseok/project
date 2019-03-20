@@ -1,6 +1,7 @@
 package com.test.project.Dto;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @패키지 com.test.project.Dto
@@ -10,6 +11,7 @@ import lombok.Data;
  * @설명:
  */
 @Data
+@ToString
 public class BRelplyBean {
   private String reply_id;
   private int board_no;
@@ -19,10 +21,5 @@ public class BRelplyBean {
   private String reply_in_date;
   private String reply_del_date;
   private String reply_upt_date;
-  
-  @Override
-  public String toString() {
-    return "BRelplyBean [board_no=" + board_no + ", reply_no=" + reply_no + ", reply_content=" + reply_content + ", reply_in_date=" + reply_in_date + ", reply_del_date=" + reply_del_date + ", reply_upt_date=" + reply_upt_date + "]";
-  }
   
 }

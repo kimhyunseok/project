@@ -1,6 +1,7 @@
 package com.test.project.Dto;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @패키지 com.test.project.Dto
@@ -10,27 +11,36 @@ import lombok.Data;
  * @설명:
  */
 @Data
+@ToString
 public class CircleBean {
   private int circle_No;
   private String circle_Nm;
   private String circle_Kind;
-  private String circle_PNum;
   private int circle_Cnt;
   private String circle_Content;
-  private String circle_Date;
+  private String circle_intro;
   private String circle_Time;
   private String circle_PostNum;
   private String circle_Addr1;
   private String circle_Addr2;
   private String circle_Point;
   private String circle_in_date;
-  private int circle_Logo_Fileno;
+  private String circle_Date1;
+  private String circle_Date2;
+  private String circle_Date1_week;
+  private String circle_Date2_week;
+  private String circle_AplyDate1;
+  private String circle_AplyDate2;
+  private int file_no;
+  private int circle_Recnt;
   private String file_url;
   private String file_name;
-  
-  @Override
-  public String toString() {
-    return "CircleBean [circle_No=" + circle_No + ", circle_Nm=" + circle_Nm + ", circle_Kind=" + circle_Kind + ", circle_PNum=" + circle_PNum + ", circle_Cnt=" + circle_Cnt + ", circle_Content=" + circle_Content + ", circle_Date=" + circle_Date + ", circle_Time=" + circle_Time + ", circle_PostNum=" + circle_PostNum + ", circle_Addr1=" + circle_Addr1 + ", circle_Addr2=" + circle_Addr2 + ", circle_Point=" + circle_Point + ", circle_in_date=" + circle_in_date + "]";
-  }
+  private String filename;
+  private String user_id;
+  private String user_nm;
+  private String user_phone;
+  private String user_email_1;
+  private String user_email_2;
+  private String circle_Summary;
   
 }

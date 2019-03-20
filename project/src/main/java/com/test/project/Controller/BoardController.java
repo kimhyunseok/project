@@ -53,9 +53,7 @@ public class BoardController {
   private BoardService BSevice;
   @Autowired
   private BReplyService BReSevice;
-  @Autowired
-  private FileService FSevice;
-  @Autowired
+  
   private CFileUploadMathod method;
   private ModelAndView model = new ModelAndView();
   private pagingBean test;
@@ -105,7 +103,7 @@ public class BoardController {
     map1.put("db_table", "tb_event_board");
     map1.put("board_No", pageNum);
     view = BSevice.board_View(map1);
-    bean = FSevice.file_Select(view.getBoard_fileNo());
+    bean = Fservice.file_Select(view.getBoard_fileNo());
     
     map2.put("db_table", "tb_event_board_reply");
     map2.put("board_No", pageNum);
@@ -334,7 +332,7 @@ public class BoardController {
     map.put("board_No", num);
     map.put("db_table", "tb_event_board");
     BoardBean bean = BSevice.board_View(map);
-    FileBean fbean = FSevice.file_Select(bean.getBoard_fileNo());
+    FileBean fbean = Fservice.file_Select(bean.getBoard_fileNo());
     model.addObject("list", bean);
     model.addObject("flist", fbean);
     model.addObject("title", "이벤트수정");
@@ -373,7 +371,7 @@ public class BoardController {
     map.put("db_table", "tb_event_board");
     map.put("list", bean);
     BSevice.board_upt(map);
-    FileBean fbean = FSevice.file_Select(bean.getBoard_fileNo());
+    FileBean fbean = Fservice.file_Select(bean.getBoard_fileNo());
     model.setViewName("redirect:http://localhost:8080/board/event/eventList?pageNum=1");
     logger.info("이벤트수정처리-end");
     return model;

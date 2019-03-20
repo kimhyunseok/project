@@ -253,7 +253,7 @@ function point(lat,lng){
     $("#crops2").chained("#kind1");
     $( ".reply" ).click(function() {
     var jquery= $("#reply_area"+$(this).data("count"));
-      $( jquery).toggle( "slow" );
+      $( jquery).toggle(  );
     });
     $( ".reply_upt" ).click(function() {
       var jquery= $("#reply_Udtarea"+$(this).data("count"));

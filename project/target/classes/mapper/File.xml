@@ -6,7 +6,7 @@
 		id="file_Insert"
 		parameterType="com.test.project.Dto.FileBean"
 		useGeneratedKeys="true"
-		keyProperty="file_no">
+		keyProperty="file_no" >
 		INSERT INTO tb_file
 		(
 		`file_name`,

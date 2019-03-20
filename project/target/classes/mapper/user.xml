@@ -16,13 +16,17 @@
 		user_id = #{user_id} AND user_pw =#{user_pw}
 	</select>
 	<insert id="UserJoin" parameterType="com.test.project.Dto.UserBean">
-		INSERT INTO tb_user
+		INSERT INTO TB_USER
 		(
-			`user_id`,
-			`user_nm`,
-			`user_pw`,
-			`user_email_1`,
-			`user_email_2`
+			`USER_ID`,
+			`USER_NM`,
+			`USER_PW`,
+			`USER_EMAIL_1`,
+			`USER_EMAIL_2`,
+            `USER_PHONE`,
+            `USER_ADDR1`,
+            `USER_ADDR2`,  
+            `USER_POST`       
 		)
 		VALUES
 		(
@@ -30,7 +34,11 @@
 			#{user_nm},
 			#{user_pw},
 			#{user_email_1},
-			#{user_email_2}
+			#{user_email_2},
+            #{user_phone},
+            #{user_addr1},
+            #{user_addr2},
+            #{user_post} 
 		);
 	</insert>
 	<select id="SelectUserInfo" parameterType="String" resultType="com.test.project.Dto.UserBean">
@@ -39,7 +47,11 @@
 			user_nm,
 			user_pw,
 			user_email_1,
-			user_email_2
+			user_email_2,
+            user_addr1,
+            user_addr2,
+            user_post, 
+            user_phone
 		FROM
 			TB_USER
 		WHERE
@@ -48,10 +60,14 @@
 	<update id="UserUpdate" parameterType="com.test.project.Dto.UserBean" >
 		UPDATE tb_user
 		SET
-			`user_id` =#{user_id},
-			`user_pw` =#{user_pw},
-			`user_email_1` =#{user_email_1},
-			`user_email_2` = #{user_email_2}
+			`user_id`	   = #{user_id},
+			`user_pw`      = #{user_pw},
+			`user_email_1` = #{user_email_1},
+			`user_email_2` = #{user_email_2},
+            `user_phone`   = #{user_phone},
+            `user_addr1`   = #{user_addr1},
+            `user_addr2`   = #{user_addr2},
+            `user_post`    = #{user_post}
 		WHERE `user_id` = #{user_id} ;
 	</update>
 </mapper>

@@ -5,7 +5,8 @@
 <body>
 
 	<div id="wrapper" class="animate" >
-		<jsp:include page="/WEB-INF/view/include/menu.jsp" />
+
+		<jsp:include page="/WEB-INF/view/include/menu.jsp" flush="true"/>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">

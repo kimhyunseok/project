@@ -11,6 +11,7 @@ package com.test.project.Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.test.project.Dto.MenuBean;
 import com.test.project.Dto.UserBean;
+import com.test.project.Service.MenuService;
 import com.test.project.Service.UserService;
 
 /**
@@ -42,6 +45,8 @@ public class JoinController {
   private static Logger logger = LogManager.getLogger(JoinController.class);
   @Autowired
   UserService service;
+  @Autowired
+  private MenuService MService;
   
   /**
    * @메소드명 : member
@@ -50,18 +55,15 @@ public class JoinController {
    * @설명 : 회원가입
    */
   @RequestMapping("/member")
-  public ModelAndView member(String namel, HttpServletRequest request) {
+  public ModelAndView member(String namel, HttpServletRequest request, UserBean bean) {
     logger.info("================member Start=================");
     ModelAndView model = new ModelAndView();
-    UserBean bean = new UserBean();
-    String name = request.getParameter("user_nm");
-    String id = request.getParameter("user_id");
-    String mail1 = request.getParameter("user_email_1");
-    String mail2 = request.getParameter("user_email_2");
-    bean.setUser_nm(name);
-    bean.setUser_id(id);
-    bean.setUser_email_1(mail1);
-    bean.setUser_email_2(mail2);
+    // 1.메뉴불러오기
+    ArrayList<MenuBean> menu = MService.menu_List();
+    ArrayList<MenuBean> Smenu = MService.menu_SubList();
+    model.addObject("menu", menu);
+    model.addObject("Smenu", Smenu);
+    
     model.addObject("list", bean);
     model.addObject("user", 1);
     model.setViewName("main/member");
@@ -80,6 +82,11 @@ public class JoinController {
   public ModelAndView memberUpdate(HttpSession session) {
     logger.info("================memberUpdate Start=================");
     ModelAndView model = new ModelAndView();
+    // 1.메뉴불러오기
+    ArrayList<MenuBean> menu = MService.menu_List();
+    ArrayList<MenuBean> Smenu = MService.menu_SubList();
+    model.addObject("menu", menu);
+    model.addObject("Smenu", Smenu);
     model.addObject("user", 2);
     model.setViewName("main/member");
     Object user_id = session.getAttribute("ss_id");
@@ -118,8 +125,8 @@ public class JoinController {
   public String userjoin(UserBean user, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
     logger.info("================userjoin Start=================");
     service.UserJoin(user);
-    session.setAttribute("ss_id", user.getUser_nm());
-    session.setAttribute("naver_id", user.getUser_id());
+    session.setAttribute("ss_id", user.getUser_id());
+    session.setAttribute("ss_nm", user.getUser_nm());
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out;
     try {

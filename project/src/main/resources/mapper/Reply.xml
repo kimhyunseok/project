@@ -42,7 +42,7 @@
 		#{board_content},
 		'관리자',
 		NOW(),
-		#{board_no}
+		1
 		)
 	</insert>
 	<select

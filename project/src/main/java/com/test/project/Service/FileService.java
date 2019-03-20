@@ -24,9 +24,9 @@ public class FileService implements FileDao {
   @Autowired
   private FileDao dao;
   
-  public int file_Insert(FileBean file) {
+  public void file_Insert(FileBean file) {
     // TODO Auto-generated method stub
-    return dao.file_Insert(file);
+    dao.file_Insert(file);
   }
   
   public FileBean file_Select(int fileNO) {
